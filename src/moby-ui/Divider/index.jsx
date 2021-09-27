@@ -1,14 +1,14 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const HLine = styled.div`
-  width: ${(props) => (props.size === null ? "100%" : `${props.size}px`)};
+  width: ${(props) => (props.size === null ? '100%' : `${props.size}px`)};
   border-bottom: 1px solid #cecece;
 `;
 
 const VLine = styled.div`
   width: 1px;
-  height: ${(props) => (props.size === null ? "100%" : `${props.size}px`)};
+  height: ${(props) => (props.size === null ? '100%' : `${props.size}px`)};
   border-left: 1px solid #cecece;
 `;
 

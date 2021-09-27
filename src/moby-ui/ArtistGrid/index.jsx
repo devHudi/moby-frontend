@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const ArtistWrapper = styled.div`
   margin-bottom: 13px;
@@ -38,7 +38,7 @@ Artist.propTypes = {
 
 Artist.defaultProps = {
   image: null,
-  text: "",
+  text: '',
 };
 
 const ArtistGrid = styled.div`

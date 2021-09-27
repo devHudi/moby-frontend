@@ -1,7 +1,7 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
-import _ from "lodash";
-import styled from "styled-components";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import styled from 'styled-components';
 
 const TabWrapper = styled.div`
   display: flex;
@@ -15,12 +15,12 @@ const TabItem = styled.div`
 const TabPressable = styled.div`
   padding: 11px;
   border-bottom: 2px solid
-    ${(props) => (props.activated ? "#7f7f7f" : "#E6E6E6")};
+    ${(props) => (props.activated ? '#7f7f7f' : '#E6E6E6')};
 `;
 
 const TabText = styled.div`
   text-align: center;
-  color: ${(props) => (props.activated ? "#000000" : "#E6E6E6")};
+  color: ${(props) => (props.activated ? '#000000' : '#E6E6E6')};
   font-size: 8px;
 `;
 

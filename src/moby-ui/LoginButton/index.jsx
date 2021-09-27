@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const StyledButton = styled.button`
   width: 100%;
@@ -16,13 +16,13 @@ const LoginButton = ({ children, ...props }) => (
 
 LoginButton.propTypes = {
   disabled: PropTypes.bool,
-  onPress: PropTypes.func,
+  onClick: PropTypes.func,
   children: PropTypes.string.isRequired,
 };
 
 LoginButton.defaultProps = {
   disabled: false,
-  onPress: () => {},
+  onClick: () => {},
 };
 
 export default LoginButton;
