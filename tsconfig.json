@@ -1,16 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "types": [
-      "node",
-      "webpack-env"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node", "webpack-env"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -25,7 +18,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
