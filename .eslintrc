@@ -1,0 +1,47 @@
+{
+  "extends": ["react-app", "prettier", "airbnb"],
+  "plugins": ["prettier"],
+  "rules": {
+    "linebreak-style": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "import/no-unresolved": "off",
+    "object-curly-newline": "off",
+    "import/prefer-default-export": "off",
+    "operator-linebreak": "off",
+    "no-console": "warn",
+    "implicit-arrow-linebreak": "off",
+    "indent": "off",
+    "no-confusing-arrow": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/button-has-type": "off",
+    "no-underscore-dangle": "off",
+    "curly": "off",
+    "nonblock-statement-body-position": "off",
+    "jsx-a11y/alt-text": "off",
+    "function-paren-newline": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-alert": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-wrap-multilines": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "additionalHooks": "useRecoilCallback"
+      }
+    ],
+    "no-unused-vars": "warn",
+    "arrow-body-style": "warn",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "react/jsx-curly-newline": "off",
+    "react/prop-types": "warn"
+  }
+}
