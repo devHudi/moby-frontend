@@ -34,6 +34,11 @@ const Header = ({ title, children }) => (
   </Wrapper>
 );
 
+Header.SubTitle = styled.div`
+  margin-top: 5px;
+  font-size: 14px;
+`;
+
 Header.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
