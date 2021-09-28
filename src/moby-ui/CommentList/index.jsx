@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { MdKeyboardArrowDown } from 'react-icons/md';
+
 import { Flex, TextField, Margin } from 'moby-ui';
 
 const CommentWrapper = styled.div`
   position: relative;
   display: flex;
+  flex-direction: column;
   margin-bottom: 25px;
 `;
 
@@ -51,7 +54,22 @@ const CommentContent = styled.div`
   font-size: 11px;
 `;
 
-const Comment = ({ image, name, content, date, onReportClick }) => (
+const MoreButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  height: 30px;
+`;
+
+const Comment = ({
+  image,
+  name,
+  content,
+  date,
+  onReportClick,
+  onMoreClick,
+}) => (
   <CommentWrapper>
     <Flex align="center">
       <CommentImageWrapper>
@@ -70,6 +88,10 @@ const Comment = ({ image, name, content, date, onReportClick }) => (
         <CommentContent>{content}</CommentContent>
       </CommentContentWrapper>
     </Flex>
+
+    <MoreButton onClick={onMoreClick}>
+      <MdKeyboardArrowDown />
+    </MoreButton>
   </CommentWrapper>
 );
 
@@ -79,6 +101,7 @@ Comment.propTypes = {
   content: PropTypes.string,
   date: PropTypes.objectOf(Date),
   onReportClick: PropTypes.func,
+  onMoreClick: PropTypes.func,
 };
 
 Comment.defaultProps = {
@@ -87,6 +110,7 @@ Comment.defaultProps = {
   content: '',
   date: new Date(),
   onReportClick: () => console.log('Report'),
+  onMoreClick: () => console.log('Load More'),
 };
 
 const CommentListWrapper = styled.div``;
