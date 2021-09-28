@@ -34,16 +34,16 @@ const CommentName = styled.div`
 `;
 
 const CommentDate = styled.div`
+  margin-top: -2px;
   margin-left: 10px;
   font-size: 9px;
   color: #888888;
 `;
 
 const CommentReport = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
+  flex-basis: 40px;
   font-size: 11px;
+  text-align: right;
   color: #888888;
 `;
 
@@ -63,8 +63,10 @@ const Comment = ({ image, name, content, date, onReportClick }) => (
             <CommentName>{name}</CommentName>
             <CommentDate>{dayjs(date).format('YYYY.MM.DD')}</CommentDate>
           </Flex>
+
           <CommentReport onClick={onReportClick}> 신고 </CommentReport>
         </Flex>
+        <Margin size={5} />
         <CommentContent>{content}</CommentContent>
       </CommentContentWrapper>
     </Flex>
