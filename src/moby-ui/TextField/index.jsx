@@ -51,10 +51,10 @@ Wrapper.defaultProps = {
   children: null,
 };
 
-const TextField = ({ width, underline, icon }) => (
+const TextField = ({ width, underline, icon, ...props }) => (
   <Wrapper width={width} underline={underline}>
     {icon && <Icon>{icon}</Icon>}
-    <Input />
+    <Input {...props} />
   </Wrapper>
 );
 
