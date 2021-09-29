@@ -3,7 +3,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { createGlobalStyle } from 'styled-components';
 
-import { Home, Blog } from './pages';
+import { Login } from './pages';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -36,8 +36,8 @@ const App = () => (
     <GlobalStyle />
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
+        <Route exact path="/login">
+          <Login />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
