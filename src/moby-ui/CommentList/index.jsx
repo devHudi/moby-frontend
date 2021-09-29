@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
-import { Flex, Margin } from 'moby-ui';
+import { Flex, Margin, Divider } from 'moby-ui';
 
 const CommentWrapper = styled.div`
   position: relative;
@@ -108,11 +108,15 @@ const CommentListWrapper = styled.div`
 
 const CommentList = ({ children, onMoreClick }) => (
   <CommentListWrapper>
+    <Divider />
+    <Margin size={15} />
+
     {children}
 
     <MoreButton onClick={onMoreClick}>
       <MdKeyboardArrowDown />
     </MoreButton>
+    <Divider />
   </CommentListWrapper>
 );
 
