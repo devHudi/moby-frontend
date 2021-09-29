@@ -11,7 +11,7 @@ const Gradient = styled.div`
 
 const StyledFlex = styled(Flex)`
   margin: 0 auto;
-  width: 280px;
+  width: 233px;
 `;
 
 const Logo = styled.img``;
@@ -22,10 +22,11 @@ const ButtonWrapper = styled(Flex)`
 
 const FindAccount = styled.div`
   color: #ffffff;
+  font-size: 14px;
 `;
 
 const Login = () => (
-  <>
+  <IonPage>
     <Gradient>
       <StyledFlex justify="center" align="center" direction="column" fullHeight>
         <Logo src={logoImage} />
@@ -39,10 +40,10 @@ const Login = () => (
 
         <ButtonWrapper>
           <LoginButton>LOGIN</LoginButton>
-          <Margin />
+          <Margin size={30} />
           <LoginButton>JOIN</LoginButton>
         </ButtonWrapper>
-        <Margin size="15" />
+        <Margin size={15} />
 
         <CheckBox> 로그인 상태 유지</CheckBox>
         <Margin size="150" />
@@ -50,7 +51,7 @@ const Login = () => (
         <FindAccount>아이디 / 비밀번호 찾기 {'>'}</FindAccount>
       </StyledFlex>
     </Gradient>
-  </>
+  </IonPage>
 );
 
 export default Login;
