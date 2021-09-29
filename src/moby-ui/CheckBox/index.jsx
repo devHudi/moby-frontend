@@ -5,6 +5,7 @@ import { Flex } from '..';
 
 const StyledText = styled.div`
   color: #ffffff;
+  font-size: 11px;
 `;
 
 const Box = styled.div`
