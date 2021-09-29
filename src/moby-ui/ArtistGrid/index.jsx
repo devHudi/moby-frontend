@@ -2,8 +2,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const ArtistWrapper = styled.div`
-  margin-bottom: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex-basis: 105px;
+  margin-bottom: 13px;
+
+  &:nth-last-child(1),
+  &:nth-last-child(2),
+  &:nth-last-child(3) {
+    margin: 0;
+  }
 `;
 
 const ArtistThumb = styled.div`
@@ -43,7 +52,7 @@ Artist.defaultProps = {
 
 const ArtistGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 `;
 ArtistGrid.Artist = Artist;
 
