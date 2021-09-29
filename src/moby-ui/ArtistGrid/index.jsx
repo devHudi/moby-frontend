@@ -42,11 +42,8 @@ Artist.defaultProps = {
 };
 
 const ArtistGrid = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 ArtistGrid.Artist = Artist;
 
