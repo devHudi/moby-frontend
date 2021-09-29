@@ -3,13 +3,17 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
-import { Flex, TextField, Margin } from 'moby-ui';
+import { Flex, Margin } from 'moby-ui';
 
 const CommentWrapper = styled.div`
   position: relative;
   display: flex;
-  flex-direction: column;
-  margin-bottom: 25px;
+  align-items: center;
+  margin-bottom: 15px;
+
+  &:nth-last-child(2) {
+    margin: 0;
+  }
 `;
 
 const CommentImageWrapper = styled.div`
@@ -18,7 +22,7 @@ const CommentImageWrapper = styled.div`
 `;
 
 const CommentContentWrapper = styled.div`
-  flex-shrink: 1;
+  flex-grow: 1;
   margin-left: 10px;
   align-items: center;
 `;
@@ -37,7 +41,7 @@ const CommentName = styled.div`
 `;
 
 const CommentDate = styled.div`
-  margin-top: -2px;
+  margin-top: -3px;
   margin-left: 10px;
   font-size: 9px;
   color: #888888;
@@ -58,40 +62,26 @@ const MoreButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  height: 30px;
+  height: 25px;
 `;
 
-const Comment = ({
-  image,
-  name,
-  content,
-  date,
-  onReportClick,
-  onMoreClick,
-}) => (
+const Comment = ({ image, name, content, date, onReportClick }) => (
   <CommentWrapper>
-    <Flex align="center">
-      <CommentImageWrapper>
-        <UserProfile image={image} />
-      </CommentImageWrapper>
-      <CommentContentWrapper>
-        <Flex>
-          <Flex align="center">
-            <CommentName>{name}</CommentName>
-            <CommentDate>{dayjs(date).format('YYYY.MM.DD')}</CommentDate>
-          </Flex>
-
-          <CommentReport onClick={onReportClick}> 신고 </CommentReport>
+    <CommentImageWrapper>
+      <UserProfile image={image} />
+    </CommentImageWrapper>
+    <CommentContentWrapper>
+      <Flex>
+        <Flex align="center">
+          <CommentName>{name}</CommentName>
+          <CommentDate>{dayjs(date).format('YYYY.MM.DD')}</CommentDate>
         </Flex>
-        <Margin size={5} />
-        <CommentContent>{content}</CommentContent>
-      </CommentContentWrapper>
-    </Flex>
 
-    <MoreButton onClick={onMoreClick}>
-      <MdKeyboardArrowDown />
-    </MoreButton>
+        <CommentReport onClick={onReportClick}> 신고 </CommentReport>
+      </Flex>
+      <Margin size={5} />
+      <CommentContent>{content}</CommentContent>
+    </CommentContentWrapper>
   </CommentWrapper>
 );
 
@@ -101,7 +91,6 @@ Comment.propTypes = {
   content: PropTypes.string,
   date: PropTypes.objectOf(Date),
   onReportClick: PropTypes.func,
-  onMoreClick: PropTypes.func,
 };
 
 Comment.defaultProps = {
@@ -110,29 +99,33 @@ Comment.defaultProps = {
   content: '',
   date: new Date(),
   onReportClick: () => console.log('Report'),
-  onMoreClick: () => console.log('Load More'),
 };
 
-const CommentListWrapper = styled.div``;
+const CommentListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-const CommentList = ({ placeholder, children }) => (
+const CommentList = ({ children, onMoreClick }) => (
   <CommentListWrapper>
-    <TextField placeholder={placeholder} />
-    <Margin size={25} />
     {children}
+
+    <MoreButton onClick={onMoreClick}>
+      <MdKeyboardArrowDown />
+    </MoreButton>
   </CommentListWrapper>
 );
 
 CommentList.Comment = Comment;
 
 CommentList.propTypes = {
-  placeholder: PropTypes.string,
   children: PropTypes.node,
+  onMoreClick: PropTypes.func,
 };
 
 CommentList.defaultProps = {
-  placeholder: '',
   children: null,
+  onMoreClick: () => console.log('Load More'),
 };
 
 export default CommentList;
