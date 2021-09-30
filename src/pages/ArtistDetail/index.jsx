@@ -11,6 +11,7 @@ import {
   Flex,
   Typography,
   TextField,
+  Image,
   CommentList,
   AltHeader,
   Navigation,
@@ -51,13 +52,6 @@ const dummyComments = Array.from(Array(19)).map((u, i) => ({
   date: new Date(),
 }));
 
-const Thumb = styled.div`
-  height: 237px;
-  background-image: url(${(props) => props.image});
-  background-size: cover;
-  background-position: center center;
-`;
-
 const ArtistDetail = () => {
   const history = useHistory();
 
@@ -66,7 +60,7 @@ const ArtistDetail = () => {
       <IonContent>
         <AltHeader title="BTS" onBackClick={() => history.goBack()} />
 
-        <Thumb image="http://placehold.it/300x300" />
+        <Image height={237} image="http://placehold.it/300x300" />
 
         <Header
           agency="HYBE Entertainment"
