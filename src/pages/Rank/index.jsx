@@ -48,6 +48,7 @@ const Rank = () => {
               sales={item.sales}
               likes={item.likes}
               clicks={item.clicks}
+              defaultOpen={item.rank < 4}
             />
           ))}
         </Padding>
