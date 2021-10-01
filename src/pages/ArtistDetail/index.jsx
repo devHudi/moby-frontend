@@ -22,21 +22,21 @@ import Header from './components/Header';
 
 const dummyItems = [
   {
-    image: 'http://placehold.it/300x300',
+    image: 'https://picsum.photos/300/300',
     name: 'test',
     type: 'official',
     price: 30000,
     onHeartClick: () => {},
   },
   {
-    image: 'http://placehold.it/300x300',
+    image: 'https://picsum.photos/300/300',
     name: 'test',
     type: 'community',
     price: 30000,
     onHeartClick: () => {},
   },
   {
-    image: 'http://placehold.it/300x300',
+    image: 'https://picsum.photos/300/300',
     name: 'test',
     type: 'official',
     price: 30000,
@@ -59,7 +59,7 @@ const ArtistDetail = () => {
       <IonContent>
         <AltHeader title="BTS" onBackClick={() => history.goBack()} />
 
-        <Image height={237} image="http://placehold.it/300x300" />
+        <Image height={237} image="https://picsum.photos/300/300" />
 
         <Header
           agency="HYBE Entertainment"

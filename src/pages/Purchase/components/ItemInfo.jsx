@@ -14,7 +14,7 @@ const ItemImage = styled(Image)`
 
 const ItemInfo = ({ type, name, quantity, price }) => (
   <Flex>
-    <ItemImage image="http://placehold.it/300x300" />
+    <ItemImage image="https://picsum.photos/300/300" />
 
     <Flex direction="column">
       <Typography size={10} color="#444444">

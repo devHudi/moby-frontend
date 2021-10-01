@@ -10,7 +10,7 @@ const dummyRanks = Array.from(Array(10)).map((item, i) => ({
   name: `상품 ${i + 1}`,
   status: 2,
   isNew: true,
-  image: 'http://placehold.it/300x300',
+  image: 'https://picsum.photos/300/300',
   sales: 10912342,
   likes: 12341234,
   clicks: 2394829,

@@ -32,7 +32,7 @@ const Number = styled.div`
 const Profile = ({ name, email, holding, balance }) => (
   <Wrapper align="center">
     <Flex align="center">
-      <ProfileImage image="http://placehold.it/300x300" />
+      <ProfileImage image="https://picsum.photos/300/300" />
       <Flex direction="column">
         <Typography size={15} weight="bold" color="#ffffff">
           {name}

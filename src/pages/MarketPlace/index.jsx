@@ -17,9 +17,9 @@ import {
 } from 'moby-ui';
 
 const dummyImageSlides = [
-  'http://placehold.it/300x300',
-  'http://placehold.it/300x300',
-  'http://placehold.it/300x300',
+  'https://picsum.photos/300/300',
+  'https://picsum.photos/300/300',
+  'https://picsum.photos/300/300',
 ];
 
 const dummyRank = [

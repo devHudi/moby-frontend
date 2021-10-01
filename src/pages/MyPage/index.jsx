@@ -18,21 +18,21 @@ import Profile from './components/Profile';
 
 const dummyItems = [
   {
-    image: 'http://placehold.it/300x300',
+    image: 'https://picsum.photos/300/300',
     name: 'test',
     type: 'official',
     price: 30000,
     onHeartClick: () => {},
   },
   {
-    image: 'http://placehold.it/300x300',
+    image: 'https://picsum.photos/300/300',
     name: 'test',
     type: 'community',
     price: 30000,
     onHeartClick: () => {},
   },
   {
-    image: 'http://placehold.it/300x300',
+    image: 'https://picsum.photos/300/300',
     name: 'test',
     type: 'official',
     price: 30000,
