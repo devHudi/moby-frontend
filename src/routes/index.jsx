@@ -9,6 +9,7 @@ import {
   ArtistDetail,
   ItemDetail,
   Purchase,
+  PurchaseSuccess,
 } from 'pages';
 
 const Router = () => (
@@ -31,6 +32,9 @@ const Router = () => (
       </Route>
       <Route exact path="/purchase">
         <Purchase />
+      </Route>
+      <Route exact path="/purchase-success/:id">
+        <PurchaseSuccess />
       </Route>
     </IonRouterOutlet>
   </IonReactRouter>
