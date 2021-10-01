@@ -12,6 +12,7 @@ import {
   PurchaseSuccess,
   MyWallet,
   MyPage,
+  Rank,
 } from 'pages';
 
 const Router = () => (
@@ -43,6 +44,9 @@ const Router = () => (
       </Route>
       <Route exact path="/my-page">
         <MyPage />
+      </Route>
+      <Route exact path="/rank">
+        <Rank />
       </Route>
     </IonRouterOutlet>
   </IonReactRouter>
