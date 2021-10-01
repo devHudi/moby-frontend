@@ -10,6 +10,7 @@ import {
   ItemDetail,
   Purchase,
   PurchaseSuccess,
+  MyWallet,
   MyPage,
 } from 'pages';
 
@@ -36,6 +37,9 @@ const Router = () => (
       </Route>
       <Route exact path="/purchase-success/:id">
         <PurchaseSuccess />
+      </Route>
+      <Route exact path="/my-wallet">
+        <MyWallet />
       </Route>
       <Route exact path="/my-page">
         <MyPage />
