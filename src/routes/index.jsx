@@ -2,7 +2,7 @@ import { Route } from 'react-router-dom';
 import { IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
-import { Login, SignUp, MarketPlace, ArtistDetail } from 'pages';
+import { Login, SignUp, MarketPlace, ArtistDetail, ItemDetail } from 'pages';
 
 const Router = () => (
   <IonReactRouter>
@@ -18,6 +18,9 @@ const Router = () => (
       </Route>
       <Route exact path="/artists/:artistId">
         <ArtistDetail />
+      </Route>
+      <Route exact path="/items/:itemId">
+        <ItemDetail />
       </Route>
     </IonRouterOutlet>
   </IonReactRouter>
