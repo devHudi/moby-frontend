@@ -1,16 +1,7 @@
-import styled from 'styled-components';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent } from '@ionic/react';
-import {
-  AltHeader,
-  Divider,
-  Padding,
-  Margin,
-  Typography,
-  Navigation,
-  Flex,
-} from 'moby-ui';
+import { AltHeader, Divider, Padding, Margin, Navigation } from 'moby-ui';
 
 import Item from './components/Item';
 
