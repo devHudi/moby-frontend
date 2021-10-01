@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import { useIonToast } from '@ionic/react';
 import styled from 'styled-components';
 
 import marketPlaceImage from './images/market-place.png';
@@ -38,6 +39,14 @@ const MenuText = styled.div`
 
 const Navigation = () => {
   const history = useHistory();
+  const [present, dismiss] = useIonToast();
+
+  const onToast = () => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      message: '해당 기능은 추후 제공될 예정입니다.',
+    });
+  };
 
   return (
     <Wrapper>
@@ -49,13 +58,13 @@ const Navigation = () => {
         <MenuIcon src={myWalletImage} />
         <MenuText>MY WALLET</MenuText>
       </Menu>
-      <Menu onClick={() => history.push('/nfc')}>
+      <Menu onClick={onToast}>
         <MenuIcon src={nfcImage} />
         <MenuText>NFC</MenuText>
       </Menu>
-      <Menu onClick={() => history.push('/setting')}>
+      <Menu onClick={() => history.push('/my-page')}>
         <MenuIcon src={settingImage} />
-        <MenuText>SETTING</MenuText>
+        <MenuText>MY PAGE</MenuText>
       </Menu>
     </Wrapper>
   );
