@@ -15,6 +15,15 @@ $ yarn
 $ yarn start
 ```
 
+## Commands
+
+```
+$ yarn check:lint
+$ yarn fix:lint
+$ yarn check:prettier
+$ yarn fix:prettier
+```
+
 ## Available Routes
 
 - 로그인 : `/login`
