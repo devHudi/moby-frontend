@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Typography, Margin, Divider, Image, Flex } from 'moby-ui';
+import { Typography, Margin, Image, Flex } from 'moby-ui';
 
 const Wrapper = styled(Flex)`
   padding: 28px 26px;

@@ -58,12 +58,14 @@ Header.propTypes = {
   icon: PropTypes.node,
   name: PropTypes.string,
   charge: PropTypes.bool,
+  activated: PropTypes.bool,
 };
 
 Header.defaultProps = {
   icon: null,
   name: null,
   charge: false,
+  activated: false,
 };
 
 const Wrapper = styled.div`
@@ -132,6 +134,7 @@ const Method = ({ icon, name, activated, mobyPay, balance, onClick }) => {
 };
 
 Method.propTypes = {
+  icon: PropTypes.node,
   mobyPay: PropTypes.bool,
   name: PropTypes.string,
   activated: PropTypes.bool,
@@ -140,6 +143,7 @@ Method.propTypes = {
 };
 
 Method.defaultProps = {
+  icon: null,
   mobyPay: false,
   name: null,
   activated: false,

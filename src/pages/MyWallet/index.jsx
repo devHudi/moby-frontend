@@ -1,17 +1,6 @@
 import { useState } from 'react';
-import _ from 'lodash';
 import { IonPage, IonContent } from '@ionic/react';
-import {
-  Header,
-  Divider,
-  AltTab,
-  Image,
-  Typography,
-  Margin,
-  Padding,
-  Flex,
-  Navigation,
-} from 'moby-ui';
+import { Header, Divider, AltTab, Margin, Padding, Navigation } from 'moby-ui';
 
 import NftTab from './components/NftTab';
 import PayTab from './components/PayTab';

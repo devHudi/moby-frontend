@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Padding, Typography, Divider, Margin, Flex, Image } from 'moby-ui';
+import { Typography, Margin, Flex, Image } from 'moby-ui';
 import { ITEM_TYPES } from 'constants/index.js';
 
 const ItemImage = styled(Image)`

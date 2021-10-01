@@ -1,16 +1,7 @@
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import {
-  Header,
-  Divider,
-  AltTab,
-  Image,
-  Typography,
-  Margin,
-  Padding,
-  Flex,
-} from 'moby-ui';
+import { Image, Typography, Margin, Flex } from 'moby-ui';
 
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
@@ -35,7 +26,7 @@ const Item = ({
   holdingPercentage,
   onClick,
 }) => (
-  <Flex align="center">
+  <Flex align="center" onClick={onClick}>
     <ItemImage image={image} />
     <RightWrapper direction="column">
       <Typography size={13} weight="bold">
