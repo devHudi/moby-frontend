@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 
@@ -19,7 +18,6 @@ const data = {
       fill: true,
       backgroundColor: 'rgba(60, 34, 152, .15)',
       borderColor: '#3C2298',
-      // pointBackgroundColor: 'transparent',
     },
   ],
 };
@@ -51,20 +49,16 @@ const ChartWrapper = styled.div`
   border: 1px solid #e8e8e8;
 `;
 
-const Chart = () => {
-  const [wrapperWidth, setWrapperWidth] = useState(0);
+const Chart = () => (
+  <div>
+    <TitleText>최근 거래 (₩)</TitleText>
 
-  return (
-    <div>
-      <TitleText>최근 거래 (₩)</TitleText>
+    <PeriodTab />
 
-      <PeriodTab />
-
-      <ChartWrapper>
-        <Line data={data} options={options} />
-      </ChartWrapper>
-    </div>
-  );
-};
+    <ChartWrapper>
+      <Line data={data} options={options} />
+    </ChartWrapper>
+  </div>
+);
 
 export default Chart;

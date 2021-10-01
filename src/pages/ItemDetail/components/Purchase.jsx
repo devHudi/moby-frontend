@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -14,24 +13,6 @@ const Wrapper = styled.div`
   z-index: 100;
 `;
 
-const Menu = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  flex-basis: 25%;
-`;
-
-const MenuText = styled.div`
-  font-size: 8px;
-  letter-spacing: -1px;
-  color: #ffffff;
-`;
-
-const Navigation = () => {
-  const history = useHistory();
-
-  return <Wrapper>Empty Yet</Wrapper>;
-};
+const Navigation = () => <Wrapper>Empty Yet</Wrapper>;
 
 export default Navigation;

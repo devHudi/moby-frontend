@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent } from '@ionic/react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
