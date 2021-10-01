@@ -1,5 +1,7 @@
 # Moby Frontend
 
+https://gifted-khorana-7ea737.netlify.app/
+
 ## Tech Stacks
 
 - React
