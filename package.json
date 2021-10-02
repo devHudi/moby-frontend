@@ -52,7 +52,7 @@
     "eject": "react-scripts eject",
     "type-check": "tsc",
     "check:lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-    "check:pretty": "prettier -c \"src/**/*.{jsx,js,ts,tsx}\"",
+    "check:prettier": "prettier -c \"src/**/*.{jsx,js,ts,tsx}\"",
     "fix:lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "fix:prettier": "prettier -c --write \"src/**/*.{jsx,js,ts,tsx}\""
   },
