@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { IonPage } from '@ionic/react';
 import { Flex, LoginTextField, LoginButton, Margin, CheckBox } from 'moby-ui';
@@ -25,33 +26,50 @@ const FindAccount = styled.div`
   font-size: 14px;
 `;
 
-const Login = () => (
-  <IonPage>
-    <Gradient>
-      <StyledFlex justify="center" align="center" direction="column" fullHeight>
-        <Logo src={logoImage} />
-        <Margin size={20} />
+const Login = () => {
+  const history = useHistory();
 
-        <LoginTextField placeholder="ID" />
-        <Margin size={15} />
+  const onLogin = () => {
+    history.push('/');
+  };
 
-        <LoginTextField placeholder="Password" />
-        <Margin size={20} />
+  const onJoin = () => {
+    history.push('/sign-up');
+  };
 
-        <ButtonWrapper>
-          <LoginButton>LOGIN</LoginButton>
-          <Margin size={30} />
-          <LoginButton>JOIN</LoginButton>
-        </ButtonWrapper>
-        <Margin size={15} />
+  return (
+    <IonPage>
+      <Gradient>
+        <StyledFlex
+          justify="center"
+          align="center"
+          direction="column"
+          fullHeight
+        >
+          <Logo src={logoImage} />
+          <Margin size={20} />
 
-        <CheckBox> 로그인 상태 유지</CheckBox>
-        <Margin size="150" />
+          <LoginTextField placeholder="ID" />
+          <Margin size={15} />
 
-        <FindAccount>아이디 / 비밀번호 찾기 {'>'}</FindAccount>
-      </StyledFlex>
-    </Gradient>
-  </IonPage>
-);
+          <LoginTextField placeholder="Password" />
+          <Margin size={20} />
+
+          <ButtonWrapper>
+            <LoginButton onClick={onLogin}>LOGIN</LoginButton>
+            <Margin size={30} />
+            <LoginButton onClick={onJoin}>JOIN</LoginButton>
+          </ButtonWrapper>
+          <Margin size={15} />
+
+          <CheckBox> 로그인 상태 유지</CheckBox>
+          <Margin size="150" />
+
+          <FindAccount>아이디 / 비밀번호 찾기 {'>'}</FindAccount>
+        </StyledFlex>
+      </Gradient>
+    </IonPage>
+  );
+};
 
 export default Login;
