@@ -36,6 +36,7 @@ const ItemDetail = () => {
           {tab === 0 && <ChartTab />}
           {tab === 1 && <DetailTab images={DUMMY_IMAGES} />}
         </Padding>
+
         <Purchase />
         <Margin size={90} />
       </IonContent>
