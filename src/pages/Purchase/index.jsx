@@ -22,6 +22,7 @@ const Purchase = () => {
   const onToast = () => {
     present({
       buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
       message: '해당 결제 기능은 추후 제공될 예정입니다.',
     });
   };

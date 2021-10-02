@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, useIonToast } from '@ionic/react';
 import {
   Header,
   Typography,
@@ -19,6 +19,15 @@ import Profile from './components/Profile';
 
 const MyPage = () => {
   const history = useHistory();
+  const [present, dismiss] = useIonToast();
+
+  const onToast = () => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '해당 기능은 추후 제공될 예정입니다.',
+    });
+  };
 
   const dummyItems = [
     {
@@ -46,6 +55,11 @@ const MyPage = () => {
       onClick: () => history.push('/items/dummyId'),
     },
   ];
+
+  const onLogout = () => {
+    // 로그아웃 추가 필요
+    onToast();
+  };
 
   return (
     <IonPage>
@@ -93,28 +107,28 @@ const MyPage = () => {
           <Divider />
 
           <Padding padding={5}>
-            <Typography size={13}>
+            <Typography size={13} onClick={onToast}>
               <Padding padding={10} left={0} right={0}>
                 <Flex justify="space-between" align="center">
                   알림 설정 <MdKeyboardArrowRight />
                 </Flex>
               </Padding>
             </Typography>
-            <Typography size={13}>
+            <Typography size={13} onClick={onToast}>
               <Padding padding={10} left={0} right={0}>
                 <Flex justify="space-between" align="center">
                   암호 잠금 <MdKeyboardArrowRight />
                 </Flex>
               </Padding>
             </Typography>
-            <Typography size={13}>
+            <Typography size={13} onClick={onToast}>
               <Padding padding={10} left={0} right={0}>
                 <Flex justify="space-between" align="center">
                   캐시 삭제 <MdKeyboardArrowRight />
                 </Flex>
               </Padding>
             </Typography>
-            <Typography size={13}>
+            <Typography size={13} onClick={onLogout}>
               <Padding padding={10} left={0} right={0}>
                 <Flex justify="space-between" align="center">
                   로그 아웃 <MdKeyboardArrowRight />
@@ -127,7 +141,7 @@ const MyPage = () => {
 
           <Padding padding={5}>
             <Padding padding={10} left={0} right={0}>
-              <Typography size={13}>
+              <Typography size={13} onClick={onToast}>
                 <Flex justify="space-between" align="center">
                   개인정보 처리 방침
                 </Flex>
