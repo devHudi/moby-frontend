@@ -21,9 +21,18 @@ const MarketPlace = () => {
   const history = useHistory();
 
   const dummyImageSlides = [
-    'https://picsum.photos/300/300',
-    'https://picsum.photos/300/300',
-    'https://picsum.photos/300/300',
+    {
+      image: 'https://picsum.photos/300/300',
+      onClick: () => history.push('/artists/dummy'),
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      onClick: () => history.push('/artists/dummy'),
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      onClick: () => history.push('/artists/dummy'),
+    },
   ];
 
   const dummyRank = [
