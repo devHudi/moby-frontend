@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { useIonToast } from '@ionic/react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
 import { Flex, Margin, Divider } from 'moby-ui';
@@ -65,32 +66,43 @@ const MoreButton = styled.div`
   height: 25px;
 `;
 
-const Comment = ({ image, name, content, date, onReportClick }) => (
-  <CommentWrapper>
-    <CommentImageWrapper>
-      <UserProfile image={image} />
-    </CommentImageWrapper>
-    <CommentContentWrapper>
-      <Flex>
-        <Flex align="center">
-          <CommentName>{name}</CommentName>
-          <CommentDate>{dayjs(date).format('YYYY.MM.DD')}</CommentDate>
-        </Flex>
+const Comment = ({ image, name, content, date }) => {
+  const [present, dismiss] = useIonToast();
 
-        <CommentReport onClick={onReportClick}> 신고 </CommentReport>
-      </Flex>
-      <Margin size={5} />
-      <CommentContent>{content}</CommentContent>
-    </CommentContentWrapper>
-  </CommentWrapper>
-);
+  const onToast = () => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '해당 기능은 추후 제공될 예정입니다.',
+    });
+  };
+
+  return (
+    <CommentWrapper>
+      <CommentImageWrapper>
+        <UserProfile image={image} />
+      </CommentImageWrapper>
+      <CommentContentWrapper>
+        <Flex>
+          <Flex align="center">
+            <CommentName>{name}</CommentName>
+            <CommentDate>{dayjs(date).format('YYYY.MM.DD')}</CommentDate>
+          </Flex>
+
+          <CommentReport onClick={onToast}> 신고 </CommentReport>
+        </Flex>
+        <Margin size={5} />
+        <CommentContent>{content}</CommentContent>
+      </CommentContentWrapper>
+    </CommentWrapper>
+  );
+};
 
 Comment.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
   content: PropTypes.string,
   date: PropTypes.objectOf(Date),
-  onReportClick: PropTypes.func,
 };
 
 Comment.defaultProps = {
@@ -98,7 +110,6 @@ Comment.defaultProps = {
   name: '',
   content: '',
   date: new Date(),
-  onReportClick: () => console.log('Report'),
 };
 
 const CommentListWrapper = styled.div`
