@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Typography } from 'moby-ui';
 
@@ -15,16 +16,24 @@ const Wrapper = styled.div`
   z-index: 100;
 `;
 
-const Price = ({ price }) => (
-  <Wrapper>
-    <Typography size={15} color="#ffffff">
-      결제금액
-    </Typography>
-    <Typography size={24} weight="bold" color="#ffffff">
-      {price.toLocaleString()} 원 | 결제
-    </Typography>
-  </Wrapper>
-);
+const Price = ({ price }) => {
+  const history = useHistory();
+
+  const onPurchase = () => {
+    history.push('/purchase-success/dummyId');
+  };
+
+  return (
+    <Wrapper>
+      <Typography size={15} color="#ffffff">
+        결제금액
+      </Typography>
+      <Typography size={24} weight="bold" color="#ffffff">
+        {price.toLocaleString()} 원 | <span onClick={onPurchase}>결제</span>
+      </Typography>
+    </Wrapper>
+  );
+};
 
 Price.propTypes = {
   price: PropTypes.number,
