@@ -28,6 +28,10 @@ const Logo = styled.img`
 const SignUp = () => {
   const history = useHistory();
 
+  const onSignUp = () => {
+    history.push('/login');
+  };
+
   return (
     <IonPage>
       <Background>
@@ -64,7 +68,9 @@ const SignUp = () => {
             <Margin size={50} />
 
             <Flex justify="flex-end">
-              <Button width={78}>JOIN</Button>
+              <Button width={78} onClick={onSignUp}>
+                JOIN
+              </Button>
             </Flex>
           </Flex>
         </Padding>

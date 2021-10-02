@@ -30,8 +30,8 @@ const ArtistText = styled.div`
   font-size: 11px;
 `;
 
-const Artist = ({ image, text }) => (
-  <ArtistWrapper>
+const Artist = ({ image, text, onClick }) => (
+  <ArtistWrapper onClick={onClick}>
     <ArtistThumb image={image} />
     <ArtistText>{text}</ArtistText>
   </ArtistWrapper>
@@ -43,11 +43,13 @@ Artist.propTypes = {
     PropTypes.shape({ uri: PropTypes.string }),
   ]),
   text: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 Artist.defaultProps = {
   image: null,
   text: '',
+  onClick: () => console.log('Item Click'),
 };
 
 const ArtistGrid = styled.div`

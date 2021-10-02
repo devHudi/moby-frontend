@@ -21,9 +21,18 @@ const MarketPlace = () => {
   const history = useHistory();
 
   const dummyImageSlides = [
-    'https://picsum.photos/300/300',
-    'https://picsum.photos/300/300',
-    'https://picsum.photos/300/300',
+    {
+      image: 'https://picsum.photos/300/300',
+      onClick: () => history.push('/artists/dummy'),
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      onClick: () => history.push('/artists/dummy'),
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      onClick: () => history.push('/artists/dummy'),
+    },
   ];
 
   const dummyRank = [
@@ -58,6 +67,7 @@ const MarketPlace = () => {
   const dummyArtists = Array.from(Array(19)).map((u, i) => ({
     image: `https://randomuser.me/api/portraits/men/${i}.jpg`,
     text: `ARIST ${i}`,
+    onClick: () => history.push(`/artists/${i}`),
   }));
 
   const dummyComments = Array.from(Array(19)).map((u, i) => ({
@@ -92,7 +102,11 @@ const MarketPlace = () => {
 
           <ArtistGrid>
             {_.map(dummyArtists, (artist) => (
-              <ArtistGrid.Artist image={artist.image} text={artist.text} />
+              <ArtistGrid.Artist
+                image={artist.image}
+                text={artist.text}
+                onClick={artist.onClick}
+              />
             ))}
           </ArtistGrid>
 

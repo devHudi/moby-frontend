@@ -1,5 +1,6 @@
+import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, useIonToast } from '@ionic/react';
 import {
   Header,
   Typography,
@@ -16,122 +17,144 @@ import { MdKeyboardArrowRight } from 'react-icons/md';
 
 import Profile from './components/Profile';
 
-const dummyItems = [
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'official',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'community',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'official',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-];
+const MyPage = () => {
+  const history = useHistory();
+  const [present, dismiss] = useIonToast();
 
-const MyPage = () => (
-  <IonPage>
-    <IonContent>
-      <Header title="My Page" />
-      <Margin size={7} />
+  const onToast = () => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '해당 기능은 추후 제공될 예정입니다.',
+    });
+  };
 
-      <Profile
-        name="슈가님사랑해용"
-        email="sample@email.com"
-        holding={52}
-        balance={520800}
-      />
+  const dummyItems = [
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'official',
+      price: 30000,
+      onHeartClick: () => {},
+      onClick: () => history.push('/items/dummyId'),
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'community',
+      price: 30000,
+      onHeartClick: () => {},
+      onClick: () => history.push('/items/dummyId'),
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'official',
+      price: 30000,
+      onHeartClick: () => {},
+      onClick: () => history.push('/items/dummyId'),
+    },
+  ];
 
-      <Padding padding={26} top={20} bottom={13}>
-        <Typography size={14} weight="bold">
-          내가 좋아하는 NFT
-        </Typography>
+  const onLogout = () => {
+    // 로그아웃 추가 필요
+    onToast();
+  };
 
-        <Margin size={12} />
+  return (
+    <IonPage>
+      <IonContent>
+        <Header title="My Page" />
+        <Margin size={7} />
 
-        <HScroll>
-          {_.map(dummyItems, (item) => (
-            <ItemCard
-              image={item.image}
-              name={item.name}
-              type={item.type}
-              price={item.price}
-              onHeartClick={item.onHeartClick}
-            />
-          ))}
-        </HScroll>
-      </Padding>
+        <Profile
+          name="슈가님사랑해용"
+          email="sample@email.com"
+          holding={52}
+          balance={520800}
+        />
 
-      <Divider />
-
-      <Padding padding={18}>
-        <Padding padding={5} bottom={13}>
+        <Padding padding={26} top={20} bottom={13}>
           <Typography size={14} weight="bold">
-            앱 설정
+            내가 좋아하는 NFT
           </Typography>
+
+          <Margin size={12} />
+
+          <HScroll>
+            {_.map(dummyItems, (item) => (
+              <ItemCard
+                image={item.image}
+                name={item.name}
+                type={item.type}
+                price={item.price}
+                onHeartClick={item.onHeartClick}
+                onClick={item.onClick}
+              />
+            ))}
+          </HScroll>
         </Padding>
 
         <Divider />
 
-        <Padding padding={5}>
-          <Typography size={13}>
-            <Padding padding={10} left={0} right={0}>
-              <Flex justify="space-between" align="center">
-                알림 설정 <MdKeyboardArrowRight />
-              </Flex>
-            </Padding>
-          </Typography>
-          <Typography size={13}>
-            <Padding padding={10} left={0} right={0}>
-              <Flex justify="space-between" align="center">
-                암호 잠금 <MdKeyboardArrowRight />
-              </Flex>
-            </Padding>
-          </Typography>
-          <Typography size={13}>
-            <Padding padding={10} left={0} right={0}>
-              <Flex justify="space-between" align="center">
-                캐시 삭제 <MdKeyboardArrowRight />
-              </Flex>
-            </Padding>
-          </Typography>
-          <Typography size={13}>
-            <Padding padding={10} left={0} right={0}>
-              <Flex justify="space-between" align="center">
-                로그 아웃 <MdKeyboardArrowRight />
-              </Flex>
-            </Padding>
-          </Typography>
-        </Padding>
-
-        <Divider />
-
-        <Padding padding={5}>
-          <Padding padding={10} left={0} right={0}>
-            <Typography size={13}>
-              <Flex justify="space-between" align="center">
-                개인정보 처리 방침
-              </Flex>
+        <Padding padding={18}>
+          <Padding padding={5} bottom={13}>
+            <Typography size={14} weight="bold">
+              앱 설정
             </Typography>
           </Padding>
-        </Padding>
-      </Padding>
 
-      <Navigation />
-      <Margin size={90} />
-    </IonContent>
-  </IonPage>
-);
+          <Divider />
+
+          <Padding padding={5}>
+            <Typography size={13} onClick={onToast}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex justify="space-between" align="center">
+                  알림 설정 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
+            <Typography size={13} onClick={onToast}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex justify="space-between" align="center">
+                  암호 잠금 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
+            <Typography size={13} onClick={onToast}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex justify="space-between" align="center">
+                  캐시 삭제 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
+            <Typography size={13} onClick={onLogout}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex justify="space-between" align="center">
+                  로그 아웃 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
+          </Padding>
+
+          <Divider />
+
+          <Padding padding={5}>
+            <Padding padding={10} left={0} right={0}>
+              <Typography size={13} onClick={onToast}>
+                <Flex justify="space-between" align="center">
+                  개인정보 처리 방침
+                </Flex>
+              </Typography>
+            </Padding>
+          </Padding>
+        </Padding>
+
+        <Navigation />
+        <Margin size={90} />
+      </IonContent>
+    </IonPage>
+  );
+};
 
 export default MyPage;

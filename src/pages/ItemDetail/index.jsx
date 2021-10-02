@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent } from '@ionic/react';
-import { Divider, Image, Padding, Margin, Tab } from 'moby-ui';
+import { Divider, Image, Padding, Margin, Tab, AltHeader } from 'moby-ui';
 
 import Header from './components/Header';
 import ChartTab from './components/ChartTab';
@@ -13,6 +14,7 @@ const DUMMY_IMAGES = [
 ];
 
 const ItemDetail = () => {
+  const history = useHistory();
   const [tab, setTab] = useState(0);
 
   const onTabChange = (i) => {
@@ -22,6 +24,12 @@ const ItemDetail = () => {
   return (
     <IonPage>
       <IonContent>
+        <AltHeader
+          title="BTS Butter Poster"
+          subtitle="Cooler Remix | Sweeter Remix"
+          onBackClick={() => history.goBack()}
+        />
+
         <Image
           height={237}
           image="https://www.idolsale.com/web/product/medium/201812/b922d46f9808c416145c7beec3be9e51.jpg"

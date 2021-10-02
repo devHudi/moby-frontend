@@ -1,32 +1,38 @@
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 
 import { Padding, Divider } from 'moby-ui';
 
 import Item from './Item';
 
-const NftTab = ({ items }) => (
-  <>
-    {_.map(items, (item, i) => (
-      <>
-        <Item
-          image={item.image}
-          name={item.name}
-          date={item.date}
-          buyPrice={item.price}
-          currentPrice={item.currentPrice}
-          holding={item.holding}
-          holdingPercentage={item.holdingPercentage}
-        />
-        {i < items.length - 1 && (
-          <Padding padding={21} left={0} right={0}>
-            <Divider />
-          </Padding>
-        )}
-      </>
-    ))}
-  </>
-);
+const NftTab = ({ items }) => {
+  const history = useHistory();
+
+  return (
+    <>
+      {_.map(items, (item, i) => (
+        <>
+          <Item
+            image={item.image}
+            name={item.name}
+            date={item.date}
+            buyPrice={item.price}
+            currentPrice={item.currentPrice}
+            holding={item.holding}
+            holdingPercentage={item.holdingPercentage}
+            onClick={() => history.push('/items/dummyId')}
+          />
+          {i < items.length - 1 && (
+            <Padding padding={21} left={0} right={0}>
+              <Divider />
+            </Padding>
+          )}
+        </>
+      ))}
+    </>
+  );
+};
 
 NftTab.propTypes = {
   items: PropTypes.arrayOf(

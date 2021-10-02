@@ -35,14 +35,19 @@ const ImageSlider = ({ images }) => (
   <Wrapper>
     <Slider {...settings}>
       {_.map(images, (image) => (
-        <Image image={image} />
+        <Image image={image.image} onClick={image.onClick} />
       ))}
     </Slider>
   </Wrapper>
 );
 
 ImageSlider.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string),
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string,
+      onClick: PropTypes.func,
+    }),
+  ),
 };
 
 ImageSlider.defaultProps = {
