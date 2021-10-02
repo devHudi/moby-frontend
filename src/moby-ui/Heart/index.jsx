@@ -12,9 +12,9 @@ const Wrapper = styled.div`
 const Heart = ({ defaultFilled, borderColor, size, onChange }) => {
   const [filled, setFilled] = useState(defaultFilled);
 
-  const onClick = () => {
+  const onClick = (e) => {
     if (onChange) {
-      onChange(!filled);
+      onChange(!filled, e);
       setFilled(!filled);
     }
   };

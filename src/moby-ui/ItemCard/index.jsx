@@ -43,30 +43,38 @@ const ItemPrice = styled.div`
   font-weight: bold;
 `;
 
-const ItemCard = ({ image, name, type, price, onHeartClick }) => (
-  <ItemWrapper>
-    <ItemImage image={image}>
-      <HeartWrapper>
-        <Heart onChange={onHeartClick} />
-      </HeartWrapper>
-    </ItemImage>
-    <Margin size={10} />
+const ItemCard = ({ image, name, type, price, onHeartClick, onClick }) => {
+  const handleHeartClick = (filled, e) => {
+    e.stopPropagation();
+    onHeartClick(filled);
+  };
 
-    <Flex justify="space-between" align="center">
-      <ItemName>{name}</ItemName>
-      <ItemType>| {ITEM_TYPES[type]}</ItemType>
-    </Flex>
-    <Margin size={5} />
+  return (
+    <ItemWrapper onClick={onClick}>
+      <ItemImage image={image}>
+        <HeartWrapper>
+          <Heart onChange={handleHeartClick} />
+        </HeartWrapper>
+      </ItemImage>
+      <Margin size={10} />
 
-    <ItemPrice>{price.toLocaleString()}원</ItemPrice>
-  </ItemWrapper>
-);
+      <Flex justify="space-between" align="center">
+        <ItemName>{name}</ItemName>
+        <ItemType>| {ITEM_TYPES[type]}</ItemType>
+      </Flex>
+      <Margin size={5} />
+
+      <ItemPrice>{price.toLocaleString()}원</ItemPrice>
+    </ItemWrapper>
+  );
+};
 
 ItemCard.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
   type: PropTypes.string,
+  onClick: PropTypes.func,
   onHeartClick: PropTypes.func,
 };
 
@@ -75,7 +83,8 @@ ItemCard.defaultProps = {
   name: '',
   price: 0,
   type: 'official',
-  onHeartClick: () => {},
+  onClick: () => console.log('ItemCard Click'),
+  onHeartClick: () => console.log('ItemCard Heart Click'),
 };
 
 export default ItemCard;
