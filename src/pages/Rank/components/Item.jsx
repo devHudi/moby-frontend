@@ -51,6 +51,13 @@ const Status = styled.div`
   color: #d8094e;
 `;
 
+const Arrow = styled.div`
+  display: flex;
+  align-items: center;
+  transform: rotate(${(props) => (props.open ? '180deg' : '0deg')});
+  transition: transform 0.3s;
+`;
+
 const New = styled.div`
   font-size: 6px;
   font-weight: bold;
@@ -95,9 +102,9 @@ const Item = ({
             </Status>
             {isNew && <New>NEW</New>}
           </Flex>
-          <div>
+          <Arrow open={open}>
             <MdKeyboardArrowDown />
-          </div>
+          </Arrow>
         </InformHeader>
 
         <Divider />
