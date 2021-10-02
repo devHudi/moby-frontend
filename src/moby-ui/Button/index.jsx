@@ -8,4 +8,5 @@ export default styled.button`
   color: #ffffff;
   font-size: 12px;
   border-radius: 99px;
+  opacity: ${(props) => (props.disabled ? 0.7 : 1)};
 `;
