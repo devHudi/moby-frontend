@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import { IonPage, IonContent } from '@ionic/react';
-import { Header, Divider, AltTab, Margin, Padding, Navigation } from 'moby-ui';
+import {
+  Header,
+  Divider,
+  Flex,
+  AltTab,
+  Margin,
+  Padding,
+  Navigation,
+  AltDropdown,
+} from 'moby-ui';
 
 import NftTab from './components/NftTab';
 import PayTab from './components/PayTab';
@@ -67,11 +76,13 @@ const MyWallet = () => {
       <IonContent>
         <Header title="My Wallet">
           <Margin size={10} />
-          <AltTab
-            tabs={['나의 NFT', '간편결제수단']}
-            onChange={(i) => setTab(i)}
-          />
-          <Margin size={3} />
+          <Flex justify="space-between">
+            <AltTab
+              tabs={['나의 NFT', '간편결제수단']}
+              onChange={(i) => setTab(i)}
+            />
+            {tab === 0 && <AltDropdown items={['구매순', '가격순']} />}
+          </Flex>
         </Header>
 
         {tab === 0 && (
