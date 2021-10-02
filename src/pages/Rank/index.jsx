@@ -40,6 +40,7 @@ const Rank = () => {
               likes={item.likes}
               clicks={item.clicks}
               defaultOpen={item.rank < 4}
+              onClick={() => history.push('/items/dummyId')}
             />
           ))}
         </Padding>

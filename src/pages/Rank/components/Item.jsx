@@ -80,6 +80,7 @@ const Item = ({
   likes,
   clicks,
   defaultOpen,
+  onClick,
 }) => {
   const [open, setOpen] = useState(defaultOpen);
 
@@ -112,7 +113,7 @@ const Item = ({
         <Margin size={13} />
 
         <Flex align="center">
-          <ItemImage image={image} />
+          <ItemImage image={image} onClick={onClick} />
           <Flex direction="column">
             <Flex align="center" justify="space-between">
               <Box width={48}>
@@ -172,6 +173,7 @@ Item.propTypes = {
   likes: PropTypes.number,
   clicks: PropTypes.number,
   defaultOpen: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 Item.defaultProps = {
@@ -184,6 +186,7 @@ Item.defaultProps = {
   likes: 0,
   clicks: 0,
   defaultOpen: false,
+  onClick: () => console.log('Rank Item Click'),
 };
 
 export default Item;
