@@ -1,45 +1,10 @@
+import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import styled from 'styled-components';
 
 import { Margin, Padding, ItemCard, Typography } from 'moby-ui';
 import Chart from './Chart';
 import Table from './Table';
-
-const dummyData = [
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-  { date: new Date(), quantity: 1, price: 10000 },
-];
-
-const dummyItems = [
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'official',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'community',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'official',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-];
 
 const Grid = styled.div`
   margin: 0 auto;
@@ -64,37 +29,82 @@ const GridItem = styled.div`
   }
 `;
 
-const ChartTab = () => (
-  <div>
-    <Chart />
+const ChartTab = () => {
+  const history = useHistory();
 
-    <Margin size={7} />
+  const dummyTableData = [
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+    { date: new Date(), quantity: 1, price: 10000 },
+  ];
 
-    <Table data={dummyData} />
+  const dummyItems = [
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'official',
+      price: 30000,
+      onClick: () => history.push('/items/dummyId1'),
+      onHeartClick: () => {},
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'community',
+      price: 30000,
+      onClick: () => history.push('/items/dummyId2'),
+      onHeartClick: () => {},
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'official',
+      price: 30000,
+      onClick: () => history.push('/items/dummyId3'),
+      onHeartClick: () => {},
+    },
+  ];
 
-    <Margin size={20} />
+  return (
+    <div>
+      <Chart />
 
-    <Padding padding={14} top={0}>
-      <Typography size={14} weight="bold">
-        추천 NFT
-      </Typography>
+      <Margin size={7} />
 
-      <Margin size={9} />
+      <Table data={dummyTableData} />
 
-      <Grid>
-        {_.map(dummyItems, (item) => (
-          <GridItem>
-            <ItemCard
-              image={item.image}
-              name={item.name}
-              type={item.type}
-              price={item.price}
-            />
-          </GridItem>
-        ))}
-      </Grid>
-    </Padding>
-  </div>
-);
+      <Margin size={20} />
+
+      <Padding padding={14} top={0}>
+        <Typography size={14} weight="bold">
+          추천 NFT
+        </Typography>
+
+        <Margin size={9} />
+
+        <Grid>
+          {_.map(dummyItems, (item) => (
+            <GridItem>
+              <ItemCard
+                image={item.image}
+                name={item.name}
+                type={item.type}
+                price={item.price}
+                onClick={item.onClick}
+                onHeartClick={item.onHeartClick}
+              />
+            </GridItem>
+          ))}
+        </Grid>
+      </Padding>
+    </div>
+  );
+};
 
 export default ChartTab;

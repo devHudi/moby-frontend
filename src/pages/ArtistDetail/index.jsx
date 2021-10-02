@@ -20,30 +20,6 @@ import {
 
 import Header from './components/Header';
 
-const dummyItems = [
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'official',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'community',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'test',
-    type: 'official',
-    price: 30000,
-    onHeartClick: () => {},
-  },
-];
-
 const dummyComments = Array.from(Array(19)).map((u, i) => ({
   image: `https://randomuser.me/api/portraits/men/${i}.jpg`,
   name: '유저입니다',
@@ -53,6 +29,33 @@ const dummyComments = Array.from(Array(19)).map((u, i) => ({
 
 const ArtistDetail = () => {
   const history = useHistory();
+
+  const dummyItems = [
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'official',
+      price: 30000,
+      onClick: () => history.push('/items/dummyId'),
+      onHeartClick: () => {},
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'community',
+      price: 30000,
+      onClick: () => history.push('/items/dummyId'),
+      onHeartClick: () => {},
+    },
+    {
+      image: 'https://picsum.photos/300/300',
+      name: 'test',
+      type: 'official',
+      price: 30000,
+      onClick: () => history.push('/items/dummyId'),
+      onHeartClick: () => {},
+    },
+  ];
 
   return (
     <IonPage>
@@ -81,6 +84,7 @@ const ArtistDetail = () => {
                 name={item.name}
                 type={item.type}
                 price={item.price}
+                onClick={item.onClick}
                 onHeartClick={item.onHeartClick}
               />
             ))}
