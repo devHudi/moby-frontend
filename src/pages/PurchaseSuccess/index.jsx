@@ -48,7 +48,11 @@ const PurchaseSuccess = () => {
           </Message>
           <Margin size={71} />
 
-          <Typography size={14} color="#ACACAC">
+          <Typography
+            size={14}
+            color="#ACACAC"
+            onClick={() => history.push('/my-wallet')}
+          >
             <Flex align="center">
               나의 NFT 보러가기 <MdKeyboardArrowRight />
             </Flex>
