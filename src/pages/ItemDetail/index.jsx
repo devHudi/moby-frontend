@@ -45,7 +45,11 @@ const ItemDetail = () => {
           {tab === 1 && <DetailTab images={DUMMY_IMAGES} />}
         </Padding>
 
-        <Purchase />
+        <Purchase
+          type="official" // official or community
+          defaultBuyPrice={1234}
+          defaultSellPrice={4321}
+        />
         <Margin size={90} />
       </IonContent>
     </IonPage>
