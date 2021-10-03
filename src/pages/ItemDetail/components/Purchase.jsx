@@ -1,20 +1,8 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import _ from 'lodash';
-// import {
-//   IonModal,
-//   IonList,
-//   IonRadioGroup,
-//   IonListHeader,
-//   IonLabel,
-//   IonItem,
-//   IonRadio,
-//   IonItemDivider,
-//   IonInput,
-//   IonButton,
-// } from '@ionic/react';
+
 import { Flex, Divider, Dropdown, Typography, Margin, Button } from 'moby-ui';
 
 const ButtonWrapper = ({ name, price, label, disabled, onClick }) => (
@@ -103,8 +91,16 @@ const RightWrapper = styled(Flex)`
   max-width: 120px;
 `;
 
-const Purchase = ({ defaultBuyPrice, defaultSellPrice, type }) => {
-  const history = useHistory();
+const Purchase = ({
+  defaultBuyPrice,
+  defaultSellPrice,
+  type,
+  onBuy,
+  onSell,
+}) => {
+  const [quantity, setQuantity] = useState(1); // eslint-disable-line
+
+  // 하단 4개의 state 는 community 판매에서 구매, 판매 금액을 직접 설정할 수 있는 UI 가 추가되면 사용될 예정
 
   const [buyOpen, setBuyOpen] = useState(false); // eslint-disable-line
   const [sellOpen, setSellOpen] = useState(false); // eslint-disable-line
@@ -112,7 +108,7 @@ const Purchase = ({ defaultBuyPrice, defaultSellPrice, type }) => {
   const [sellPrice, setSellPrice] = useState(defaultSellPrice); // eslint-disable-line
 
   const onOfficialBuy = () => {
-    history.push('/purchase');
+    onBuy('dummyItemId', quantity, buyPrice); // 상품 ID, 수량, 최종가격
   };
 
   const onCommunityBuy = () => {
@@ -127,7 +123,7 @@ const Purchase = ({ defaultBuyPrice, defaultSellPrice, type }) => {
     <>
       <Wrapper justify="space-between" align="center">
         <DropdownWrapper>
-          <Dropdown items={_.range(1, 11)} />
+          <Dropdown items={_.range(1, 11)} onChange={(n) => setQuantity(n)} />
         </DropdownWrapper>
 
         <LeftWrapper justify="center">
@@ -173,12 +169,16 @@ Purchase.propTypes = {
   defaultBuyPrice: PropTypes.number,
   defaultSellPrice: PropTypes.number,
   type: PropTypes.oneOf(['official', 'community']),
+  onBuy: PropTypes.func,
+  onSell: PropTypes.func,
 };
 
 Purchase.defaultProps = {
   defaultBuyPrice: 0,
   defaultSellPrice: 0,
   type: 'official',
+  onBuy: () => console.log('on buy'),
+  onSell: () => console.log('on sell'),
 };
 
 export default Purchase;

@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent } from '@ionic/react';
 import { Divider, Image, Padding, Margin, Tab, AltHeader } from 'moby-ui';
 
+import { useRecoilState } from 'recoil';
+import { cartState } from 'states/cart';
+
 import Header from './components/Header';
 import ChartTab from './components/ChartTab';
 import DetailTab from './components/DetailTab';
@@ -15,10 +18,26 @@ const DUMMY_IMAGES = [
 
 const ItemDetail = () => {
   const history = useHistory();
+
   const [tab, setTab] = useState(0);
+  const [cart, setCart] = useRecoilState(cartState);
 
   const onTabChange = (i) => {
     setTab(i);
+  };
+
+  const onBuy = (itemId, quantity, totalPrice) => {
+    history.push('/purchase');
+    setCart({
+      itemId,
+      quantity,
+      totalPrice,
+    });
+  };
+
+  const onSell = (itemId, quantity, totalPrice) => {
+    // selling logic here
+    console.log(`${itemId}, ${quantity} 개를 총 ${totalPrice} 원 에 판매`);
   };
 
   return (
@@ -49,6 +68,8 @@ const ItemDetail = () => {
           type="official" // official or community
           defaultBuyPrice={1234}
           defaultSellPrice={4321}
+          onBuy={onBuy}
+          onSell={onSell}
         />
         <Margin size={90} />
       </IonContent>

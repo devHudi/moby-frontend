@@ -1,6 +1,8 @@
 import { IonApp } from '@ionic/react';
 import { createGlobalStyle } from 'styled-components';
 
+import { RecoilRoot } from 'recoil';
+
 import Router from 'routes';
 
 /* Core CSS required for Ionic components to work properly */
@@ -30,10 +32,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => (
-  <IonApp>
-    <GlobalStyle />
-    <Router />
-  </IonApp>
+  <RecoilRoot>
+    <IonApp>
+      <GlobalStyle />
+      <Router />
+    </IonApp>
+  </RecoilRoot>
 );
 
 export default App;
