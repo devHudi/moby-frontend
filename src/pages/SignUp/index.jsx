@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { IonPage } from '@ionic/react';
+import { IonPage, useIonToast } from '@ionic/react';
 import {
   Flex,
   Margin,
@@ -10,6 +10,9 @@ import {
   Padding,
   Typography,
 } from 'moby-ui';
+import { useForm } from 'hooks';
+
+import { auth } from 'apis';
 
 import backgroundImage from './images/background.png';
 import logoImage from './images/logo.png';
@@ -28,8 +31,39 @@ const Logo = styled.img`
 const SignUp = () => {
   const history = useHistory();
 
-  const onSignUp = () => {
-    history.push('/login');
+  const [form, onChange, reset] = useForm({
+    username: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+  });
+
+  const [present, dismiss] = useIonToast();
+
+  const onSignUp = async () => {
+    const { username, phoneNumber, email, password } = form;
+
+    try {
+      await auth.signUp(username, phoneNumber, email, password);
+
+      present({
+        buttons: [{ text: '확인', handler: () => dismiss() }],
+        duration: 2000,
+        message: '회원가입에 성공하였습니다.',
+      });
+
+      history.push('/login');
+
+      reset();
+    } catch (error) {
+      const { message } = error.response.data;
+
+      present({
+        buttons: [{ text: '확인', handler: () => dismiss() }],
+        duration: 2000,
+        message: Array.isArray(message) ? message[0] : message,
+      });
+    }
   };
 
   return (
@@ -51,20 +85,39 @@ const SignUp = () => {
             </Typography>
             <Margin size={60} />
 
-            <TextField placeholder="NAME" underline />
-            <Margin size={20} />
-
-            <TextField placeholder="PHONE" underline />
-            <Margin size={20} />
-
             <TextField
-              keyboardType="email-address"
-              placeholder="EMAIL"
+              placeholder="NAME"
               underline
+              name="username"
+              onChange={onChange}
             />
             <Margin size={20} />
 
-            <TextField type="password" placeholder="PASSWORD" underline />
+            <TextField
+              type="tel"
+              placeholder="PHONE"
+              underline
+              name="phoneNumber"
+              onChange={onChange}
+            />
+            <Margin size={20} />
+
+            <TextField
+              type="email"
+              placeholder="EMAIL"
+              underline
+              name="email"
+              onChange={onChange}
+            />
+            <Margin size={20} />
+
+            <TextField
+              type="password"
+              placeholder="PASSWORD"
+              underline
+              name="password"
+              onChange={onChange}
+            />
             <Margin size={50} />
 
             <Flex justify="flex-end">
