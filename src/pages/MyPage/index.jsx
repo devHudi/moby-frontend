@@ -21,14 +21,6 @@ const MyPage = () => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
 
-  const onToast = () => {
-    present({
-      buttons: [{ text: '확인', handler: () => dismiss() }],
-      duration: 2000,
-      message: '해당 기능은 추후 제공될 예정입니다.',
-    });
-  };
-
   const dummyItems = [
     {
       image: 'https://picsum.photos/300/300',
@@ -56,9 +48,24 @@ const MyPage = () => {
     },
   ];
 
+  const onToast = () => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '해당 기능은 추후 제공될 예정입니다.',
+    });
+  };
+
   const onLogout = () => {
     // 로그아웃 추가 필요
-    onToast();
+    history.push('/login');
+    localStorage.clear();
+
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '로그아웃 되었습니다.',
+    });
   };
 
   return (
