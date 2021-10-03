@@ -20,7 +20,7 @@ const ItemDetail = () => {
   const history = useHistory();
 
   const [tab, setTab] = useState(0);
-  const [cart, setCart] = useRecoilState(cartState);
+  const [cart, setCart] = useRecoilState(cartState); // eslint-disable-line
 
   const onTabChange = (i) => {
     setTab(i);

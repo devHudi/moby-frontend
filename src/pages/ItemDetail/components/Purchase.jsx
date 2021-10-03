@@ -96,7 +96,7 @@ const Purchase = ({
   defaultSellPrice,
   type,
   onBuy,
-  onSell,
+  onSell, // eslint-disable-line
 }) => {
   const [quantity, setQuantity] = useState(1); // eslint-disable-line
 
