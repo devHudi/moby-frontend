@@ -40,3 +40,7 @@ $ yarn fix:prettier
 - 내 지갑 : `/my-wallet`
 - 마이 페이지 : `/my-page`
 - NFT 랭킹 : `/rank`
+
+## Env Vars
+
+- `REACT_APP_API_URL`
