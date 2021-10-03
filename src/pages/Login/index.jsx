@@ -41,7 +41,8 @@ const Login = () => {
 
   const onLogin = async () => {
     try {
-      await auth.signIn(form.email, form.password);
+      const { data } = await auth.signIn(form.email, form.password);
+      localStorage.setItem('jwt', data.token);
       history.push('/');
     } catch (error) {
       const { message } = error.response.data;
