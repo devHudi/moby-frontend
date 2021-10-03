@@ -1,7 +1,10 @@
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { IonPage } from '@ionic/react';
+import { IonPage, useIonToast } from '@ionic/react';
 import { Flex, LoginTextField, LoginButton, Margin, CheckBox } from 'moby-ui';
+import { useForm } from 'hooks';
+
+import { auth } from 'apis';
 
 import logoImage from './images/logo.png';
 
@@ -29,8 +32,26 @@ const FindAccount = styled.div`
 const Login = () => {
   const history = useHistory();
 
-  const onLogin = () => {
-    history.push('/');
+  const [present, dismiss] = useIonToast();
+
+  const [form, onChange] = useForm({
+    email: '',
+    password: '',
+  });
+
+  const onLogin = async () => {
+    try {
+      await auth.signIn(form.email, form.password);
+      history.push('/');
+    } catch (error) {
+      const { message } = error.response.data;
+
+      present({
+        buttons: [{ text: '확인', handler: () => dismiss() }],
+        duration: 2000,
+        message: Array.isArray(message) ? message[0] : message,
+      });
+    }
   };
 
   const onJoin = () => {
@@ -49,10 +70,20 @@ const Login = () => {
           <Logo src={logoImage} />
           <Margin size={20} />
 
-          <LoginTextField placeholder="ID" />
+          <LoginTextField
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={onChange}
+          />
           <Margin size={15} />
 
-          <LoginTextField placeholder="Password" />
+          <LoginTextField
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={onChange}
+          />
           <Margin size={20} />
 
           <ButtonWrapper>
