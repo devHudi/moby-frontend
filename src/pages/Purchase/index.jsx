@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent, useIonToast } from '@ionic/react';
 import { AltHeader, Divider, Padding, Margin, Typography } from 'moby-ui';
 
+import { useRecoilValue } from 'recoil';
+import { cartState } from 'states/cart';
+
 import {
   AiOutlineCreditCard,
   AiOutlineMobile,
@@ -18,6 +21,8 @@ const Purchase = () => {
 
   const [present, dismiss] = useIonToast();
   const [selected, setSelected] = useState(false);
+
+  const cart = useRecoilValue(cartState);
 
   const onToast = () => {
     present({
@@ -43,9 +48,9 @@ const Purchase = () => {
           <Margin size={15} />
 
           <ItemInfo
-            name="TINYTAN JIMIN Character 3D Modeling"
-            quantity={2}
-            price={180000}
+            name={cart.itemId}
+            quantity={cart.quantity}
+            price={cart.totalPrice}
           />
         </Padding>
         <Divider color="#EFEFEF" weight={6} />
