@@ -1,22 +1,16 @@
-import axios from 'axios';
-
-const BASE_URL = process.env.REACT_APP_API_URL;
+import { getAuthHeader, service } from 'apis/utils';
 
 const verifyToken = (jwt) =>
-  axios({
+  service({
     method: 'GET',
     url: '/users',
-    baseURL: BASE_URL,
-    headers: {
-      Authorization: `Bearer ${jwt}`,
-    },
+    headers: getAuthHeader(jwt),
   });
 
 const signIn = (email, password) =>
-  axios({
+  service({
     method: 'POST',
     url: '/users/login',
-    baseURL: BASE_URL,
     data: {
       email,
       password,
@@ -24,10 +18,9 @@ const signIn = (email, password) =>
   });
 
 const signUp = (username, phoneNumber, email, password) =>
-  axios({
+  service({
     method: 'POST',
     url: '/users',
-    baseURL: BASE_URL,
     data: {
       username,
       phoneNumber,
