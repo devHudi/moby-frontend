@@ -7,6 +7,6 @@ export const getAuthHeader = (jwt) => ({
 });
 
 export const service = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL || 'https://moby.iflag.co',
   withCredentials: true,
 });
