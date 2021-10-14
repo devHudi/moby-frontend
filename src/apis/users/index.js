@@ -4,7 +4,6 @@ import { getAuthHeader, service } from 'apis/utils';
  * Content-Type : multipart/form-data
  * @param {FormData} formData { profile : 200x200 }
  * @param {string} jwt
- * @returns void
  */
 const uploadProfile = (formData, jwt) =>
   service({
@@ -25,7 +24,6 @@ const appendCard = (jwt) =>
  * 내 아티스트 원픽
  * @param {string} artistId 아티스트 ID
  * @param {string} jwt
- * @returns void
  */
 const pickBestArtist = (artistId, jwt) =>
   service({
@@ -36,7 +34,7 @@ const pickBestArtist = (artistId, jwt) =>
 
 const deleteBestArtist = (jwt) =>
   service({
-    method: 'POST',
+    method: 'DELETE',
     url: '/best-artist',
     headers: getAuthHeader(jwt),
   });
