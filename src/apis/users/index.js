@@ -1,5 +1,4 @@
 import { getAuthHeader, service } from 'apis/utils';
-
 /**
  * Content-Type : multipart/form-data
  * @param {FormData} formData { profile : 200x200 }
@@ -36,5 +35,17 @@ export const deleteBestArtist = (jwt) =>
   service({
     method: 'DELETE',
     url: '/best-artist',
+    headers: getAuthHeader(jwt),
+  });
+
+/**
+ * 현재 유저 가져오기
+ * FIX : apis.auth.verifyToken와 겹침
+ * @param {string} jwt
+ */
+export const getCurrentUser = (jwt) =>
+  service({
+    method: 'GET',
+    url: '/users',
     headers: getAuthHeader(jwt),
   });
