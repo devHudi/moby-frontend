@@ -12,41 +12,44 @@ import {
   Flex,
   Navigation,
 } from 'moby-ui';
-
+import { useCallback, useEffect, useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
-
+import * as users from 'apis/users';
+import * as favs from 'apis/favs';
 import Profile from './components/Profile';
 
 const MyPage = () => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
+  const [isReady, setIsReady] = useState(false);
+  const [user, setUser] = useState(null); // null or UserDTO
+  const [favList, setFavList] = useState(null); // null or FavDTO
 
-  const dummyItems = [
-    {
-      image: 'https://picsum.photos/300/300',
-      name: 'test',
-      type: 'official',
-      price: 30000,
-      onHeartClick: () => {},
-      onClick: () => history.push('/items/dummyId'),
-    },
-    {
-      image: 'https://picsum.photos/300/300',
-      name: 'test',
-      type: 'community',
-      price: 30000,
-      onHeartClick: () => {},
-      onClick: () => history.push('/items/dummyId'),
-    },
-    {
-      image: 'https://picsum.photos/300/300',
-      name: 'test',
-      type: 'official',
-      price: 30000,
-      onHeartClick: () => {},
-      onClick: () => history.push('/items/dummyId'),
-    },
-  ];
+  const getCurrentUser = useCallback(async () => {
+    const jwt = localStorage.getItem('jwt');
+    try {
+      const [userResponse, favResponse] = await Promise.all([
+        users.getCurrentUser(jwt),
+        favs.getAllFavProduct(jwt),
+      ]);
+      if (userResponse.data.success) setUser(userResponse.data.user);
+      else
+        throw new Error(
+          '사용자 정보를 가져오는 과정에서 예상치 못한 문제가 발생했습니다.',
+        );
+      setFavList(favResponse.data);
+    } catch (error) {
+      if (error.response?.data) alert(error.response.data.message);
+      else alert(error.message); // 라우터에서 이미 에러 체크해서 present 사용 X
+      localStorage.removeItem('jwt');
+      history('/login');
+    }
+    setIsReady(true);
+  }, [history]);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, [getCurrentUser]);
 
   const onToast = () => {
     present({
@@ -57,7 +60,6 @@ const MyPage = () => {
   };
 
   const onLogout = () => {
-    // 로그아웃 추가 필요
     history.push('/login');
     localStorage.clear();
 
@@ -68,98 +70,139 @@ const MyPage = () => {
     });
   };
 
+  const handleHeartClick = useCallback(async (productId) => {
+    // TODO 하트 클릭하면 채워진 하트가 지워지고 fav에서 리스트 제거
+    try {
+      // TODO fav.deleteFav api 사용
+    } catch (error) {
+      // present({
+      //   buttons: [{ text: '확인', handler: () => dismiss() }],
+      //   duration: 2000,
+      //   message: '',
+      // });
+    }
+  }, []);
+
+  const handleFavProductClick = useCallback(
+    (productId) => {
+      // TODO 누르면 해당 상품 디테일 페이지로 이동
+      // TODO history.push(`/items/${productId}`);
+      history.push('/items/dummyId');
+    },
+    [history],
+  );
   return (
     <IonPage>
-      <IonContent>
-        <Header title="My Page" />
-        <Margin size={7} />
+      {isReady ? (
+        <IonContent>
+          <Header title="My Page" />
+          <Margin size={7} />
 
-        <Profile
-          name="슈가님사랑해용"
-          email="sample@email.com"
-          holding={52}
-          balance={520800}
-        />
+          <Profile
+            name={user.username}
+            email={user.email}
+            thumbnailSrc={user.profileImageSrc}
+            favArtistName={
+              user.bestOfArtistName
+                ? user.bestOfArtistName
+                : '당신의 아티스트를 Pick 해주세요!'
+            }
+            holding={user.productsPurchased.length} // 보유 NFT 수량
+            balance={user.money} // 잔액
+          />
 
-        <Padding padding={26} top={20} bottom={13}>
-          <Typography size={14} weight="bold">
-            내가 좋아하는 NFT
-          </Typography>
-
-          <Margin size={12} />
-
-          <HScroll>
-            {_.map(dummyItems, (item) => (
-              <ItemCard
-                image={item.image}
-                name={item.name}
-                type={item.type}
-                price={item.price}
-                onHeartClick={item.onHeartClick}
-                onClick={item.onClick}
-              />
-            ))}
-          </HScroll>
-        </Padding>
-
-        <Divider />
-
-        <Padding padding={18}>
-          <Padding padding={5} bottom={13}>
+          <Padding padding={26} top={20} bottom={13}>
             <Typography size={14} weight="bold">
-              앱 설정
+              내가 좋아하는 NFT
             </Typography>
+
+            <Margin size={12} />
+
+            <HScroll>
+              {_.map(favList, (item) => (
+                <ItemCard
+                  key={item.id}
+                  image={item.thumbnailSrc}
+                  name={item.title}
+                  type={item.isOfficial ? 'official' : 'community'}
+                  price={item.currentPrice}
+                  onHeartClick={() => handleHeartClick(item.id)} // TODO
+                  onClick={() => handleFavProductClick(item.id)}
+                />
+              ))}
+            </HScroll>
           </Padding>
 
           <Divider />
 
-          <Padding padding={5}>
-            <Typography size={13} onClick={onToast}>
-              <Padding padding={10} left={0} right={0}>
-                <Flex justify="space-between" align="center">
-                  알림 설정 <MdKeyboardArrowRight />
-                </Flex>
-              </Padding>
-            </Typography>
-            <Typography size={13} onClick={onToast}>
-              <Padding padding={10} left={0} right={0}>
-                <Flex justify="space-between" align="center">
-                  암호 잠금 <MdKeyboardArrowRight />
-                </Flex>
-              </Padding>
-            </Typography>
-            <Typography size={13} onClick={onToast}>
-              <Padding padding={10} left={0} right={0}>
-                <Flex justify="space-between" align="center">
-                  캐시 삭제 <MdKeyboardArrowRight />
-                </Flex>
-              </Padding>
-            </Typography>
-            <Typography size={13} onClick={onLogout}>
-              <Padding padding={10} left={0} right={0}>
-                <Flex justify="space-between" align="center">
-                  로그 아웃 <MdKeyboardArrowRight />
-                </Flex>
-              </Padding>
-            </Typography>
-          </Padding>
-
-          <Divider />
-
-          <Padding padding={5}>
-            <Padding padding={10} left={0} right={0}>
-              <Typography size={13} onClick={onToast}>
-                <Flex justify="space-between" align="center">
-                  개인정보 처리 방침
-                </Flex>
+          <Padding padding={18}>
+            <Padding padding={5} bottom={13}>
+              <Typography size={14} weight="bold">
+                앱 설정
               </Typography>
             </Padding>
-          </Padding>
-        </Padding>
 
-        <Navigation />
-        <Margin size={90} />
-      </IonContent>
+            <Divider />
+
+            <Padding padding={5}>
+              <Typography size={13} onClick={onToast}>
+                <Padding padding={10} left={0} right={0}>
+                  <Flex justify="space-between" align="center">
+                    알림 설정 <MdKeyboardArrowRight />
+                  </Flex>
+                </Padding>
+              </Typography>
+              <Typography size={13} onClick={onToast}>
+                <Padding padding={10} left={0} right={0}>
+                  <Flex justify="space-between" align="center">
+                    암호 잠금 <MdKeyboardArrowRight />
+                  </Flex>
+                </Padding>
+              </Typography>
+              <Typography size={13} onClick={onToast}>
+                <Padding padding={10} left={0} right={0}>
+                  <Flex justify="space-between" align="center">
+                    캐시 삭제 <MdKeyboardArrowRight />
+                  </Flex>
+                </Padding>
+              </Typography>
+              <Typography size={13} onClick={onLogout}>
+                <Padding padding={10} left={0} right={0}>
+                  <Flex
+                    style={{ cursor: 'pointer' }}
+                    justify="space-between"
+                    align="center"
+                  >
+                    로그 아웃 <MdKeyboardArrowRight />
+                  </Flex>
+                </Padding>
+              </Typography>
+            </Padding>
+
+            <Divider />
+
+            <Padding padding={5}>
+              <Padding padding={10} left={0} right={0}>
+                <Typography size={13} onClick={onToast}>
+                  <Flex justify="space-between" align="center">
+                    <a
+                      href="https://moby-privacy.netlify.app/"
+                      rel="noopener noreferrer"
+                    >
+                      개인정보 처리 방침
+                    </a>
+                  </Flex>
+                </Typography>
+              </Padding>
+            </Padding>
+          </Padding>
+
+          <Navigation />
+          <Margin size={90} />
+        </IonContent>
+      ) : (
+        'loading...'
+      )}
     </IonPage>
   );
 };

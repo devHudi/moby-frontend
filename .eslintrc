@@ -14,7 +14,7 @@
     "object-curly-newline": "off",
     "import/prefer-default-export": "off",
     "operator-linebreak": "off",
-    "no-console": "off",
+    "no-console": "warn",
     "implicit-arrow-linebreak": "off",
     "indent": "off",
     "no-confusing-arrow": "off",

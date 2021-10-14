@@ -29,10 +29,17 @@ const Number = styled.div`
   font-weight: bold;
 `;
 
-const Profile = ({ name, email, holding, balance }) => (
+const Profile = ({
+  thumbnailSrc,
+  name,
+  email,
+  favArtistName,
+  holding,
+  balance,
+}) => (
   <Wrapper align="center">
     <Flex align="center">
-      <ProfileImage image="https://picsum.photos/300/300" />
+      <ProfileImage image={thumbnailSrc} />
       <Flex direction="column">
         <Typography size={15} weight="bold" color="#ffffff">
           {name}
@@ -43,7 +50,7 @@ const Profile = ({ name, email, holding, balance }) => (
         <Margin size={17} />
 
         <Typography size={10} color="#ffffff">
-          MY 아티스트 | BTS
+          MY 아티스트 | {favArtistName}
         </Typography>
       </Flex>
     </Flex>
@@ -67,15 +74,19 @@ const Profile = ({ name, email, holding, balance }) => (
 );
 
 Profile.propTypes = {
+  thumbnailSrc: PropTypes.string,
   name: PropTypes.string,
   email: PropTypes.string,
+  favArtistName: PropTypes.string,
   holding: PropTypes.number,
   balance: PropTypes.number,
 };
 
 Profile.defaultProps = {
-  name: null,
-  email: null,
+  thumbnailSrc: '',
+  name: '',
+  email: '',
+  favArtistName: '',
   holding: 0,
   balance: 0,
 };
