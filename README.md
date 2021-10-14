@@ -2,7 +2,7 @@
 
 > 데스트톱 해상도는 전혀 지원하지 않습니다. 크롬 개발자 도구에서 `iPhone 6/7/8 Plus` 해상도로 테스트 해주세요.
 
-https://gifted-khorana-7ea737.netlify.app/
+- [Link](https://gifted-khorana-7ea737.netlify.app/)
 
 ## Tech Stacks
 
@@ -15,17 +15,17 @@ https://gifted-khorana-7ea737.netlify.app/
 ## Getting Started
 
 ```
-$ yarn
-$ yarn start
+yarn
+yarn start
 ```
 
 ## Commands
 
 ```
-$ yarn check:lint
-$ yarn fix:lint
-$ yarn check:prettier
-$ yarn fix:prettier
+yarn check:lint
+yarn fix:lint
+yarn check:prettier
+yarn fix:prettier
 ```
 
 ## Available Routes
