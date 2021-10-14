@@ -1,6 +1,6 @@
 import { getAuthHeader, service } from 'apis/utils';
 
-const getAllArtist = (jwt) =>
+export const getAllArtist = (jwt) =>
   service({
     method: 'GET',
     url: '/artists',
@@ -11,7 +11,7 @@ const getAllArtist = (jwt) =>
  * @param {string} keyword 검색어
  * @param {string} jwt
  */
-const searchArtist = (keyword, jwt) =>
+export const searchArtist = (keyword, jwt) =>
   service({
     method: 'GET',
     url: `/artists?q=${keyword}`,
@@ -24,7 +24,7 @@ const searchArtist = (keyword, jwt) =>
  * @param {number} page 현재 페이지 1부터 시작
  * @param {string} jwt
  */
-const getAllArtistCommentsWithPagenation = (limit, page, jwt) =>
+export const getAllArtistCommentsWithPagenation = (limit, page, jwt) =>
   service({
     method: 'GET',
     url: `/artists/comments?limit=${limit}&page=${page}`,
@@ -36,7 +36,7 @@ const getAllArtistCommentsWithPagenation = (limit, page, jwt) =>
  * @param {number} page 현재 페이지 1부터 시작
  * @param {string} jwt
  */
-const getArtistsWithRakings = (limit, page, jwt) =>
+export const getArtistsWithRakings = (limit, page, jwt) =>
   service({
     method: 'GET',
     url: `/artists/rankings?limit=${limit}&page=${page}`,
@@ -47,7 +47,7 @@ const getArtistsWithRakings = (limit, page, jwt) =>
  * @param {string} artistId 아티스트 아이디
  * @param {string} jwt
  */
-const getArtistDetail = (artistId, jwt) =>
+export const getArtistDetail = (artistId, jwt) =>
   service({
     method: 'GET',
     url: `/artists/${artistId}`,
@@ -60,7 +60,7 @@ const getArtistDetail = (artistId, jwt) =>
  * @param {string} contents 댓글 내용
  * @param {string} jwt
  */
-const commentArtist = (artistId, contents, jwt) =>
+export const commentArtist = (artistId, contents, jwt) =>
   service({
     method: 'POST',
     url: `/artists/${artistId}/comments`,
@@ -73,7 +73,7 @@ const commentArtist = (artistId, contents, jwt) =>
  * @param {string} artistId 아티스트 아이디
  * @param {string} jwt
  */
-const getCommentsByArtist = (artistId, jwt) =>
+export const getCommentsByArtist = (artistId, jwt) =>
   service({
     method: 'GET',
     url: `/artists/${artistId}/comments`,
@@ -87,7 +87,7 @@ const getCommentsByArtist = (artistId, jwt) =>
  * @param {string} contents 댓글 내용
  * @param {string} jwt
  */
-const deleteCommentsByArtist = (artistId, commentId, jwt) =>
+export const deleteCommentsByArtist = (artistId, commentId, jwt) =>
   service({
     method: 'DELETE',
     url: `/artists/${artistId}/comments/${commentId}`,
@@ -99,22 +99,10 @@ const deleteCommentsByArtist = (artistId, commentId, jwt) =>
  * @param {string} artistId 아티스트 아이디
  * @param {string} jwt
  */
-const hitVisitCountOnArtist = (artistId, jwt) =>
+export const hitVisitCountOnArtist = (artistId, jwt) =>
   service({
     method: 'PUT',
     url: '/visitors/hit/artists',
     data: { id: artistId },
     headers: getAuthHeader(jwt),
   });
-
-export default {
-  getAllArtist,
-  searchArtist,
-  getAllArtistCommentsWithPagenation,
-  getArtistsWithRakings,
-  getArtistDetail,
-  deleteCommentsByArtist,
-  commentArtist,
-  getCommentsByArtist,
-  hitVisitCountOnArtist,
-};

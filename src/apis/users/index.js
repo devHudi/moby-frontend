@@ -5,7 +5,7 @@ import { getAuthHeader, service } from 'apis/utils';
  * @param {FormData} formData { profile : 200x200 }
  * @param {string} jwt
  */
-const uploadProfile = (formData, jwt) =>
+export const uploadProfile = (formData, jwt) =>
   service({
     method: 'POST',
     data: formData,
@@ -13,7 +13,7 @@ const uploadProfile = (formData, jwt) =>
     headers: getAuthHeader(jwt),
   });
 
-const appendCard = (jwt) =>
+export const appendCard = (jwt) =>
   service({
     method: 'GET',
     url: '/cards',
@@ -25,23 +25,16 @@ const appendCard = (jwt) =>
  * @param {string} artistId 아티스트 ID
  * @param {string} jwt
  */
-const pickBestArtist = (artistId, jwt) =>
+export const pickBestArtist = (artistId, jwt) =>
   service({
     method: 'POST',
     url: `/best-artist/${artistId}`,
     headers: getAuthHeader(jwt),
   });
 
-const deleteBestArtist = (jwt) =>
+export const deleteBestArtist = (jwt) =>
   service({
     method: 'DELETE',
     url: '/best-artist',
     headers: getAuthHeader(jwt),
   });
-
-export default {
-  appendCard,
-  pickBestArtist,
-  deleteBestArtist,
-  uploadProfile,
-};

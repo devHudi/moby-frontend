@@ -1,6 +1,6 @@
 import { getAuthHeader, service } from 'apis/utils';
 
-const getAllProduct = (jwt) =>
+export const getAllProduct = (jwt) =>
   service({
     method: 'GET',
     url: '/products',
@@ -12,7 +12,7 @@ const getAllProduct = (jwt) =>
  * @param {number} limit 최대 가져올 상품 개수
  * @param {string} jwt
  */
-const getRecentProduct = (limit, jwt) =>
+export const getRecentProduct = (limit, jwt) =>
   service({
     method: 'GET',
     url: `/products/recent?limit=${limit}`,
@@ -24,7 +24,7 @@ const getRecentProduct = (limit, jwt) =>
  * @param {string} keyword 검색어
  * @param {string} jwt
  */
-const searchProduct = (keyword, jwt) =>
+export const searchProduct = (keyword, jwt) =>
   service({
     method: 'GET',
     url: `/products/search?q=${keyword}`,
@@ -37,7 +37,7 @@ const searchProduct = (keyword, jwt) =>
  * @param {number} page 가져올 총 페이지 개수
  * @param {string} jwt
  */
-const getProductsWithRakings = (limit, page, jwt) =>
+export const getProductsWithRakings = (limit, page, jwt) =>
   service({
     method: 'GET',
     url: `/products/rankings?limit=${limit}&page=${page}`,
@@ -48,7 +48,7 @@ const getProductsWithRakings = (limit, page, jwt) =>
  * @param {string} productId 상품 아이디
  * @param {string} jwt
  */
-const getProductDetail = (productId, jwt) =>
+export const getProductDetail = (productId, jwt) =>
   service({
     method: 'GET',
     url: `/products/${productId}`,
@@ -59,7 +59,7 @@ const getProductDetail = (productId, jwt) =>
  * @param {string} artistId 아티스트 아이디
  * @param {string} jwt
  */
-const getProductByArtistId = (artistId, jwt) =>
+export const getProductByArtistId = (artistId, jwt) =>
   service({
     method: 'GET',
     url: `/products/artists/${artistId}`,
@@ -71,20 +71,10 @@ const getProductByArtistId = (artistId, jwt) =>
  * @param {string} productId 아티스트 아이디
  * @param {string} jwt
  */
-const hitVisitCountOnProduct = (productId, jwt) =>
+export const hitVisitCountOnProduct = (productId, jwt) =>
   service({
     method: 'PUT',
     url: '/visitors/hit/products',
     data: { id: productId },
     headers: getAuthHeader(jwt),
   });
-
-export default {
-  getAllProduct,
-  searchProduct,
-  hitVisitCountOnProduct,
-  getRecentProduct,
-  getProductsWithRakings,
-  getProductDetail,
-  getProductByArtistId,
-};
