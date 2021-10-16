@@ -133,7 +133,9 @@ const Rank = ({ items }) => {
     setIntervalFlag(true);
 
     setInterval(() => {
-      if (currentRef.current === items.length - 1) {
+      const itemCount = items.length || 5;
+
+      if (currentRef.current === itemCount - 1) {
         currentRef.current = 0;
         setCurrent(0);
       } else setCurrent((currentRef.current += 1));

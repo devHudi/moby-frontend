@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { IonPage, IonContent } from '@ionic/react';
@@ -17,65 +18,141 @@ import {
   Padding,
 } from 'moby-ui';
 
+import * as artistsApi from 'apis/artists';
+import * as productsApi from 'apis/products';
+
 const MarketPlace = () => {
   const history = useHistory();
 
-  const dummyImageSlides = [
-    {
-      image: 'https://picsum.photos/300/300',
-      onClick: () => history.push('/artists/dummy'),
-    },
-    {
-      image: 'https://picsum.photos/300/300',
-      onClick: () => history.push('/artists/dummy'),
-    },
-    {
-      image: 'https://picsum.photos/300/300',
-      onClick: () => history.push('/artists/dummy'),
-    },
-  ];
+  const [imageSlides, setImageSlides] = useState([]);
 
-  const dummyRank = [
-    {
-      name: 'BTS | Butter Poster',
-      isNew: true,
-      status: 2,
-      onClick: () => history.push('/rank'),
-    },
-    {
-      name: 'NCT | RESONANCE PT2 Album',
-      status: 0,
-      onClick: () => history.push('/rank'),
-    },
-    {
-      name: 'TWICE | More&More Poster',
-      status: 1,
-      onClick: () => history.push('/rank'),
-    },
-    {
-      name: 'IU | LILAC Jacket',
-      status: 2,
-      onClick: () => history.push('/rank'),
-    },
-    {
-      name: 'BTS | PERMISSION TO DANCE Poster',
-      status: 2,
-      onClick: () => history.push('/rank'),
-    },
-  ];
+  const [nftRanking, setNftRanking] = useState([]);
+  const [artistRanking, setArtistRanking] = useState([]);
+  const [rankingTab, setRankingTab] = useState(0);
 
-  const dummyArtists = Array.from(Array(19)).map((u, i) => ({
-    image: `https://randomuser.me/api/portraits/men/${i}.jpg`,
-    text: `ARIST ${i}`,
-    onClick: () => history.push(`/artists/${i}`),
-  }));
+  const [keyword, setKeyword] = useState('');
+  const [artists, setArtists] = useState([]);
 
-  const dummyComments = Array.from(Array(19)).map((u, i) => ({
-    image: `https://randomuser.me/api/portraits/men/${i}.jpg`,
-    name: '유저입니다',
-    content: '이 한국의 아이돌은 유쾌한!',
-    date: new Date(),
-  }));
+  const [comments, setComments] = useState([]);
+  const [commentPage, setCommentPage] = useState(1);
+
+  const initArtists = useCallback(async () => {
+    const jwt = localStorage.getItem('jwt');
+    const { data } = await artistsApi.getAllArtist(jwt);
+
+    setArtists(
+      _.chain(data)
+        .map((item) => ({
+          id: item?.id,
+          text: item?.name,
+          image: item?.thumbnailSrc,
+          onClick: () => history.push(`/artists/${item?.id}`),
+        }))
+        .slice(0, 18)
+        .value(),
+    );
+  }, [history]);
+
+  const searchArtists = useCallback(async () => {
+    const jwt = localStorage.getItem('jwt');
+    const { data } = await artistsApi.searchArtist(keyword, jwt);
+
+    setArtists(
+      _.chain(data)
+        .map((item) => ({
+          id: item?.id,
+          text: item?.name,
+          image: item?.thumbnailSrc,
+          onClick: () => history.push(`/artists/${item?.id}`),
+        }))
+        .slice(0, 18)
+        .value(),
+    );
+  }, [keyword, history]);
+
+  const getComments = useCallback(async () => {
+    const jwt = localStorage.getItem('jwt');
+    const { data } = await artistsApi.getAllArtistCommentsWithPagenation(
+      20,
+      commentPage,
+      jwt,
+    );
+
+    setComments([
+      ...comments,
+      ..._.map(data.comments, (item) => ({
+        id: item?.id,
+        image: item?.author?.profileImageSrc,
+        name: item?.author?.username,
+        content: item?.contents,
+        date: item?.createdAt,
+      })),
+    ]);
+  }, [commentPage]); // eslint-disable-line
+
+  const getImageSlides = useCallback(async () => {
+    const jwt = localStorage.getItem('jwt');
+    const { data } = await productsApi.getRecentProduct(5, jwt);
+
+    setImageSlides(
+      _.map(data, (item) => ({
+        image: item.posterSrc,
+        onClick: () => history.push(`/items/${item.id}`),
+      })),
+    );
+  }, [history]);
+
+  const getNftRanking = useCallback(async () => {
+    const jwt = localStorage.getItem('jwt');
+    const { data } = await productsApi.getProductsWithRakings(5, 1, jwt);
+
+    const isNews = [true, false, false, true, true];
+    const statuses = [2, 2, 0, 2, 1];
+
+    setNftRanking(
+      _.map(data.products, (item, i) => ({
+        name: item?.title,
+        isNew: isNews[i],
+        status: statuses[i],
+        onClick: () => history.push('/rank'),
+      })),
+    );
+  }, [history]);
+
+  const getArtistRanking = useCallback(async () => {
+    const jwt = localStorage.getItem('jwt');
+    const { data } = await artistsApi.getArtistsWithRakings(5, 1, jwt);
+
+    const isNews = [false, false, true, false, false];
+    const statuses = [1, 0, 2, 1, 0];
+
+    setArtistRanking(
+      _.map(data.artists, (item, i) => ({
+        name: item?.name,
+        isNew: isNews[i],
+        status: statuses[i],
+        onClick: () => history.push('/rank'),
+      })),
+    );
+  }, [history]);
+
+  useEffect(() => {
+    if (keyword === '') initArtists();
+    else searchArtists(keyword);
+
+    getComments();
+    getImageSlides();
+    getNftRanking();
+    getArtistRanking();
+  }, [
+    keyword,
+    initArtists,
+    searchArtists,
+    getComments,
+    getImageSlides,
+    getNftRanking,
+    getArtistRanking,
+  ]);
 
   return (
     <IonPage>
@@ -85,23 +162,31 @@ const MarketPlace = () => {
           <Typography size={14}>NEW</Typography>
         </Header>
 
-        <ImageSlider images={dummyImageSlides} />
+        <ImageSlider images={imageSlides} />
 
         <Padding padding={17} top={15}>
-          <AltTab tabs={['실시간 NFT 순위', '아티스트 순위']} />
+          <AltTab
+            tabs={['실시간 NFT 순위', '아티스트 순위']}
+            onChange={(tab) => setRankingTab(tab)}
+          />
 
           <Margin size={14} />
 
-          <Rank items={dummyRank} />
+          <Rank items={rankingTab === 0 ? nftRanking : artistRanking} />
+          {/* <Rank items={nftRanking} /> */}
 
           <Margin size={25} />
 
-          <TextField placeholder="아티스트 검색" icon={<AiOutlineSearch />} />
+          <TextField
+            placeholder="아티스트 검색"
+            icon={<AiOutlineSearch />}
+            onChange={_.debounce((e) => setKeyword(e.target.value), 300)}
+          />
 
           <Margin size={25} />
 
           <ArtistGrid>
-            {_.map(dummyArtists, (artist) => (
+            {_.map(artists, (artist) => (
               <ArtistGrid.Artist
                 image={artist.image}
                 text={artist.text}
@@ -115,12 +200,13 @@ const MarketPlace = () => {
           <TextField
             placeholder="아티스트를 위한 응원의 댓글을 남겨주세요!"
             icon={<AiOutlineHeart />}
+            disabled
           />
 
           <Margin size={21} />
 
-          <CommentList>
-            {_.map(dummyComments, (comment) => (
+          <CommentList onMoreClick={() => setCommentPage(commentPage + 1)}>
+            {_.map(comments, (comment) => (
               <CommentList.Comment
                 image={comment.image}
                 name={comment.name}
