@@ -14,7 +14,7 @@ export const getAllArtist = (jwt) =>
 export const searchArtist = (keyword, jwt) =>
   service({
     method: 'GET',
-    url: `/artists?q=${keyword}`,
+    url: `/artists/search?q=${keyword}`,
     headers: getAuthHeader(jwt),
   });
 
