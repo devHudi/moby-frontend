@@ -1,6 +1,10 @@
+import { useState, useEffect, useCallback } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ITEM_TYPES } from 'constants/index.js';
+
+import * as favsApi from 'apis/favs';
 
 import { Flex, Margin, Heart } from '..';
 
@@ -43,17 +47,45 @@ const ItemPrice = styled.div`
   font-weight: bold;
 `;
 
-const ItemCard = ({ image, name, type, price, onHeartClick, onClick }) => {
-  const handleHeartClick = (filled, e) => {
+const ItemCard = ({ id, image, name, type, price, onClick }) => {
+  const [heart, setHeart] = useState(false);
+  const jwt = localStorage.getItem('jwt');
+
+  const getProductHeart = useCallback(async () => {
+    const { data } = await favsApi.getAllFavProduct(jwt);
+
+    setHeart(_.find(data, { id }) !== undefined);
+  }, [id, jwt]);
+
+  const addFav = useCallback(async () => {
+    setHeart(true);
+    await favsApi.appendFavProduct(id, jwt);
+  }, [id, jwt]);
+
+  const deleteFav = useCallback(async () => {
+    setHeart(false);
+    await favsApi.deleteFavProduct(id, jwt);
+  }, [id, jwt]);
+
+  const handleHeartClick = (e) => {
     e.stopPropagation();
-    onHeartClick(filled);
+
+    if (heart) {
+      deleteFav();
+    } else {
+      addFav();
+    }
   };
+
+  useEffect(() => {
+    getProductHeart();
+  }, [getProductHeart]);
 
   return (
     <ItemWrapper onClick={onClick}>
       <ItemImage image={image}>
         <HeartWrapper>
-          <Heart onChange={handleHeartClick} />
+          <Heart filled={heart} onChange={handleHeartClick} />
         </HeartWrapper>
       </ItemImage>
       <Margin size={10} />
@@ -70,12 +102,12 @@ const ItemCard = ({ image, name, type, price, onHeartClick, onClick }) => {
 };
 
 ItemCard.propTypes = {
+  id: PropTypes.string.isRequired,
   image: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
   type: PropTypes.string,
   onClick: PropTypes.func,
-  onHeartClick: PropTypes.func,
 };
 
 ItemCard.defaultProps = {
@@ -84,7 +116,6 @@ ItemCard.defaultProps = {
   price: 0,
   type: 'official',
   onClick: () => console.log('ItemCard Click'),
-  onHeartClick: () => console.log('ItemCard Heart Click'),
 };
 
 export default ItemCard;

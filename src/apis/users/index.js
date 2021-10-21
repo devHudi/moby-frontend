@@ -8,14 +8,14 @@ export const uploadProfile = (formData, jwt) =>
   service({
     method: 'POST',
     data: formData,
-    url: '/profile',
+    url: '/users/profile',
     headers: getAuthHeader(jwt),
   });
 
 export const appendCard = (jwt) =>
   service({
     method: 'GET',
-    url: '/cards',
+    url: '/users/cards',
     headers: getAuthHeader(jwt),
   });
 
@@ -27,14 +27,14 @@ export const appendCard = (jwt) =>
 export const pickBestArtist = (artistId, jwt) =>
   service({
     method: 'POST',
-    url: `/best-artist/${artistId}`,
+    url: `/users/best-artist/${artistId}`,
     headers: getAuthHeader(jwt),
   });
 
 export const deleteBestArtist = (jwt) =>
   service({
     method: 'DELETE',
-    url: '/best-artist',
+    url: '/users/best-artist',
     headers: getAuthHeader(jwt),
   });
 
