@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import _ from 'lodash';
+import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent } from '@ionic/react';
 import {
   Header,
@@ -11,65 +13,49 @@ import {
   AltDropdown,
 } from 'moby-ui';
 
+import * as usersApi from 'apis/users';
+
 import NftTab from './components/NftTab';
 import PayTab from './components/PayTab';
 
-const dummyItems = [
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'TINYTAN JIMIN 3D Modeling',
-    date: new Date(),
-    buyPrice: 90000,
-    currentPrice: 90000,
-    holding: 2,
-    holdingPercentage: 0.05,
-    onClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'TINYTAN JIMIN 3D Modeling',
-    date: new Date(),
-    buyPrice: 90000,
-    currentPrice: 90000,
-    holding: 2,
-    holdingPercentage: 0.05,
-    onClick: () => {},
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'TINYTAN JIMIN 3D Modeling',
-    date: new Date(),
-    buyPrice: 90000,
-    currentPrice: 90000,
-    holding: 2,
-    holdingPercentage: 0.05,
-    onClick: () => {},
-  },
-];
-
-const dummyCars = [
-  {
-    image: 'https://picsum.photos/300/300',
-    name: '신한카드 Z',
-    number: '9999-9999-9999-9999',
-    expireDate: new Date(),
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: '삼성카드 와우',
-    number: '9999-9999-9999-9999',
-    expireDate: new Date(),
-  },
-  {
-    image: 'https://picsum.photos/300/300',
-    name: 'BC카드 킹',
-    number: '9999-9999-9999-9999',
-    expireDate: new Date(),
-  },
-];
-
 const MyWallet = () => {
+  const history = useHistory();
+
   const [tab, setTab] = useState(0);
+
+  const [items, setItems] = useState([]);
+  const [cards, setCards] = useState([]);
+
+  const jwt = localStorage.getItem('jwt');
+
+  const getUser = useCallback(async () => {
+    const { data } = await usersApi.getCurrentUser(jwt);
+
+    setItems(
+      _.map(data.productsPurchased, (item) => ({
+        image: item?.posterSrc,
+        name: item?.title,
+        date: item?.createdAt,
+        buyPrice: item?.purchasePrice,
+        currentPrice: item?.currentPrice,
+        holding: item?.holdingQuantity,
+        holdingPercentage: item?.share,
+        onClick: () => history.push(`/items/${item?.id}`),
+      })),
+    );
+
+    setCards(
+      _.map(data.cards, (item) => ({
+        name: item?.cardName,
+        number: item?.cardNumber,
+        expireDate: item?.expired,
+      })),
+    );
+  }, [jwt, history]);
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
 
   return (
     <IonPage>
@@ -89,12 +75,12 @@ const MyWallet = () => {
           <>
             <Divider weight={6} color="#EFEFEF" />
             <Padding padding={26}>
-              <NftTab items={dummyItems} />
+              <NftTab items={items} />
             </Padding>
           </>
         )}
 
-        {tab === 1 && <PayTab cards={dummyCars} />}
+        {tab === 1 && <PayTab cards={cards} />}
 
         <Navigation />
         <Margin size={90} />
