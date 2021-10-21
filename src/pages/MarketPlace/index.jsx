@@ -140,7 +140,6 @@ const MarketPlace = () => {
     if (keyword === '') initArtists();
     else searchArtists(keyword);
 
-    getComments();
     getImageSlides();
     getNftRanking();
     getArtistRanking();
@@ -148,11 +147,14 @@ const MarketPlace = () => {
     keyword,
     initArtists,
     searchArtists,
-    getComments,
     getImageSlides,
     getNftRanking,
     getArtistRanking,
   ]);
+
+  useEffect(() => {
+    getComments();
+  }, [getComments]);
 
   return (
     <IonPage>

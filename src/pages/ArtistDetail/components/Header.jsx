@@ -15,12 +15,12 @@ const Value = styled(Typography)`
   flex-grow: 1;
 `;
 
-const Header = ({ agency, marketCap, tradingVolume }) => (
+const Header = ({ agency, marketCap, tradingVolume, heart, onHeartChange }) => (
   <>
     <Padding padding={33} top={16} bottom={18}>
       <Flex justify="space-between" align="center">
         <Icon>
-          <Heart defaultFilled />
+          <Heart filled={heart} onChange={onHeartChange} />
         </Icon>
         <Value size={14} align="right">
           {agency}
@@ -61,12 +61,16 @@ Header.propTypes = {
   agency: PropTypes.string,
   marketCap: PropTypes.number,
   tradingVolume: PropTypes.number,
+  heart: PropTypes.bool,
+  onHeartChange: PropTypes.func,
 };
 
 Header.defaultProps = {
   agency: '',
   marketCap: 0,
   tradingVolume: 0,
+  heart: false,
+  onHeartChange: () => {},
 };
 
 export default Header;
