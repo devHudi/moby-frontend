@@ -13,6 +13,8 @@ import {
   HScroll,
 } from 'moby-ui';
 
+import Card from './Card';
+
 import mobyIcon from '../images/moby-icon.png';
 
 const Icon = styled.div`
@@ -99,7 +101,7 @@ const PayTab = ({ balance, cards }) => {
 
         <HScroll>
           {_.map(cards, (card) => (
-            <CreditCard image={card.image} />
+            <Card name={card.name} number={card.number} />
           ))}
         </HScroll>
         <Margin size={23} />
@@ -120,7 +122,7 @@ const PayTab = ({ balance, cards }) => {
                     {card.number}
                   </Typography>
                   <Typography size={13} color="#696969">
-                    {dayjs(card.date).format('MM/DD')}
+                    {dayjs(card.expireDate).format('MM/DD')}
                   </Typography>
                 </Flex>
               </Flex>
