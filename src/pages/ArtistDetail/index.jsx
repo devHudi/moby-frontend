@@ -43,7 +43,9 @@ const ArtistDetail = () => {
   const [products, setProducts] = useState([]);
 
   const [comments, setComments] = useState([]);
-  const [commentPage, setCommentPage] = useState(1);
+
+  const [commentPage, setCommentPage] = useState(1); // eslint-disable-line
+  // API 에서 아티스트 상세에서 댓글 페이징을 아직 지원하지 않음
 
   const [commentInput, setCommentInput] = useState('');
 
