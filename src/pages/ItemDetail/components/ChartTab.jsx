@@ -29,7 +29,7 @@ const GridItem = styled.div`
   }
 `;
 
-const ChartTab = () => {
+const ChartTab = ({ items }) => {
   const history = useHistory();
 
   const dummyTableData = [
@@ -89,9 +89,10 @@ const ChartTab = () => {
         <Margin size={9} />
 
         <Grid>
-          {_.map(dummyItems, (item) => (
+          {_.map(items, (item) => (
             <GridItem>
               <ItemCard
+                id={item.id}
                 image={item.image}
                 name={item.name}
                 type={item.type}
