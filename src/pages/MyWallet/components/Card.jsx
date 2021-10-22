@@ -1,9 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 
 import icImage from './ic.png';
+import plusImage from './plus.png';
 
 const COLORS = ['#FFC400', '#1864ab', '#5f3dc4', '#a61e4d', '#212529'];
 
@@ -39,21 +38,51 @@ const CardNumber = styled.div`
   font-size: 12px;
 `;
 
-const Card = ({ name, number }) => {
+const AddWrapper = styled(Wrapper)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #7334e4;
+  background-color: #f4efff;
+`;
+
+const Card = ({ name, number, isAdd, onClick }) => {
+  if (isAdd) {
+    return (
+      <AddWrapper onClick={onClick}>
+        <img src={plusImage} />
+      </AddWrapper>
+    );
+  }
+
   const color = COLORS[number % COLORS.length];
 
+  const formattedNumber = String(number).replace(
+    /(\d{4})(\d{4})(\d{4})(\d{2})/,
+    '$1-$2-$3-$4',
+  );
+
   return (
-    <Wrapper color={color}>
+    <Wrapper color={color} onClick={onClick}>
       <IC src={icImage} />
       <CardName>{name}</CardName>
-      <CardNumber>{number}</CardNumber>
+      <CardNumber>{formattedNumber}</CardNumber>
     </Wrapper>
   );
 };
 
 Card.propTypes = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  number: PropTypes.string,
+  isAdd: PropTypes.bool,
+  onClick: PropTypes.func,
+};
+
+Card.defaultProps = {
+  name: '',
+  number: '',
+  isAdd: false,
+  onClick: () => {},
 };
 
 export default Card;

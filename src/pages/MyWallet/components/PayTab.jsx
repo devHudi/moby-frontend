@@ -1,17 +1,10 @@
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import dayjs from 'dayjs';
 import { useIonToast } from '@ionic/react';
 import styled from 'styled-components';
-import {
-  Margin,
-  Padding,
-  Flex,
-  Typography,
-  Divider,
-  Image,
-  HScroll,
-} from 'moby-ui';
+import { Margin, Padding, Flex, Typography, Divider, HScroll } from 'moby-ui';
 
 import Card from './Card';
 
@@ -35,14 +28,6 @@ const ChargeBadge = styled.div`
   font-size: 9px;
 `;
 
-const CreditCard = styled(Image)`
-  margin-right: 15px;
-  flex-basis: 224.82px;
-  min-width: 224.82px;
-  height: 141.8px;
-  border-radius: 10px;
-`;
-
 const Wrapper = styled.div`
   margin-bottom: 10px;
   padding: 13px 20px;
@@ -51,6 +36,8 @@ const Wrapper = styled.div`
 
 const PayTab = ({ balance, cards }) => {
   const [present, dismiss] = useIonToast();
+
+  const history = useHistory();
 
   const onToast = () => {
     present({
@@ -103,33 +90,41 @@ const PayTab = ({ balance, cards }) => {
           {_.map(cards, (card) => (
             <Card name={card.name} number={card.number} />
           ))}
+          <Card isAdd onClick={() => history.push('/my-wallet/add-card')} />
         </HScroll>
         <Margin size={23} />
 
         <Divider />
 
-        {_.map(cards, (card) => (
-          <>
-            <Padding padding={20} left={0} right={0}>
-              <Flex justify="space-between">
-                <Flex>
-                  <Typography size={13} weight="bold">
-                    {card.name}
-                  </Typography>
+        {_.map(cards, (card) => {
+          const formattedNumber = String(card.number).replace(
+            /(\d{4})(\d{4})(\d{4})(\d{2})/,
+            '$1-$2-$3-$4',
+          );
+
+          return (
+            <>
+              <Padding padding={20} left={0} right={0}>
+                <Flex justify="space-between">
+                  <Flex>
+                    <Typography size={13} weight="bold">
+                      {card.name}
+                    </Typography>
+                  </Flex>
+                  <Flex direction="column" align="flex-end">
+                    <Typography size={13} color="#696969">
+                      {formattedNumber}
+                    </Typography>
+                    <Typography size={13} color="#696969">
+                      {dayjs(card.expireDate).format('MM/DD')}
+                    </Typography>
+                  </Flex>
                 </Flex>
-                <Flex direction="column" align="flex-end">
-                  <Typography size={13} color="#696969">
-                    {card.number}
-                  </Typography>
-                  <Typography size={13} color="#696969">
-                    {dayjs(card.expireDate).format('MM/DD')}
-                  </Typography>
-                </Flex>
-              </Flex>
-            </Padding>
-            <Divider />
-          </>
-        ))}
+              </Padding>
+              <Divider />
+            </>
+          );
+        })}
       </Padding>
     </>
   );
