@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -51,23 +52,45 @@ Wrapper.defaultProps = {
   children: null,
 };
 
-const TextField = ({ width, underline, icon, ...props }) => (
-  <Wrapper width={width} underline={underline}>
-    {icon && <Icon>{icon}</Icon>}
-    <Input {...props} />
-  </Wrapper>
-);
+const TextField = ({
+  width,
+  underline,
+  icon,
+  maxLength,
+  onChange,
+  ...props
+}) => {
+  const [value, setValue] = useState();
+
+  const handleChange = (e) => {
+    if (maxLength === null || e.target.value.length <= maxLength) {
+      onChange(e);
+      setValue(e.target.value);
+    }
+  };
+
+  return (
+    <Wrapper width={width} underline={underline}>
+      {icon && <Icon>{icon}</Icon>}
+      <Input value={value} onChange={handleChange} {...props} />
+    </Wrapper>
+  );
+};
 
 TextField.propTypes = {
   width: PropTypes.number,
   underline: PropTypes.bool,
   icon: PropTypes.node,
+  maxLength: PropTypes.number,
+  onChange: PropTypes.func,
 };
 
 TextField.defaultProps = {
   width: null,
   underline: false,
   icon: null,
+  maxLength: null,
+  onChange: () => {},
 };
 
 export default TextField;

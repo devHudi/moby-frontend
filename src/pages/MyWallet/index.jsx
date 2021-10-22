@@ -32,7 +32,7 @@ const MyWallet = () => {
     const { data } = await usersApi.getCurrentUser(jwt);
 
     setItems(
-      _.map(data.productsPurchased, (item) => ({
+      _.map(data?.user?.productsPurchased, (item) => ({
         image: item?.posterSrc,
         name: item?.title,
         date: item?.createdAt,
@@ -45,7 +45,7 @@ const MyWallet = () => {
     );
 
     setCards(
-      _.map(data.cards, (item) => ({
+      _.map(data?.user?.cards, (item) => ({
         name: item?.cardName,
         number: item?.cardNumber,
         expireDate: item?.expired,

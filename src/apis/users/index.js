@@ -12,9 +12,10 @@ export const uploadProfile = (formData, jwt) =>
     headers: getAuthHeader(jwt),
   });
 
-export const appendCard = (jwt) =>
+export const appendCard = (cardNumber, jwt) =>
   service({
-    method: 'GET',
+    method: 'POST',
+    data: { cardNumber },
     url: '/users/cards',
     headers: getAuthHeader(jwt),
   });

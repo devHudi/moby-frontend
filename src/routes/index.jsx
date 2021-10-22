@@ -14,6 +14,7 @@ import {
   Purchase,
   PurchaseSuccess,
   MyWallet,
+  AddCard,
   MyPage,
   Rank,
 } from 'pages';
@@ -89,6 +90,9 @@ const Router = () => (
       </PrivateRoute>
       <PrivateRoute exact path="/my-wallet">
         <MyWallet />
+      </PrivateRoute>
+      <PrivateRoute exact path="/my-wallet/add-card">
+        <AddCard />
       </PrivateRoute>
       <PrivateRoute exact path="/my-page">
         <MyPage />
