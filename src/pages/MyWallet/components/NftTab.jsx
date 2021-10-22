@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 
-import { Padding, Divider } from 'moby-ui';
+import { Padding, Divider, NoContent } from 'moby-ui';
 
 import Item from './Item';
 
@@ -11,6 +11,8 @@ const NftTab = ({ items }) => {
 
   return (
     <>
+      {items.length === 0 && <NoContent height={400} />}
+
       {_.map(items, (item, i) => (
         <>
           <Item

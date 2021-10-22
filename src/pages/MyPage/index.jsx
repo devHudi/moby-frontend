@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { IonPage, IonContent, useIonToast } from '@ionic/react';
@@ -11,8 +12,8 @@ import {
   ItemCard,
   Flex,
   Navigation,
+  NoContent,
 } from 'moby-ui';
-import { useCallback, useEffect, useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import * as users from 'apis/users';
 import * as favs from 'apis/favs';
@@ -87,7 +88,7 @@ const MyPage = () => {
     (productId) => {
       // TODO 누르면 해당 상품 디테일 페이지로 이동
       // TODO history.push(`/items/${productId}`);
-      history.push('/items/dummyId');
+      history.push(`/items/${productId}`);
     },
     [history],
   );
@@ -118,15 +119,17 @@ const MyPage = () => {
 
             <Margin size={12} />
 
+            {favList.length === 0 && <NoContent height={140} />}
+
             <HScroll>
               {_.map(favList, (item) => (
                 <ItemCard
                   key={item.id}
+                  id={item.id}
                   image={item.thumbnailSrc}
                   name={item.title}
                   type={item.isOfficial ? 'official' : 'community'}
                   price={item.currentPrice}
-                  onHeartClick={() => handleHeartClick(item.id)} // TODO
                   onClick={() => handleFavProductClick(item.id)}
                 />
               ))}
