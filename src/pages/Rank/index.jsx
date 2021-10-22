@@ -8,17 +8,6 @@ import * as productsApi from 'apis/products';
 
 import Item from './components/Item';
 
-const dummyRanks = Array.from(Array(10)).map((item, i) => ({
-  rank: i + 1,
-  name: `상품 ${i + 1}`,
-  status: 2,
-  isNew: true,
-  image: 'https://picsum.photos/300/300',
-  sales: 10912342,
-  likes: 12341234,
-  clicks: 2394829,
-}));
-
 const Rank = () => {
   const history = useHistory();
 
@@ -27,8 +16,6 @@ const Rank = () => {
   const getRanking = useCallback(async () => {
     const jwt = localStorage.getItem('jwt');
     const { data } = await productsApi.getProductsWithRakings(10, 1, jwt);
-
-    console.log(data);
 
     const isNews = [
       true,
@@ -51,9 +38,9 @@ const Rank = () => {
         status: statuses[i],
         isNew: isNews[i],
         image: item?.posterSrc,
-        sales: 0,
+        sales: item?.salesRate, // 필드명 변경 가능성 있음
         likes: item?.likesCount,
-        clicks: 0,
+        clicks: item?.clicked,
         onClick: () => history.push('/rank'),
       })),
     );
