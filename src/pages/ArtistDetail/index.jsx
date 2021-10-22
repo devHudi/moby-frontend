@@ -211,7 +211,6 @@ const ArtistDetail = () => {
                 type={item.type}
                 price={item.price}
                 onClick={item.onClick}
-                onHeartClick={item.onHeartClick}
               />
             ))}
           </HScroll>

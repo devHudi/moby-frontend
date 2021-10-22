@@ -87,7 +87,7 @@ const MyPage = () => {
     (productId) => {
       // TODO 누르면 해당 상품 디테일 페이지로 이동
       // TODO history.push(`/items/${productId}`);
-      history.push('/items/dummyId');
+      history.push(`/items/${productId}`);
     },
     [history],
   );
@@ -122,11 +122,11 @@ const MyPage = () => {
               {_.map(favList, (item) => (
                 <ItemCard
                   key={item.id}
+                  id={item.id}
                   image={item.thumbnailSrc}
                   name={item.title}
                   type={item.isOfficial ? 'official' : 'community'}
                   price={item.currentPrice}
-                  onHeartClick={() => handleHeartClick(item.id)} // TODO
                   onClick={() => handleFavProductClick(item.id)}
                 />
               ))}
