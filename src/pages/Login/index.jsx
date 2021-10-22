@@ -4,6 +4,9 @@ import { IonPage, useIonToast } from '@ionic/react';
 import { Flex, LoginTextField, LoginButton, Margin, CheckBox } from 'moby-ui';
 import { useForm } from 'hooks';
 
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 import { auth } from 'apis';
 
 import logoImage from './images/logo.png';
@@ -34,12 +37,16 @@ const Login = () => {
 
   const [present, dismiss] = useIonToast();
 
+  const [, setSpinner] = useRecoilState(spinnerState);
+
   const [form, onChange] = useForm({
     email: '',
     password: '',
   });
 
   const onLogin = async () => {
+    setSpinner(true);
+
     try {
       const { data } = await auth.signIn(form.email, form.password);
       localStorage.setItem('jwt', data.token);
@@ -53,6 +60,8 @@ const Login = () => {
         message: Array.isArray(message) ? message[0] : message,
       });
     }
+
+    setSpinner(false);
   };
 
   const onJoin = () => {

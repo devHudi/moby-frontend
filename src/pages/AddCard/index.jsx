@@ -10,6 +10,10 @@ import {
   Padding,
   Typography,
 } from 'moby-ui';
+
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 import { useForm } from 'hooks';
 
 import * as usersApi from 'apis/users';
@@ -46,6 +50,8 @@ const AddCard = () => {
 
   const [present, dismiss] = useIonToast();
 
+  const [, setSpinner] = useRecoilState(spinnerState);
+
   const jwt = localStorage.getItem('jwt');
 
   const onSubmit = async () => {
@@ -58,6 +64,8 @@ const AddCard = () => {
         message: '모든 정보를 입력해주세요.',
       });
     }
+
+    setSpinner(true);
 
     try {
       await usersApi.appendCard(cardNumber, jwt);
@@ -80,6 +88,8 @@ const AddCard = () => {
         message: Array.isArray(message) ? message[0] : message,
       });
     }
+
+    setSpinner(false);
   };
 
   return (

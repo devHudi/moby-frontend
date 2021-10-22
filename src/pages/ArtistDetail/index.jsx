@@ -19,6 +19,9 @@ import {
   ItemCard,
 } from 'moby-ui';
 
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 import * as usersApi from 'apis/users';
 import * as artistsApi from 'apis/artists';
 import * as productsApi from 'apis/products';
@@ -49,7 +52,10 @@ const ArtistDetail = () => {
 
   const [commentInput, setCommentInput] = useState('');
 
+  const [, setSpinner] = useRecoilState(spinnerState);
+
   const [present, dismiss] = useIonToast();
+
   const showError = useCallback(() => {
     present({
       buttons: [{ text: '확인', handler: () => dismiss() }],
@@ -109,6 +115,8 @@ const ArtistDetail = () => {
 
   const createComment = useCallback(
     async (e) => {
+      setSpinner(true);
+
       if (e.keyCode === 13) {
         const jwt = localStorage.getItem('jwt');
         try {
@@ -135,6 +143,8 @@ const ArtistDetail = () => {
           showError();
         }
       }
+
+      setSpinner(false);
     },
     [commentInput, artistId, showError], // eslint-disable-line
   );
