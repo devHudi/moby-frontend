@@ -10,6 +10,10 @@ import {
   Padding,
   Typography,
 } from 'moby-ui';
+
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 import { useForm } from 'hooks';
 
 import { auth } from 'apis';
@@ -40,8 +44,12 @@ const SignUp = () => {
 
   const [present, dismiss] = useIonToast();
 
+  const [, setSpinner] = useRecoilState(spinnerState);
+
   const onSignUp = async () => {
     const { username, phoneNumber, email, password } = form;
+
+    setSpinner(true);
 
     try {
       await auth.signUp(username, phoneNumber, email, password);
@@ -64,6 +72,8 @@ const SignUp = () => {
         message: Array.isArray(message) ? message[0] : message,
       });
     }
+
+    setSpinner(false);
   };
 
   return (

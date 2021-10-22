@@ -19,6 +19,11 @@ import {
   Rank,
 } from 'pages';
 
+import { Spinner } from 'moby-ui';
+
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 const PublicRoute = ({ ...props }) => {
   const jwt = localStorage.getItem('jwt');
 
@@ -64,44 +69,50 @@ const PrivateRoute = ({ ...props }) => {
   }
 };
 
-const Router = () => (
-  <IonReactRouter>
-    <IonRouterOutlet>
-      <PublicRoute exact path="/login">
-        <Login />
-      </PublicRoute>
-      <PublicRoute exact path="/sign-up">
-        <SignUp />
-      </PublicRoute>
-      <PrivateRoute exact path="/">
-        <MarketPlace />
-      </PrivateRoute>
-      <PrivateRoute exact path="/artists/:artistId">
-        <ArtistDetail />
-      </PrivateRoute>
-      <PrivateRoute exact path="/items/:itemId">
-        <ItemDetail />
-      </PrivateRoute>
-      <PrivateRoute exact path="/purchase">
-        <Purchase />
-      </PrivateRoute>
-      <PrivateRoute exact path="/purchase-success/:id">
-        <PurchaseSuccess />
-      </PrivateRoute>
-      <PrivateRoute exact path="/my-wallet">
-        <MyWallet />
-      </PrivateRoute>
-      <PrivateRoute exact path="/my-wallet/add-card">
-        <AddCard />
-      </PrivateRoute>
-      <PrivateRoute exact path="/my-page">
-        <MyPage />
-      </PrivateRoute>
-      <PrivateRoute exact path="/rank">
-        <Rank />
-      </PrivateRoute>
-    </IonRouterOutlet>
-  </IonReactRouter>
-);
+const Router = () => {
+  const [spinner] = useRecoilState(spinnerState);
+
+  return (
+    <IonReactRouter>
+      {spinner && <Spinner />}
+
+      <IonRouterOutlet>
+        <PublicRoute exact path="/login">
+          <Login />
+        </PublicRoute>
+        <PublicRoute exact path="/sign-up">
+          <SignUp />
+        </PublicRoute>
+        <PrivateRoute exact path="/">
+          <MarketPlace />
+        </PrivateRoute>
+        <PrivateRoute exact path="/artists/:artistId">
+          <ArtistDetail />
+        </PrivateRoute>
+        <PrivateRoute exact path="/items/:itemId">
+          <ItemDetail />
+        </PrivateRoute>
+        <PrivateRoute exact path="/purchase">
+          <Purchase />
+        </PrivateRoute>
+        <PrivateRoute exact path="/purchase-success/:id">
+          <PurchaseSuccess />
+        </PrivateRoute>
+        <PrivateRoute exact path="/my-wallet">
+          <MyWallet />
+        </PrivateRoute>
+        <PrivateRoute exact path="/my-wallet/add-card">
+          <AddCard />
+        </PrivateRoute>
+        <PrivateRoute exact path="/my-page">
+          <MyPage />
+        </PrivateRoute>
+        <PrivateRoute exact path="/rank">
+          <Rank />
+        </PrivateRoute>
+      </IonRouterOutlet>
+    </IonReactRouter>
+  );
+};
 
 export default Router;
