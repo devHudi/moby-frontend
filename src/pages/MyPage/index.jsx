@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { IonPage, IonContent, useIonToast } from '@ionic/react';
@@ -11,8 +12,8 @@ import {
   ItemCard,
   Flex,
   Navigation,
+  NoContent,
 } from 'moby-ui';
-import { useCallback, useEffect, useState } from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import * as users from 'apis/users';
 import * as favs from 'apis/favs';
@@ -117,6 +118,8 @@ const MyPage = () => {
             </Typography>
 
             <Margin size={12} />
+
+            {favList.length === 0 && <NoContent height={140} />}
 
             <HScroll>
               {_.map(favList, (item) => (
