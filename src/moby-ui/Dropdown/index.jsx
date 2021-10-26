@@ -2,16 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
-import {
-  IonModal,
-  IonList,
-  IonRadioGroup,
-  IonRadio,
-  IonListHeader,
-  IonLabel,
-  IonItem,
-  IonButton,
-} from '@ionic/react';
 
 import { GoTriangleDown } from 'react-icons/go';
 
