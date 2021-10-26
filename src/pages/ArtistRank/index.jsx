@@ -32,19 +32,19 @@ const Rank = () => {
     const statuses = [2, 2, 0, 2, 1, 2, 0, 0, 0, 1];
 
     setRanking(
-      _.map(data.artists, (item, i) => ({
+      _.map(data.artists, (artist, i) => ({
+        id: artist?.id,
         rank: i + 1,
-        name: item?.name,
+        name: artist?.name,
         status: statuses[i],
         isNew: isNews[i],
-        image: item?.posterSrc,
-        sales: item?.salesRate, // 필드명 변경 가능성 있음
-        likes: item?.likesCount,
-        clicks: item?.clicked,
-        onClick: () => history.push('/rank'),
+        image: artist?.posterSrc,
+        sales: artist?.salesRate, // 필드명 변경 가능성 있음
+        likes: artist?.likesCount,
+        clicks: artist?.clicked,
       })),
     );
-  }, [history]);
+  }, []);
 
   useEffect(() => {
     getRanking();
@@ -60,19 +60,19 @@ const Rank = () => {
         <Divider />
 
         <Padding padding={30} top={21}>
-          {_.map(ranking, (item) => (
+          {_.map(ranking, (artist) => (
             <Item
-              key={item.rank}
-              rank={item.rank}
-              name={item.name}
-              status={item.status}
-              isNew={item.isNew}
-              image={item.image}
-              sales={item.sales}
-              likes={item.likes}
-              clicks={item.clicks}
-              defaultOpen={item.rank < 4}
-              onClick={() => history.push('/items/dummyId')}
+              key={artist.rank}
+              rank={artist.rank}
+              name={artist.name}
+              status={artist.status}
+              isNew={artist.isNew}
+              image={artist.image}
+              sales={artist.sales}
+              likes={artist.likes}
+              clicks={artist.clicks}
+              defaultOpen={artist.rank < 4}
+              onClick={() => history.push(`/artists/${artist.id}`)}
             />
           ))}
         </Padding>

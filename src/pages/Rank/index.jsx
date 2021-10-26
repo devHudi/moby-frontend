@@ -33,6 +33,7 @@ const Rank = () => {
 
     setRanking(
       _.map(data.products, (item, i) => ({
+        id: item?.id,
         rank: i + 1,
         name: item?.title,
         status: statuses[i],
@@ -72,7 +73,7 @@ const Rank = () => {
               likes={item.likes}
               clicks={item.clicks}
               defaultOpen={item.rank < 4}
-              onClick={() => history.push('/items/dummyId')}
+              onClick={() => history.push(`/items/${item.id}`)}
             />
           ))}
         </Padding>
