@@ -23,7 +23,7 @@ const NftTab = ({ items }) => {
             currentPrice={item.currentPrice}
             holding={item.holding}
             holdingPercentage={item.holdingPercentage}
-            onClick={() => history.push('/items/dummyId')}
+            onClick={() => history.push(`/items/${item.id}`)}
           />
           {i < items.length - 1 && (
             <Padding padding={21} left={0} right={0}>

@@ -39,7 +39,7 @@ const Rank = () => {
         status: statuses[i],
         isNew: isNews[i],
         image: artist?.posterSrc,
-        sales: artist?.salesRate, // 필드명 변경 가능성 있음
+        sales: artist?.quantity,
         likes: artist?.likesCount,
         clicks: artist?.clicked,
       })),
