@@ -16,6 +16,7 @@ import {
   Typography,
   Margin,
   Padding,
+  NoContent,
 } from 'moby-ui';
 
 import * as artistsApi from 'apis/artists';
@@ -175,7 +176,6 @@ const MarketPlace = () => {
           <Margin size={14} />
 
           <Rank items={rankingTab === 0 ? nftRanking : artistRanking} />
-          {/* <Rank items={nftRanking} /> */}
 
           <Margin size={25} />
 
@@ -186,6 +186,8 @@ const MarketPlace = () => {
           />
 
           <Margin size={25} />
+
+          {artists.length === 0 && <NoContent height={300} />}
 
           <ArtistGrid>
             {_.map(artists, (artist) => (
