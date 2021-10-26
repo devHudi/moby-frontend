@@ -22,8 +22,6 @@ const data = {
   ],
 };
 
-console.log(data);
-
 const options = {
   plugins: {
     legend: { display: false },
