@@ -17,6 +17,7 @@ import {
   Navigation,
   HScroll,
   ItemCard,
+  NoContent,
 } from 'moby-ui';
 
 import { useRecoilState } from 'recoil';
@@ -202,6 +203,7 @@ const ArtistDetail = () => {
             </Flex>
           </Typography>
           <Margin size={20} />
+          {products.length === 0 && <NoContent height={150} />}
           <HScroll>
             {_.map(products, (item) => (
               <ItemCard
