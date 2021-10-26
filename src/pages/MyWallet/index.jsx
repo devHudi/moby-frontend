@@ -26,22 +26,36 @@ const MyWallet = () => {
   const [items, setItems] = useState([]);
   const [cards, setCards] = useState([]);
 
+  const [sort, setSort] = useState(0);
+
   const jwt = localStorage.getItem('jwt');
+
+  const sortItems = (data, sortType) => {
+    if (sortType === 0) {
+      return _.sortBy(data, 'date').reverse();
+    }
+
+    return _.sortBy(data, 'currentPrice').reverse();
+  };
 
   const getUser = useCallback(async () => {
     const { data } = await usersApi.getCurrentUser(jwt);
 
     setItems(
-      _.map(data?.user?.productsPurchased, (item) => ({
-        image: item?.posterSrc,
-        name: item?.title,
-        date: item?.createdAt,
-        buyPrice: item?.purchasePrice,
-        currentPrice: item?.currentPrice,
-        holding: item?.holdingQuantity,
-        holdingPercentage: item?.share,
-        onClick: () => history.push(`/items/${item?.id}`),
-      })),
+      sortItems(
+        _.map(data?.user?.productsPurchased, (item) => ({
+          id: item?.id,
+          image: item?.posterSrc,
+          name: item?.title,
+          date: item?.createdAt,
+          buyPrice: item?.purchasePrice,
+          currentPrice: item?.currentPrice,
+          holding: item?.holdingQuantity,
+          holdingPercentage: item?.share,
+          onClick: () => history.push(`/items/${item?.id}`),
+        })),
+        sort,
+      ),
     );
 
     setCards(
@@ -51,7 +65,7 @@ const MyWallet = () => {
         expireDate: item?.expired,
       })),
     );
-  }, [jwt, history]);
+  }, [jwt, history, sort]);
 
   useEffect(() => {
     getUser();
@@ -67,7 +81,12 @@ const MyWallet = () => {
               tabs={['나의 NFT', '간편결제수단']}
               onChange={(i) => setTab(i)}
             />
-            {tab === 0 && <AltDropdown items={['구매순', '가격순']} />}
+            {tab === 0 && (
+              <AltDropdown
+                items={['구매날짜순', '구매가격순']}
+                onChange={(i) => setSort(i)}
+              />
+            )}
           </Flex>
         </Header>
 
