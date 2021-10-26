@@ -39,7 +39,7 @@ const Rank = () => {
         status: statuses[i],
         isNew: isNews[i],
         image: item?.posterSrc,
-        sales: item?.salesRate, // 필드명 변경 가능성 있음
+        sales: item?.quantity,
         likes: item?.likesCount,
         clicks: item?.clicked,
         onClick: () => history.push('/rank'),
