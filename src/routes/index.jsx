@@ -17,6 +17,7 @@ import {
   AddCard,
   MyPage,
   Rank,
+  ArtistRank,
 } from 'pages';
 
 import { Spinner } from 'moby-ui';
@@ -107,8 +108,11 @@ const Router = () => {
         <PrivateRoute exact path="/my-page">
           <MyPage />
         </PrivateRoute>
-        <PrivateRoute exact path="/rank">
+        <PrivateRoute exact path="/rank/nft">
           <Rank />
+        </PrivateRoute>
+        <PrivateRoute exact path="/rank/artist">
+          <ArtistRank />
         </PrivateRoute>
       </IonRouterOutlet>
     </IonReactRouter>
