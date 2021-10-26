@@ -30,8 +30,6 @@ const GridItem = styled.div`
 `;
 
 const ChartTab = ({ items }) => {
-  const history = useHistory();
-
   const dummyTableData = [
     { date: new Date(), quantity: 1, price: 10000 },
     { date: new Date(), quantity: 1, price: 10000 },
@@ -42,33 +40,6 @@ const ChartTab = ({ items }) => {
     { date: new Date(), quantity: 1, price: 10000 },
     { date: new Date(), quantity: 1, price: 10000 },
     { date: new Date(), quantity: 1, price: 10000 },
-  ];
-
-  const dummyItems = [
-    {
-      image: 'https://picsum.photos/300/300',
-      name: 'test',
-      type: 'official',
-      price: 30000,
-      onClick: () => history.push('/items/dummyId1'),
-      onHeartClick: () => {},
-    },
-    {
-      image: 'https://picsum.photos/300/300',
-      name: 'test',
-      type: 'community',
-      price: 30000,
-      onClick: () => history.push('/items/dummyId2'),
-      onHeartClick: () => {},
-    },
-    {
-      image: 'https://picsum.photos/300/300',
-      name: 'test',
-      type: 'official',
-      price: 30000,
-      onClick: () => history.push('/items/dummyId3'),
-      onHeartClick: () => {},
-    },
   ];
 
   return (
