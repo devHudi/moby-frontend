@@ -115,7 +115,7 @@ const MarketPlace = () => {
         name: item?.title,
         isNew: isNews[i],
         status: statuses[i],
-        onClick: () => history.push('/rank'),
+        onClick: () => history.push('/rank/nft'),
       })),
     );
   }, [history]);
@@ -132,7 +132,7 @@ const MarketPlace = () => {
         name: item?.name,
         isNew: isNews[i],
         status: statuses[i],
-        onClick: () => history.push('/rank'),
+        onClick: () => history.push('/rank/artist'),
       })),
     );
   }, [history]);
