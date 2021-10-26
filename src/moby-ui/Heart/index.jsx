@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   display: inline-block;
   color: ${(props) => (props.filled ? '#FF381A' : props.borderColor)};
   font-size: ${(props) => props.size}px;
+  transition: color 0.3s;
 `;
 
 const Heart = ({ filled, borderColor, size, onChange }) => (
