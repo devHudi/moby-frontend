@@ -20,7 +20,11 @@ const Header = ({ agency, marketCap, tradingVolume, heart, onHeartChange }) => (
     <Padding padding={33} top={16} bottom={18}>
       <Flex justify="space-between" align="center">
         <Icon>
-          <Heart filled={heart} onChange={onHeartChange} />
+          <Heart
+            filled={heart}
+            onChange={onHeartChange}
+            borderColor="#E8E8E8"
+          />
         </Icon>
         <Value size={14} align="right">
           {agency}
