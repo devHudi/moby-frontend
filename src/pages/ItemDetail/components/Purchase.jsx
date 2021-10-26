@@ -3,16 +3,33 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import _ from 'lodash';
 
-import { Flex, Divider, Dropdown, Typography, Margin, Button } from 'moby-ui';
+import {
+  Flex,
+  Divider,
+  Dropdown,
+  Typography,
+  Margin,
+  Button,
+  Modal,
+  TextField,
+} from 'moby-ui';
+
+const PriceField = styled(Typography)`
+  max-width: 100px;
+  text-overflow: ellipsis;
+  display: inline;
+  white-space: nowrap;
+  overflow: hidden;
+`;
 
 const ButtonWrapper = ({ name, price, label, disabled, onClick }) => (
   <Flex direction="column" align="center">
     <Typography size={5} color="#4C4C4C">
       {name}
     </Typography>
-    <Typography size={12} weight="bold">
-      {price.toLocaleString()}
-    </Typography>
+    <PriceField size={12} weight="bold">
+      {Number(price).toLocaleString()}
+    </PriceField>
     <Margin size={5} />
     <Button width={90} onClick={onClick} disabled={disabled}>
       {label}
@@ -41,6 +58,7 @@ const PriceTextFieldWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   border-bottom: 1px solid #000000;
+  letter-spacing: -1px;
 `;
 
 const FixedPrice = ({ price, onClick }) => (
@@ -92,35 +110,57 @@ const RightWrapper = styled(Flex)`
 `;
 
 const Purchase = ({
+  itemId,
   defaultBuyPrice,
   defaultSellPrice,
   type,
-  onBuy,
-  onSell, // eslint-disable-line
+  onOfficialBuy,
+  onCommunityBuy,
+  onCommunitySell,
 }) => {
-  const [quantity, setQuantity] = useState(1); // eslint-disable-line
+  const [quantity, setQuantity] = useState(1);
 
-  // 하단 4개의 state 는 community 판매에서 구매, 판매 금액을 직접 설정할 수 있는 UI 가 추가되면 사용될 예정
-
-  const [buyOpen, setBuyOpen] = useState(false); // eslint-disable-line
-  const [sellOpen, setSellOpen] = useState(false); // eslint-disable-line
-  const [buyPrice, setBuyPrice] = useState(defaultBuyPrice); // eslint-disable-line
-  const [sellPrice, setSellPrice] = useState(defaultSellPrice); // eslint-disable-line
-
-  const onOfficialBuy = () => {
-    onBuy('dummyItemId', quantity, buyPrice); // 상품 ID, 수량, 최종가격
-  };
-
-  const onCommunityBuy = () => {
-    setBuyOpen(true);
-  };
-
-  const onCommunitySell = () => {
-    setSellOpen(true);
-  };
+  const [buyOpen, setBuyOpen] = useState(false);
+  const [sellOpen, setSellOpen] = useState(false);
+  const [buyPrice, setBuyPrice] = useState(defaultBuyPrice);
+  const [sellPrice, setSellPrice] = useState(defaultSellPrice);
 
   return (
     <>
+      {(buyOpen || sellOpen) && (
+        <Modal
+          title={buyOpen ? '구매' : '판매'}
+          onConfirm={() => {
+            if (buyOpen) {
+              setBuyOpen(false);
+              onCommunityBuy(itemId, quantity, buyPrice);
+            } else {
+              setSellOpen(false);
+              onCommunitySell(itemId, quantity, sellPrice);
+            }
+          }}
+          onCancel={() => {
+            if (buyOpen) setBuyOpen(false);
+            else setSellOpen(false);
+          }}
+        >
+          <Flex align="center" justify="center">
+            <TextField
+              type="number"
+              underline
+              width={50}
+              defaultValue={buyOpen ? buyPrice : sellPrice}
+              onChange={(e) => {
+                const { value } = e.target;
+                if (buyOpen) setBuyPrice(value);
+                else setSellPrice(value);
+              }}
+            />
+            KRW
+          </Flex>
+        </Modal>
+      )}
+
       <Wrapper justify="space-between" align="center">
         <DropdownWrapper>
           <Dropdown items={_.range(1, 11)} onChange={(n) => setQuantity(n)} />
@@ -131,10 +171,10 @@ const Purchase = ({
 
           {type === 'community' && (
             <ButtonWrapper
-              name="즉시구매가"
-              price={sellPrice}
+              name="구매가"
+              price={buyPrice || '0'}
               label="구매하기"
-              onClick={onCommunityBuy}
+              onClick={() => setBuyOpen(true)}
             />
           )}
         </LeftWrapper>
@@ -145,18 +185,18 @@ const Purchase = ({
           {type === 'official' && (
             <ButtonWrapper
               name="총액"
-              price={buyPrice}
+              price={buyPrice || '0'}
               label="구매하기"
-              onClick={onOfficialBuy}
+              onClick={() => onOfficialBuy(itemId, quantity, buyPrice)}
             />
           )}
 
           {type === 'community' && (
             <ButtonWrapper
-              name="즉시판매가"
-              price={sellPrice}
+              name="판매가"
+              price={sellPrice || '0'}
               label="판매하기"
-              onClick={onCommunitySell}
+              onClick={() => setSellOpen(true)}
             />
           )}
         </RightWrapper>
@@ -166,19 +206,22 @@ const Purchase = ({
 };
 
 Purchase.propTypes = {
+  itemId: PropTypes.string.isRequired,
   defaultBuyPrice: PropTypes.number,
   defaultSellPrice: PropTypes.number,
   type: PropTypes.oneOf(['official', 'community']),
-  onBuy: PropTypes.func,
-  onSell: PropTypes.func,
+  onOfficialBuy: PropTypes.func,
+  onCommunityBuy: PropTypes.func,
+  onCommunitySell: PropTypes.func,
 };
 
 Purchase.defaultProps = {
   defaultBuyPrice: 0,
   defaultSellPrice: 0,
   type: 'official',
-  onBuy: () => console.log('on buy'),
-  onSell: () => console.log('on sell'),
+  onOfficialBuy: () => console.log('on buy'),
+  onCommunityBuy: () => console.log('on buy'),
+  onCommunitySell: () => console.log('on sell'),
 };
 
 export default Purchase;

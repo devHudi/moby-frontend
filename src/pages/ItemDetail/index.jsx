@@ -103,11 +103,17 @@ const ItemDetail = () => {
         </Padding>
 
         <Purchase
+          itemId={itemId}
           type={item?.isOfficial ? 'official' : 'community'}
-          defaultBuyPrice={1234}
-          defaultSellPrice={4321}
-          onBuy={onBuy}
-          onSell={onSell}
+          defaultBuyPrice={21000}
+          defaultSellPrice={19000}
+          onOfficialBuy={onBuy}
+          onCommunityBuy={(id, quantity, buyPrice) =>
+            console.log('커뮤니티 구매', id, quantity, buyPrice)
+          }
+          onCommunitySell={(id, quantity, buyPrice) =>
+            console.log('커뮤니티 판매', id, quantity, buyPrice)
+          }
         />
         <Margin size={90} />
       </IonContent>
