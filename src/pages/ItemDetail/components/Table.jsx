@@ -12,6 +12,7 @@ const RowWrapper = styled.div`
 `;
 
 const Column = styled.div`
+  padding: 0 10px;
   text-align: center;
   flex-basis: 33.333%;
   text-align: ${(props) => props.align || 'center'};
@@ -46,22 +47,26 @@ Row.defaultProps = {
 const TableWrapper = styled.div``;
 
 const Table = ({ data }) => (
-  <TableWrapper>
-    <Row header date="거래일" quantity="수량" price="거래가" />
+  <>
+    <Margin size={10} />
+    <TableWrapper>
+      <Row header date="거래일" quantity="수량" price="거래가" />
 
-    <Margin size={8} />
-    <Divider />
-    <Margin size={7} />
+      <Margin size={8} />
+      <Divider />
+      <Margin size={7} />
 
-    {_.map(data, (row) => (
-      <>
-        <Row row={row.date} quantity={row.quantity} price={row.price} />
-        <Margin size={3} />
-      </>
-    ))}
+      {_.map(data, (row) => (
+        <>
+          <Row row={row.date} quantity={row.quantity} price={row.price} />
+          <Margin size={3} />
+        </>
+      ))}
 
-    <Divider />
-  </TableWrapper>
+      <Margin size={5} />
+      <Divider />
+    </TableWrapper>
+  </>
 );
 
 Table.propTypes = {
