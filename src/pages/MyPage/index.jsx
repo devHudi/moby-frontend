@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
-import { IonPage, IonContent, useIonToast } from '@ionic/react';
+import {
+  IonPage,
+  IonContent,
+  useIonToast,
+  useIonViewWillEnter,
+} from '@ionic/react';
 import {
   Header,
   Typography,
@@ -22,7 +27,6 @@ import Profile from './components/Profile';
 const MyPage = () => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
-  const [isReady, setIsReady] = useState(false);
   const [user, setUser] = useState(null); // null or UserDTO
   const [favList, setFavList] = useState(null); // null or FavDTO
 
@@ -45,10 +49,8 @@ const MyPage = () => {
       localStorage.removeItem('jwt');
       history('/login');
     }
-    setIsReady(true);
   }, [history]);
-
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     getCurrentUser();
   }, [getCurrentUser]);
 
@@ -71,19 +73,6 @@ const MyPage = () => {
     });
   };
 
-  const handleHeartClick = useCallback(async (productId) => {
-    // TODO 하트 클릭하면 채워진 하트가 지워지고 fav에서 리스트 제거
-    try {
-      // TODO fav.deleteFav api 사용
-    } catch (error) {
-      // present({
-      //   buttons: [{ text: '확인', handler: () => dismiss() }],
-      //   duration: 2000,
-      //   message: '',
-      // });
-    }
-  }, []);
-
   const handleFavProductClick = useCallback(
     (productId) => {
       // TODO 누르면 해당 상품 디테일 페이지로 이동
@@ -92,120 +81,117 @@ const MyPage = () => {
     },
     [history],
   );
+
   return (
     <IonPage>
-      {isReady ? (
-        <IonContent>
-          <Header title="My Page" />
-          <Margin size={7} />
+      <IonContent>
+        <Header title="My Page" />
+        <Margin size={7} />
 
-          <Profile
-            name={user.username}
-            email={user.email}
-            thumbnailSrc={user.profileImageSrc}
-            favArtistName={
-              user.bestOfArtistName
-                ? user.bestOfArtistName
-                : '당신의 아티스트를 Pick 해주세요!'
-            }
-            holding={user.productsPurchased.length} // 보유 NFT 수량
-            balance={user.money} // 잔액
-          />
+        <Profile
+          name={user?.username}
+          email={user?.email}
+          thumbnailSrc={user?.profileImageSrc}
+          favArtistName={
+            user?.bestOfArtistName
+              ? user?.bestOfArtistName
+              : '당신의 아티스트를 Pick 해주세요!'
+          }
+          holding={user?.productsPurchased.length} // 보유 NFT 수량
+          balance={user?.money} // 잔액
+        />
 
-          <Padding padding={26} top={20} bottom={13}>
+        <Padding padding={26} top={20} bottom={13}>
+          <Typography size={14} weight="bold">
+            내가 좋아하는 NFT
+          </Typography>
+
+          <Margin size={12} />
+
+          {favList?.length === 0 && <NoContent height={140} />}
+
+          <HScroll>
+            {_.map(favList, (item) => (
+              <ItemCard
+                key={item.id}
+                id={item.id}
+                image={item.thumbnailSrc}
+                name={item.title}
+                type={item.isOfficial ? 'official' : 'community'}
+                price={item.currentPrice}
+                onClick={() => handleFavProductClick(item.id)}
+              />
+            ))}
+          </HScroll>
+        </Padding>
+
+        <Divider />
+
+        <Padding padding={18}>
+          <Padding padding={5} bottom={13}>
             <Typography size={14} weight="bold">
-              내가 좋아하는 NFT
+              앱 설정
             </Typography>
-
-            <Margin size={12} />
-
-            {favList.length === 0 && <NoContent height={140} />}
-
-            <HScroll>
-              {_.map(favList, (item) => (
-                <ItemCard
-                  key={item.id}
-                  id={item.id}
-                  image={item.thumbnailSrc}
-                  name={item.title}
-                  type={item.isOfficial ? 'official' : 'community'}
-                  price={item.currentPrice}
-                  onClick={() => handleFavProductClick(item.id)}
-                />
-              ))}
-            </HScroll>
           </Padding>
 
           <Divider />
 
-          <Padding padding={18}>
-            <Padding padding={5} bottom={13}>
-              <Typography size={14} weight="bold">
-                앱 설정
-              </Typography>
-            </Padding>
-
-            <Divider />
-
-            <Padding padding={5}>
-              <Typography size={13} onClick={onToast}>
-                <Padding padding={10} left={0} right={0}>
-                  <Flex justify="space-between" align="center">
-                    알림 설정 <MdKeyboardArrowRight />
-                  </Flex>
-                </Padding>
-              </Typography>
-              <Typography size={13} onClick={onToast}>
-                <Padding padding={10} left={0} right={0}>
-                  <Flex justify="space-between" align="center">
-                    암호 잠금 <MdKeyboardArrowRight />
-                  </Flex>
-                </Padding>
-              </Typography>
-              <Typography size={13} onClick={onToast}>
-                <Padding padding={10} left={0} right={0}>
-                  <Flex justify="space-between" align="center">
-                    캐시 삭제 <MdKeyboardArrowRight />
-                  </Flex>
-                </Padding>
-              </Typography>
-              <Typography size={13} onClick={onLogout}>
-                <Padding padding={10} left={0} right={0}>
-                  <Flex
-                    style={{ cursor: 'pointer' }}
-                    justify="space-between"
-                    align="center"
-                  >
-                    로그 아웃 <MdKeyboardArrowRight />
-                  </Flex>
-                </Padding>
-              </Typography>
-            </Padding>
-
-            <Divider />
-
-            <Padding padding={5}>
+          <Padding padding={5}>
+            <Typography size={13} onClick={onToast}>
               <Padding padding={10} left={0} right={0}>
-                <Typography size={13} onClick={onToast}>
-                  <Flex justify="space-between" align="center">
-                    <a
-                      href="https://moby-privacy.netlify.app/"
-                      rel="noopener noreferrer"
-                    >
-                      개인정보 처리 방침
-                    </a>
-                  </Flex>
-                </Typography>
+                <Flex justify="space-between" align="center">
+                  알림 설정 <MdKeyboardArrowRight />
+                </Flex>
               </Padding>
-            </Padding>
+            </Typography>
+            <Typography size={13} onClick={onToast}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex justify="space-between" align="center">
+                  암호 잠금 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
+            <Typography size={13} onClick={onToast}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex justify="space-between" align="center">
+                  캐시 삭제 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
+            <Typography size={13} onClick={onLogout}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex
+                  style={{ cursor: 'pointer' }}
+                  justify="space-between"
+                  align="center"
+                >
+                  로그 아웃 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
           </Padding>
 
-          <Navigation />
-          <Margin size={90} />
-        </IonContent>
-      ) : (
-        'loading...'
-      )}
+          <Divider />
+
+          <Padding padding={5}>
+            <Padding padding={10} left={0} right={0}>
+              <Typography size={13} onClick={onToast}>
+                <Flex justify="space-between" align="center">
+                  <a
+                    href="https://moby-privacy.netlify.app/"
+                    rel="noopener noreferrer"
+                  >
+                    개인정보 처리 방침
+                  </a>
+                </Flex>
+              </Typography>
+            </Padding>
+          </Padding>
+        </Padding>
+
+        <Navigation />
+        <Margin size={90} />
+      </IonContent>
     </IonPage>
   );
 };
