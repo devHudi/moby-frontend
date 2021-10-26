@@ -19,6 +19,7 @@ const TabItem = styled.div`
   flex-basis: 18%;
   border-radius: 30px;
   background-color: ${(props) => (props.activated ? '#5000df' : 'transparent')};
+  transition: background-color 0.2s;
 `;
 
 const TabText = styled.div`
