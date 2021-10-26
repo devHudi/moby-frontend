@@ -2,7 +2,7 @@ import { Route, Redirect } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import dayjs from 'dayjs';
 
-import { IonRouterOutlet, useIonToast } from '@ionic/react';
+import { IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 import {
@@ -43,15 +43,6 @@ const PublicRoute = ({ ...props }) => {
 };
 
 const PrivateRoute = ({ ...props }) => {
-  const [present, dismiss] = useIonToast();
-
-  const alert = () =>
-    present({
-      buttons: [{ text: '확인', handler: () => dismiss() }],
-      duration: 2000,
-      message: '로그인이 필요합니다.',
-    });
-
   const jwt = localStorage.getItem('jwt');
 
   try {
@@ -59,13 +50,11 @@ const PrivateRoute = ({ ...props }) => {
     const isExpired = dayjs(new Date()).isAfter(new Date(exp * 1000));
 
     if (isExpired) {
-      alert();
       return <Redirect to="/login" />;
     }
 
     return <Route {...props} />;
   } catch {
-    alert();
     return <Redirect to="/login" />;
   }
 };
