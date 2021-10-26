@@ -43,7 +43,7 @@ const TitleText = styled.div`
 `;
 
 const ChartWrapper = styled.div`
-  padding: 4px;
+  padding: 15px;
   border: 1px solid #e8e8e8;
 `;
 
