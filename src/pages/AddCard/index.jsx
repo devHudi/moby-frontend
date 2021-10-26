@@ -76,6 +76,8 @@ const AddCard = () => {
         message: '카드 등록에 성공하였습니다.',
       });
 
+      reset();
+
       history.push('/my-wallet');
 
       reset();
@@ -120,6 +122,7 @@ const AddCard = () => {
               underline
               name="cardNumber"
               maxLength={6}
+              defaultValue={form.cardNumber}
               onChange={onChange}
             />
             <Margin size={10} />
@@ -136,6 +139,7 @@ const AddCard = () => {
               underline
               name="expiredDate"
               maxLength={4}
+              defaultValue={form.expiredDate}
               onChange={onChange}
             />
             <Margin size={20} />
@@ -147,6 +151,7 @@ const AddCard = () => {
               underline
               name="cvc"
               maxLength={3}
+              value={form.cvc}
               onChange={onChange}
             />
             <Margin size={50} />

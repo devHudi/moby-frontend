@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -57,10 +57,15 @@ const TextField = ({
   underline,
   icon,
   maxLength,
+  defaultValue,
   onChange,
   ...props
 }) => {
   const [value, setValue] = useState();
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   const handleChange = (e) => {
     if (maxLength === null || e.target.value.length <= maxLength) {
@@ -82,6 +87,7 @@ TextField.propTypes = {
   underline: PropTypes.bool,
   icon: PropTypes.node,
   maxLength: PropTypes.number,
+  defaultValue: PropTypes.string,
   onChange: PropTypes.func,
 };
 
@@ -90,6 +96,7 @@ TextField.defaultProps = {
   underline: false,
   icon: null,
   maxLength: null,
+  defaultValue: null,
   onChange: () => {},
 };
 

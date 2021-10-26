@@ -55,7 +55,7 @@ const MyWallet = () => {
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, [getUser, history.location]);
 
   return (
     <IonPage>
