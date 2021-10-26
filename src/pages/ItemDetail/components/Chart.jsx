@@ -22,8 +22,6 @@ const data = {
   ],
 };
 
-console.log(data);
-
 const options = {
   plugins: {
     legend: { display: false },
@@ -45,7 +43,7 @@ const TitleText = styled.div`
 `;
 
 const ChartWrapper = styled.div`
-  padding: 4px;
+  padding: 15px;
   border: 1px solid #e8e8e8;
 `;
 
