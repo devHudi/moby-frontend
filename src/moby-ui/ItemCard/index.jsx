@@ -92,7 +92,7 @@ const ItemCard = ({ id, image, name, type, price, onClick }) => {
       </ItemImage>
       <Margin size={10} />
 
-      <Flex justify="space-between" align="center">
+      <Flex justify="space-between" align="flex-start">
         <ItemName>{name}</ItemName>
         <ItemType>| {ITEM_TYPES[type]}</ItemType>
       </Flex>
