@@ -41,6 +41,8 @@ const ItemName = styled.div`
 const ItemType = styled.div`
   font-size: 10px;
   color: #444444;
+  flex-basis: 100px;
+  text-align: right;
 `;
 
 const ItemPrice = styled.div`
