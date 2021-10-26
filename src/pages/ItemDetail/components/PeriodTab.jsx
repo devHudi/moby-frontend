@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useIonToast } from '@ionic/react';
 
 const Wrapper = styled.div`
   margin: 10px 0;
@@ -39,53 +38,48 @@ const Divider = styled.div`
   border-left: 1px solid #ffffff;
 `;
 
-const PeriodTab = ({ onChange }) => {
-  const [tab, setTab] = useState(0);
+const PeriodTab = () => {
+  const [present, dismiss] = useIonToast();
 
-  const onTabClick = (i) => {
-    setTab(i);
-    onChange(i);
+  const onToast = () => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '거래 데이터가 1개월 이상 존재하지 않습니다.',
+    });
   };
 
   return (
     <Wrapper>
-      <TabItem activated={tab === 0} onClick={() => onTabClick(0)}>
+      <TabItem activated>
         <TabText>1개월</TabText>
       </TabItem>
       <DividerWrapper>
         <Divider />
       </DividerWrapper>
-      <TabItem activated={tab === 1} onClick={() => onTabClick(1)}>
+      <TabItem onClick={onToast}>
         <TabText>3개월</TabText>
       </TabItem>
       <DividerWrapper>
         <Divider />
       </DividerWrapper>
-      <TabItem activated={tab === 2} onClick={() => onTabClick(2)}>
+      <TabItem onClick={onToast}>
         <TabText>6개월</TabText>
       </TabItem>
       <DividerWrapper>
         <Divider />
       </DividerWrapper>
-      <TabItem activated={tab === 3} onClick={() => onTabClick(3)}>
+      <TabItem onClick={onToast}>
         <TabText>1년</TabText>
       </TabItem>
       <DividerWrapper>
         <Divider />
       </DividerWrapper>
-      <TabItem activated={tab === 4} onClick={() => onTabClick(4)}>
+      <TabItem onClick={onToast}>
         <TabText>전체</TabText>
       </TabItem>
     </Wrapper>
   );
-};
-
-PeriodTab.propTypes = {
-  onChange: PropTypes.func,
-};
-
-PeriodTab.defaultProps = {
-  onChange: (i) => console.log(`Tab Changed ${i}`),
 };
 
 export default PeriodTab;

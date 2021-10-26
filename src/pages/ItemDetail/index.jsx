@@ -64,10 +64,10 @@ const ItemDetail = () => {
     });
   };
 
-  const onSell = (id, quantity, totalPrice) => {
-    // selling logic here
-    console.log(`${id}, ${quantity} 개를 총 ${totalPrice} 원 에 판매`);
-  };
+  // const onSell = (id, quantity, totalPrice) => {
+  //   // selling logic here
+  //   console.log(`${id}, ${quantity} 개를 총 ${totalPrice} 원 에 판매`);
+  // };
 
   useEffect(() => {
     getProduct();
