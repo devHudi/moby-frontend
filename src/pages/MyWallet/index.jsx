@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, useIonViewWillEnter } from '@ionic/react';
 import {
   Header,
   Divider,
@@ -13,6 +13,7 @@ import {
   AltDropdown,
 } from 'moby-ui';
 
+import * as transactionsApi from 'apis/transactions';
 import * as usersApi from 'apis/users';
 
 import NftTab from './components/NftTab';
@@ -24,6 +25,7 @@ const MyWallet = () => {
   const [tab, setTab] = useState(0);
 
   const [items, setItems] = useState([]);
+  const [balance, setBalance] = useState(0);
   const [cards, setCards] = useState([]);
 
   const [sort, setSort] = useState(0);
@@ -38,12 +40,13 @@ const MyWallet = () => {
     return _.sortBy(data, 'currentPrice').reverse();
   };
 
-  const getUser = useCallback(async () => {
-    const { data } = await usersApi.getCurrentUser(jwt);
+  const getData = useCallback(async () => {
+    const { data: transactionsData } = await transactionsApi.getMyWallet(jwt);
+    const { data: userData } = await usersApi.getCurrentUser(jwt);
 
     setItems(
       sortItems(
-        _.map(data?.user?.productsPurchased, (item) => ({
+        _.map(transactionsData?.products, (item) => ({
           id: item?.id,
           image: item?.posterSrc,
           name: item?.title,
@@ -58,8 +61,10 @@ const MyWallet = () => {
       ),
     );
 
+    setBalance(userData?.user?.money);
+
     setCards(
-      _.map(data?.user?.cards, (item) => ({
+      _.map(userData?.user?.cards, (item) => ({
         name: item?.cardName,
         number: item?.cardNumber,
         expireDate: item?.expired,
@@ -67,9 +72,9 @@ const MyWallet = () => {
     );
   }, [jwt, history, sort]);
 
-  useEffect(() => {
-    getUser();
-  }, [getUser, history.location]);
+  useIonViewWillEnter(() => {
+    getData();
+  }, [getData, history.location]);
 
   return (
     <IonPage>
@@ -99,7 +104,7 @@ const MyWallet = () => {
           </>
         )}
 
-        {tab === 1 && <PayTab cards={cards} />}
+        {tab === 1 && <PayTab balance={balance} cards={cards} />}
 
         <Navigation />
         <Margin size={90} />

@@ -26,6 +26,7 @@ const Background = styled.div`
   background-image: url(${backgroundImage});
   background-size: cover;
   background-position: bottom;
+  background-color: #ffffff;
 `;
 
 const Logo = styled.img`

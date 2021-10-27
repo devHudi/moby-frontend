@@ -1,5 +1,12 @@
 import { getAuthHeader, service } from 'apis/utils';
 
+export const getMyWallet = (jwt) =>
+  service({
+    method: 'GET',
+    url: '/transactions/wallet',
+    headers: getAuthHeader(jwt),
+  });
+
 export const addTransaction = (productId, price, quantity, jwt) =>
   service({
     method: 'POST',
