@@ -64,11 +64,6 @@ const ItemDetail = () => {
     });
   };
 
-  // const onSell = (id, quantity, totalPrice) => {
-  //   // selling logic here
-  //   console.log(`${id}, ${quantity} 개를 총 ${totalPrice} 원 에 판매`);
-  // };
-
   useEffect(() => {
     getProduct();
   }, [getProduct]);
@@ -101,8 +96,6 @@ const ItemDetail = () => {
           {tab === 0 && <ChartTab items={recommendedItems} />}
           {tab === 1 && <DetailTab images={[item?.detailImgSrc]} />}
         </Padding>
-
-        {console.log(item)}
 
         <Purchase
           itemId={itemId}
