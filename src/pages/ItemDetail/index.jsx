@@ -93,7 +93,7 @@ const ItemDetail = () => {
 
           <Margin size={17} />
 
-          {tab === 0 && <ChartTab items={recommendedItems} />}
+          {tab === 0 && <ChartTab itemId={itemId} items={recommendedItems} />}
           {tab === 1 && <DetailTab images={[item?.detailImgSrc]} />}
         </Padding>
 

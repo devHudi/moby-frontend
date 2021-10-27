@@ -1,8 +1,12 @@
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
 
 import { Margin, Padding, ItemCard, Typography, NoContent } from 'moby-ui';
+
+import * as transactionsApi from 'apis/transactions';
+
 import Chart from './Chart';
 import Table from './Table';
 
@@ -29,28 +33,42 @@ const GridItem = styled.div`
   }
 `;
 
-const ChartTab = ({ items }) => {
-  const dummyTableData = [
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-    { date: new Date(), quantity: 1, price: 10000 },
-  ];
+const ChartTab = ({ itemId, items }) => {
+  const jwt = localStorage.getItem('jwt');
 
-  console.log({ items });
+  const [tableData, setTableData] = useState([]);
+  const [chartData, setChartData] = useState([]);
+
+  const getTransactionData = useCallback(async () => {
+    const { data } = await transactionsApi.getChart(itemId, jwt);
+
+    setTableData(
+      _.map(data, (row) => ({
+        date: new Date(row.date),
+        quantity: row.count,
+        price: row.price,
+      })),
+    );
+
+    setChartData(
+      _.map(data, (transaction) => ({
+        date: transaction.date,
+        price: transaction.price,
+      })),
+    );
+  }, [itemId, jwt]);
+
+  useEffect(() => {
+    getTransactionData();
+  }, [getTransactionData]);
 
   return (
     <div>
-      <Chart />
+      <Chart data={chartData} />
 
       <Margin size={7} />
 
-      <Table data={dummyTableData} />
+      <Table data={tableData} />
 
       <Margin size={20} />
 
@@ -82,6 +100,7 @@ const ChartTab = ({ items }) => {
 };
 
 ChartTab.propTypes = {
+  itemId: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
