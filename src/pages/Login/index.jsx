@@ -64,6 +64,14 @@ const Login = () => {
     setSpinner(false);
   };
 
+  const onFind = () => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '아직 지원하지 않는 기능입니다.',
+    });
+  };
+
   const onJoin = () => {
     history.push('/sign-up');
   };
@@ -103,10 +111,12 @@ const Login = () => {
           </ButtonWrapper>
           <Margin size={15} />
 
-          <CheckBox> 로그인 상태 유지</CheckBox>
+          <CheckBox onClick={onFind}> 로그인 상태 유지</CheckBox>
           <Margin size="150" />
 
-          <FindAccount>아이디 / 비밀번호 찾기 {'>'}</FindAccount>
+          <FindAccount onClick={onFind}>
+            아이디 / 비밀번호 찾기 {'>'}
+          </FindAccount>
         </StyledFlex>
       </Gradient>
     </IonPage>
