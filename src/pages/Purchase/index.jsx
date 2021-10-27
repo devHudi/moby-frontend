@@ -61,7 +61,7 @@ const Purchase = () => {
     try {
       const { data } = await transactionsApi.addTransaction(
         cart.itemId,
-        cart.totalPrice,
+        cart.totalPrice / cart.quantity,
         cart.quantity,
         jwt,
       );
