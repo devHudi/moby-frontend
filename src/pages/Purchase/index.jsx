@@ -59,9 +59,15 @@ const Purchase = () => {
   const onPurchase = useCallback(async () => {
     setSpinner(true);
     try {
-      await transactionsApi.addTransaction(cart.itemId, jwt);
+      const { data } = await transactionsApi.addTransaction(
+        cart.itemId,
+        cart.totalPrice,
+        cart.quantity,
+        jwt,
+      );
+
       toast('결제에 성공하였습니다.');
-      history.push('/');
+      history.push(`/purchase-success/${data.transactionId}`);
     } catch (error) {
       const { message } = error.response.data;
       toast(`${message} 잠시 후 다시 시도해주세요.`);
