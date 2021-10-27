@@ -35,6 +35,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "react-slick": "^0.28.1",
+    "recharts": "^2.1.6",
     "recoil": "^0.4.1",
     "styled-components": "^5.3.1",
     "typescript": "^4.1.3",
