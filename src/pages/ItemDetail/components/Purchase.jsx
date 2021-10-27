@@ -193,7 +193,7 @@ const Purchase = ({
           {type === 'official' && (
             <ButtonWrapper
               name="총액"
-              price={buyPrice || '0'}
+              price={buyPrice * quantity || '0'}
               label="구매하기"
               onClick={() => onOfficialBuy(itemId, quantity, buyPrice)}
             />
