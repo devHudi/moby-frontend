@@ -1,8 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, useIonToast } from '@ionic/react';
 import { AiOutlineSearch, AiOutlineHeart } from 'react-icons/ai';
+
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
 
 import {
   Header,
@@ -19,6 +22,7 @@ import {
   NoContent,
 } from 'moby-ui';
 
+import * as commentsApi from 'apis/comments';
 import * as artistsApi from 'apis/artists';
 import * as productsApi from 'apis/products';
 
@@ -34,8 +38,22 @@ const MarketPlace = () => {
   const [keyword, setKeyword] = useState('');
   const [artists, setArtists] = useState([]);
 
+  const [commentInput, setCommentInput] = useState('');
+
   const [comments, setComments] = useState([]);
   const [commentPage, setCommentPage] = useState(1);
+
+  const [, setSpinner] = useRecoilState(spinnerState);
+
+  const [present, dismiss] = useIonToast();
+
+  const showError = useCallback(() => {
+    present({
+      buttons: [{ text: '확인', handler: () => dismiss() }],
+      duration: 2000,
+      message: '알 수 없는 에러가 발생하였습니다.',
+    });
+  }, [present, dismiss]);
 
   const initArtists = useCallback(async () => {
     const jwt = localStorage.getItem('jwt');
@@ -137,6 +155,42 @@ const MarketPlace = () => {
     );
   }, [history]);
 
+  const createComment = useCallback(
+    async (e) => {
+      setSpinner(true);
+
+      if (e.keyCode === 13) {
+        const jwt = localStorage.getItem('jwt');
+        try {
+          await commentsApi.commentAll(commentInput, jwt);
+
+          setCommentInput('');
+
+          const { data } = await artistsApi.getAllArtistCommentsWithPagenation(
+            1,
+            1,
+            jwt,
+          );
+          setComments([
+            {
+              id: data?.comments[0]?.id,
+              image: data?.comments[0]?.author?.profileImageSrc,
+              name: data?.comments[0]?.author?.username,
+              content: data?.comments[0]?.contents,
+              date: data?.comments[0]?.createdAt,
+            },
+            ...comments,
+          ]);
+        } catch {
+          showError();
+        }
+      }
+
+      setSpinner(false);
+    },
+    [commentInput, showError], // eslint-disable-line
+  );
+
   useEffect(() => {
     if (keyword === '') initArtists();
     else searchArtists(keyword);
@@ -204,7 +258,9 @@ const MarketPlace = () => {
           <TextField
             placeholder="아티스트를 위한 응원의 댓글을 남겨주세요!"
             icon={<AiOutlineHeart />}
-            disabled
+            value={commentInput}
+            onChange={(e) => setCommentInput(e.target.value)}
+            onKeyUp={_.throttle(createComment, 1000)}
           />
 
           <Margin size={21} />
