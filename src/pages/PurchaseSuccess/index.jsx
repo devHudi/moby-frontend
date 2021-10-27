@@ -1,5 +1,6 @@
+import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { IonPage, IonContent } from '@ionic/react';
 import {
   AltHeader,
@@ -11,6 +12,8 @@ import {
 } from 'moby-ui';
 
 import { MdKeyboardArrowRight } from 'react-icons/md';
+
+import * as transactionApis from 'apis/transactions';
 
 import checkIcon from './images/check.png';
 
@@ -25,6 +28,21 @@ const Message = styled(Typography)`
 
 const PurchaseSuccess = () => {
   const history = useHistory();
+  const { id } = useParams();
+  const jwt = localStorage.getItem('jwt');
+
+  const [transaction, setTransaction] = useState({});
+
+  console.log({ transaction });
+
+  const getTransaction = useCallback(async () => {
+    const { data } = await transactionApis.getTransaction(id, jwt);
+    setTransaction(data);
+  }, [id, jwt]);
+
+  useEffect(() => {
+    getTransaction();
+  }, [getTransaction]);
 
   return (
     <IonPage>
@@ -42,7 +60,7 @@ const PurchaseSuccess = () => {
           <Margin size={44} />
 
           <Message color="#7334E4" size={15} align="center">
-            TINYTAN JIMIN Character 3D Modeling
+            {transaction?.product?.title}
             <br />
             상품이 구매 되었습니다.
           </Message>
@@ -55,6 +73,20 @@ const PurchaseSuccess = () => {
           >
             <Flex align="center">
               나의 NFT 보러가기 <MdKeyboardArrowRight />
+            </Flex>
+          </Typography>
+
+          <Margin size={20} />
+
+          <Typography
+            size={14}
+            color="#ACACAC"
+            onClick={() => {
+              if (transaction) window.open(transaction?.url);
+            }}
+          >
+            <Flex align="center">
+              Etherscan 에서 거래내역 확인하기 <MdKeyboardArrowRight />
             </Flex>
           </Typography>
         </Body>
