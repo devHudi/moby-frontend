@@ -1,8 +1,8 @@
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
 
-import { Margin, Padding, ItemCard, Typography } from 'moby-ui';
+import { Margin, Padding, ItemCard, Typography, NoContent } from 'moby-ui';
 import Chart from './Chart';
 import Table from './Table';
 
@@ -42,6 +42,8 @@ const ChartTab = ({ items }) => {
     { date: new Date(), quantity: 1, price: 10000 },
   ];
 
+  console.log({ items });
+
   return (
     <div>
       <Chart />
@@ -59,6 +61,7 @@ const ChartTab = ({ items }) => {
 
         <Margin size={9} />
 
+        {items.length === 0 && <NoContent height={150} />}
         <Grid>
           {_.map(items, (item) => (
             <GridItem>
@@ -76,6 +79,23 @@ const ChartTab = ({ items }) => {
       </Padding>
     </div>
   );
+};
+
+ChartTab.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      image: PropTypes.image,
+      name: PropTypes.string,
+      price: PropTypes.number,
+      type: PropTypes.string,
+      onClick: PropTypes.func,
+    }),
+  ),
+};
+
+ChartTab.defaultProps = {
+  items: [],
 };
 
 export default ChartTab;
