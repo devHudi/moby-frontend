@@ -26,6 +26,7 @@ const Title = styled.div`
 const Subtitle = styled.div`
   font-size: 12px;
   text-align: center;
+  max-width: 270px;
 `;
 
 const Blank = styled.div`
