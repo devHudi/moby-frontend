@@ -11,6 +11,9 @@ import {
   Flex,
 } from 'moby-ui';
 
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
 import * as transactionApis from 'apis/transactions';
@@ -33,10 +36,14 @@ const PurchaseSuccess = () => {
 
   const [transaction, setTransaction] = useState({});
 
+  const [, setSpinner] = useRecoilState(spinnerState);
+
   const getTransaction = useCallback(async () => {
+    setSpinner(true);
     const { data } = await transactionApis.getTransaction(id, jwt);
     setTransaction(data);
-  }, [id, jwt]);
+    setSpinner(false);
+  }, [setSpinner, id, jwt]);
 
   useIonViewWillEnter(() => {
     getTransaction();
