@@ -182,14 +182,14 @@ const MyPage = () => {
         <Padding padding={18}>
           <Padding padding={5} bottom={13}>
             <Typography size={14} weight="bold">
-              앱 설정
+              기타 설정
             </Typography>
           </Padding>
 
           <Divider />
 
           <Padding padding={5}>
-            <Typography
+            {/* <Typography
               size={13}
               onClick={() => toast('해당 기능은 추후 제공될 예정입니다.')}
             >
@@ -218,6 +218,32 @@ const MyPage = () => {
                   캐시 삭제 <MdKeyboardArrowRight />
                 </Flex>
               </Padding>
+            </Typography> */}
+            <Typography
+              size={13}
+              onClick={() => window.open('https://moby-privacy.netlify.app/')}
+            >
+              <Padding padding={10} left={0} right={0}>
+                <Flex
+                  style={{ cursor: 'pointer' }}
+                  justify="space-between"
+                  align="center"
+                >
+                  개인정보 처리방침
+                  <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
+            </Typography>
+            <Typography size={13} onClick={() => toast('준비 중 입니다.')}>
+              <Padding padding={10} left={0} right={0}>
+                <Flex
+                  style={{ cursor: 'pointer' }}
+                  justify="space-between"
+                  align="center"
+                >
+                  이용약관 <MdKeyboardArrowRight />
+                </Flex>
+              </Padding>
             </Typography>
             <Typography size={13} onClick={onLogout}>
               <Padding padding={10} left={0} right={0}>
@@ -226,12 +252,12 @@ const MyPage = () => {
                   justify="space-between"
                   align="center"
                 >
-                  로그 아웃 <MdKeyboardArrowRight />
+                  로그아웃 <MdKeyboardArrowRight />
                 </Flex>
               </Padding>
             </Typography>
           </Padding>
-
+          {/*
           <Divider />
 
           <Padding padding={5}>
@@ -247,7 +273,7 @@ const MyPage = () => {
                 </Flex>
               </Typography>
             </Padding>
-          </Padding>
+          </Padding> */}
         </Padding>
 
         <Navigation />

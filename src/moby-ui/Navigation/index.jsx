@@ -59,10 +59,10 @@ const Navigation = () => {
         <MenuIcon src={myWalletImage} />
         <MenuText>MY WALLET</MenuText>
       </Menu>
-      <Menu onClick={onToast}>
+      {/* <Menu onClick={onToast}>
         <MenuIcon src={nfcImage} />
         <MenuText>NFC</MenuText>
-      </Menu>
+      </Menu> */}
       <Menu onClick={() => history.push('/my-page')}>
         <MenuIcon src={settingImage} />
         <MenuText>MY PAGE</MenuText>

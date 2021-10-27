@@ -73,7 +73,7 @@ const Comment = ({ image, name, content, date }) => {
     present({
       buttons: [{ text: '확인', handler: () => dismiss() }],
       duration: 2000,
-      message: '해당 기능은 추후 제공될 예정입니다.',
+      message: '신고 완료되었습니다.',
     });
   };
 
@@ -124,9 +124,14 @@ const CommentList = ({ children, onMoreClick }) => (
 
     {children}
 
-    <MoreButton onClick={onMoreClick}>
-      <MdKeyboardArrowDown />
-    </MoreButton>
+    {onMoreClick && (
+      <MoreButton onClick={onMoreClick}>
+        <MdKeyboardArrowDown />
+      </MoreButton>
+    )}
+
+    {!onMoreClick && <Margin size={5} />}
+
     <Divider />
   </CommentListWrapper>
 );
@@ -140,7 +145,7 @@ CommentList.propTypes = {
 
 CommentList.defaultProps = {
   children: null,
-  onMoreClick: () => console.log('Load More'),
+  onMoreClick: null,
 };
 
 export default CommentList;
