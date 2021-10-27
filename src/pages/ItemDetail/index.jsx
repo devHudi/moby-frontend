@@ -55,19 +55,14 @@ const ItemDetail = () => {
     setTab(i);
   };
 
-  const onBuy = (id, quantity, totalPrice) => {
+  const onBuy = (id, quantity, price) => {
     history.push('/purchase');
     setCart({
       itemId: id,
       quantity,
-      totalPrice,
+      totalPrice: quantity * price,
     });
   };
-
-  // const onSell = (id, quantity, totalPrice) => {
-  //   // selling logic here
-  //   console.log(`${id}, ${quantity} 개를 총 ${totalPrice} 원 에 판매`);
-  // };
 
   useEffect(() => {
     getProduct();

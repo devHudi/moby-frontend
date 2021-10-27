@@ -1,7 +1,8 @@
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Typography } from 'moby-ui';
+import { useIonToast } from '@ionic/react';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -16,11 +17,31 @@ const Wrapper = styled.div`
   z-index: 100;
 `;
 
-const Price = ({ price }) => {
-  const history = useHistory();
+const Price = ({ price, balance, methodSelected, onPurchase }) => {
+  const [present, dismiss] = useIonToast();
 
-  const onPurchase = () => {
-    history.push('/purchase-success/dummyId');
+  const toast = useCallback(
+    (message) => {
+      present({
+        buttons: [{ text: '확인', handler: () => dismiss() }],
+        duration: 2000,
+        message,
+      });
+    },
+    [present, dismiss],
+  );
+  const handlePurchase = () => {
+    if (!methodSelected) {
+      toast('결제수단을 선택해주세요.');
+      return;
+    }
+
+    if (balance < price) {
+      toast('잔액이 부족합니다.');
+      return;
+    }
+
+    onPurchase();
   };
 
   return (
@@ -29,7 +50,7 @@ const Price = ({ price }) => {
         결제금액
       </Typography>
       <Typography size={24} weight="bold" color="#ffffff">
-        {price.toLocaleString()} 원 | <span onClick={onPurchase}>결제</span>
+        {price.toLocaleString()} 원 | <span onClick={handlePurchase}>결제</span>
       </Typography>
     </Wrapper>
   );
@@ -37,10 +58,16 @@ const Price = ({ price }) => {
 
 Price.propTypes = {
   price: PropTypes.number,
+  balance: PropTypes.number,
+  methodSelected: PropTypes.bool,
+  onPurchase: PropTypes.func,
 };
 
 Price.defaultProps = {
   price: 0,
+  balance: -1,
+  methodSelected: false,
+  onPurchase: () => {},
 };
 
 export default Price;

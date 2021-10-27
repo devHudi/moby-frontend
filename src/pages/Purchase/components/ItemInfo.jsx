@@ -12,9 +12,9 @@ const ItemImage = styled(Image)`
   border: 1px solid #dddddd;
 `;
 
-const ItemInfo = ({ type, name, quantity, price }) => (
+const ItemInfo = ({ type, image, name, quantity, price }) => (
   <Flex>
-    <ItemImage image="https://picsum.photos/300/300" />
+    <ItemImage image={image} />
 
     <Flex direction="column">
       <Typography size={10} color="#444444">
