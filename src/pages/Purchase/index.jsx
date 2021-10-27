@@ -59,7 +59,7 @@ const Purchase = () => {
   const onPurchase = useCallback(async () => {
     setSpinner(true);
     try {
-      const { data } = await transactionsApi.addTransaction(
+      await transactionsApi.addTransaction(
         cart.itemId,
         cart.totalPrice,
         cart.quantity,
@@ -73,7 +73,7 @@ const Purchase = () => {
       toast(`${message} 잠시 후 다시 시도해주세요.`);
     }
     setSpinner(false);
-  }, [cart.itemId, jwt, toast, history, setSpinner]);
+  }, [cart, jwt, toast, history, setSpinner]);
 
   useEffect(() => {
     getProduct();
