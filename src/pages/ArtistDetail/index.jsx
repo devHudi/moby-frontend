@@ -1,7 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import _ from 'lodash';
 import { useHistory, useParams } from 'react-router-dom';
-import { IonPage, IonContent, useIonToast } from '@ionic/react';
+import {
+  IonPage,
+  IonContent,
+  useIonToast,
+  useIonViewWillEnter,
+} from '@ionic/react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { AiOutlineHeart } from 'react-icons/ai';
 
@@ -173,15 +178,12 @@ const ArtistDetail = () => {
     [commentPage, artistId], // eslint-disable-line
   );
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     getArtist();
     getProducts();
     getBestArtistName();
-  }, [getArtist, getProducts, getBestArtistName]);
-
-  useEffect(() => {
     getComments();
-  }, [getComments]);
+  });
 
   return (
     <IonPage>
