@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
-import { IonPage, IonContent, useIonToast } from '@ionic/react';
+import {
+  IonPage,
+  IonContent,
+  useIonToast,
+  useIonViewWillEnter,
+} from '@ionic/react';
 import { AiOutlineSearch, AiOutlineHeart } from 'react-icons/ai';
 
 import { useRecoilState } from 'recoil';
@@ -191,25 +196,15 @@ const MarketPlace = () => {
     [commentInput, showError], // eslint-disable-line
   );
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     if (keyword === '') initArtists();
     else searchArtists(keyword);
 
     getImageSlides();
     getNftRanking();
     getArtistRanking();
-  }, [
-    keyword,
-    initArtists,
-    searchArtists,
-    getImageSlides,
-    getNftRanking,
-    getArtistRanking,
-  ]);
-
-  useEffect(() => {
     getComments();
-  }, [getComments]);
+  });
 
   return (
     <IonPage>

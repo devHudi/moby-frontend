@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent, useIonViewWillEnter } from '@ionic/react';
@@ -74,7 +74,7 @@ const MyWallet = () => {
 
   useIonViewWillEnter(() => {
     getData();
-  }, [getData, history.location]);
+  });
 
   return (
     <IonPage>

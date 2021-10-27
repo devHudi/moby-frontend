@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useIonViewWillEnter } from '@ionic/react';
+
 import { ITEM_TYPES } from 'constants/index.js';
 
 import * as favsApi from 'apis/favs';
@@ -79,7 +81,7 @@ const ItemCard = ({ id, image, name, type, price, onClick }) => {
     }
   };
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     getProductHeart();
   }, [getProductHeart]);
 

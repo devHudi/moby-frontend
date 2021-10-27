@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import _ from 'lodash';
 import { useHistory, useParams } from 'react-router-dom';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, useIonViewWillEnter } from '@ionic/react';
 import { Divider, Image, Padding, Margin, Tab, AltHeader } from 'moby-ui';
 
 import { useRecoilState } from 'recoil';
@@ -64,13 +64,10 @@ const ItemDetail = () => {
     });
   };
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     getProduct();
-  }, [getProduct]);
-
-  useEffect(() => {
     getRecommendedItems();
-  }, [getRecommendedItems]);
+  });
 
   return (
     <IonPage>

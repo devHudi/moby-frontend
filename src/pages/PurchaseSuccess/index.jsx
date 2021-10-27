@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
 import { IonPage, IonContent, useIonViewWillEnter } from '@ionic/react';
@@ -40,7 +40,7 @@ const PurchaseSuccess = () => {
 
   useIonViewWillEnter(() => {
     getTransaction();
-  }, [getTransaction]);
+  });
 
   return (
     <IonPage>
