@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import { Divider, Margin } from 'moby-ui';
+import { Divider, Margin, NoContent } from 'moby-ui';
 
 const RowWrapper = styled.div`
   display: flex;
@@ -46,28 +46,31 @@ Row.defaultProps = {
 
 const TableWrapper = styled.div``;
 
-const Table = ({ data }) => (
-  <>
-    <Margin size={10} />
-    <TableWrapper>
-      <Row header date="거래일" quantity="수량" price="거래가" />
+const Table = ({ data }) => {
+  if (data.length === 0) return null;
 
-      <Margin size={8} />
-      <Divider />
-      <Margin size={7} />
+  return (
+    <>
+      <Margin size={10} />
+      <TableWrapper>
+        <Row header date="거래일" quantity="수량" price="거래가" />
 
-      {_.map(data, (row) => (
-        <>
-          <Row row={row.date} quantity={row.quantity} price={row.price} />
-          <Margin size={3} />
-        </>
-      ))}
+        <Margin size={8} />
+        <Divider />
+        <Margin size={7} />
+        {_.map(data, (row) => (
+          <>
+            <Row row={row.date} quantity={row.quantity} price={row.price} />
+            <Margin size={3} />
+          </>
+        ))}
 
-      <Margin size={5} />
-      <Divider />
-    </TableWrapper>
-  </>
-);
+        <Margin size={5} />
+        <Divider />
+      </TableWrapper>
+    </>
+  );
+};
 
 Table.propTypes = {
   data: PropTypes.arrayOf(

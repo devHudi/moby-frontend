@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import _ from 'lodash';
-import dayjs from 'dayjs';
 import styled from 'styled-components';
 
 import {
@@ -11,6 +11,9 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+
+import { NoContent } from 'moby-ui';
+
 import PeriodTab from './PeriodTab';
 
 const TitleText = styled.div`
@@ -35,39 +38,56 @@ const Chart = ({ data }) => {
 
       <PeriodTab />
 
-      <ChartWrapper>
-        <ResponsiveContainer height="100%">
-          <AreaChart
-            width={500}
-            height={300}
-            data={chartData}
-            margin={{
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <CartesianGrid strokeDasharray="1" />
+      {data.length === 0 && <NoContent height={300} />}
 
-            <XAxis hide dataKey="name" />
-            <YAxis padding={{ left: 0 }} tick={{ fontSize: 10 }} />
-            <Tooltip
-              label="name"
-              labelFormatter={(t) => new Date(t).toLocaleString()}
-            />
+      {data.length > 0 && (
+        <ChartWrapper>
+          <ResponsiveContainer height="100%">
+            <AreaChart
+              width={500}
+              height={300}
+              data={chartData}
+              margin={{
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <CartesianGrid strokeDasharray="1" />
 
-            <Area
-              type="monotone"
-              dataKey="price"
-              stroke="#8884d8"
-              fill="#8884d8"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </ChartWrapper>
+              <XAxis hide dataKey="name" />
+              <YAxis padding={{ left: 0 }} tick={{ fontSize: 10 }} />
+              <Tooltip
+                label="name"
+                labelFormatter={(t) => new Date(t).toLocaleString()}
+              />
+
+              <Area
+                type="monotone"
+                dataKey="price"
+                stroke="#8884d8"
+                fill="#8884d8"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartWrapper>
+      )}
     </div>
   );
+};
+
+Chart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.instanceOf(Date),
+      price: PropTypes.number,
+    }),
+  ),
+};
+
+Chart.defaultProps = {
+  data: [],
 };
 
 export default Chart;
