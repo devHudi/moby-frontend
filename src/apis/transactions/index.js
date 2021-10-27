@@ -3,7 +3,7 @@ import { getAuthHeader, service } from 'apis/utils';
 export const getMyWallet = (jwt) =>
   service({
     method: 'GET',
-    url: '​/transactions​/wallet',
+    url: '/transactions/wallet',
     headers: getAuthHeader(jwt),
   });
 

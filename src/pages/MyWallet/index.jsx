@@ -13,6 +13,7 @@ import {
   AltDropdown,
 } from 'moby-ui';
 
+import * as transactionsApi from 'apis/transactions';
 import * as usersApi from 'apis/users';
 
 import NftTab from './components/NftTab';
@@ -39,11 +40,12 @@ const MyWallet = () => {
   };
 
   const getUser = useCallback(async () => {
-    const { data } = await usersApi.getCurrentUser(jwt);
+    const { data: transactionsData } = await transactionsApi.getMyWallet(jwt);
+    const { data: userData } = await usersApi.getCurrentUser(jwt);
 
     setItems(
       sortItems(
-        _.map(data?.user?.productsPurchased, (item) => ({
+        _.map(transactionsData?.products, (item) => ({
           id: item?.id,
           image: item?.posterSrc,
           name: item?.title,
@@ -59,7 +61,7 @@ const MyWallet = () => {
     );
 
     setCards(
-      _.map(data?.user?.cards, (item) => ({
+      _.map(userData?.user?.cards, (item) => ({
         name: item?.cardName,
         number: item?.cardNumber,
         expireDate: item?.expired,
