@@ -19,7 +19,7 @@ const ItemDetail = () => {
   const { itemId } = useParams();
 
   const [tab, setTab] = useState(0);
-  const [cart, setCart] = useRecoilState(cartState); // eslint-disable-line
+  const [, setCart] = useRecoilState(cartState);
 
   const [item, setItem] = useState({});
   const [recommendedItems, setRecommendedItems] = useState([]);
@@ -93,7 +93,7 @@ const ItemDetail = () => {
 
           <Margin size={17} />
 
-          {tab === 0 && <ChartTab items={recommendedItems} />}
+          {tab === 0 && <ChartTab itemId={itemId} items={recommendedItems} />}
           {tab === 1 && <DetailTab images={[item?.detailImgSrc]} />}
         </Padding>
 

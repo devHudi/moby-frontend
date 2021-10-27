@@ -45,14 +45,14 @@ const PeriodTab = () => {
     present({
       buttons: [{ text: '확인', handler: () => dismiss() }],
       duration: 2000,
-      message: '거래 데이터가 1개월 이상 존재하지 않습니다.',
+      message: '해당 상품은 거래 데이터가 부족하여, 전체보기만 가능합니다.',
     });
   };
 
   return (
     <Wrapper>
-      <TabItem activated>
-        <TabText>1개월</TabText>
+      <TabItem>
+        <TabText onClick={onToast}>1개월</TabText>
       </TabItem>
       <DividerWrapper>
         <Divider />
@@ -75,7 +75,7 @@ const PeriodTab = () => {
       <DividerWrapper>
         <Divider />
       </DividerWrapper>
-      <TabItem onClick={onToast}>
+      <TabItem activated>
         <TabText>전체</TabText>
       </TabItem>
     </Wrapper>

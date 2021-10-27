@@ -6,3 +6,10 @@ export const addTransaction = (productId, jwt) =>
     url: `/transactions/${productId}`,
     headers: getAuthHeader(jwt),
   });
+
+export const getChart = (productId, jwt) =>
+  service({
+    method: 'GET',
+    url: `/transactions/chart/${productId}`,
+    headers: getAuthHeader(jwt),
+  });
