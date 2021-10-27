@@ -90,6 +90,8 @@ const MarketPlace = () => {
   }, [keyword, history]);
 
   const getComments = useCallback(async () => {
+    setSpinner(true);
+
     const jwt = localStorage.getItem('jwt');
     const { data } = await artistsApi.getAllArtistCommentsWithPagenation(
       20,
@@ -107,6 +109,8 @@ const MarketPlace = () => {
         date: item?.createdAt,
       })),
     ]);
+
+    setSpinner(false);
   }, [commentPage]); // eslint-disable-line
 
   const getImageSlides = useCallback(async () => {

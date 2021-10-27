@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent, useIonViewWillEnter } from '@ionic/react';
@@ -13,6 +13,9 @@ import {
   AltDropdown,
 } from 'moby-ui';
 
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 import * as transactionsApi from 'apis/transactions';
 import * as usersApi from 'apis/users';
 
@@ -21,6 +24,8 @@ import PayTab from './components/PayTab';
 
 const MyWallet = () => {
   const history = useHistory();
+
+  const [, setSpinner] = useRecoilState(spinnerState);
 
   const [tab, setTab] = useState(0);
 
@@ -41,6 +46,8 @@ const MyWallet = () => {
   };
 
   const getData = useCallback(async () => {
+    setSpinner(true);
+
     const { data: transactionsData } = await transactionsApi.getMyWallet(jwt);
     const { data: userData } = await usersApi.getCurrentUser(jwt);
 
@@ -70,11 +77,13 @@ const MyWallet = () => {
         expireDate: item?.expired,
       })),
     );
-  }, [jwt, history, sort]);
+
+    setSpinner(false);
+  }, [setSpinner, jwt, history, sort]);
 
   useIonViewWillEnter(() => {
     getData();
-  }, [getData, history.location]);
+  });
 
   return (
     <IonPage>
