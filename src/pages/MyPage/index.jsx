@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import {
@@ -20,6 +20,10 @@ import {
   NoContent,
 } from 'moby-ui';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+
+import { useRecoilState } from 'recoil';
+import { spinnerState } from 'states/spinner';
+
 import * as users from 'apis/users';
 import * as favs from 'apis/favs';
 import Profile from './components/Profile';
@@ -27,18 +31,27 @@ import Profile from './components/Profile';
 const MyPage = () => {
   const history = useHistory();
   const [present, dismiss] = useIonToast();
+  const [, setSpinner] = useRecoilState(spinnerState);
+
+  const fileRef = useRef();
+
   const [user, setUser] = useState(null); // null or UserDTO
   const [favList, setFavList] = useState(null); // null or FavDTO
 
+  const [profile, setProfile] = useState(null);
+
+  const jwt = localStorage.getItem('jwt');
+
   const getCurrentUser = useCallback(async () => {
-    const jwt = localStorage.getItem('jwt');
     try {
       const [userResponse, favResponse] = await Promise.all([
         users.getCurrentUser(jwt),
         favs.getAllFavProduct(jwt),
       ]);
-      if (userResponse.data.success) setUser(userResponse.data.user);
-      else
+      if (userResponse.data.success) {
+        setUser(userResponse.data.user);
+        setProfile(userResponse.data.user.profileImageSrc);
+      } else
         throw new Error(
           '사용자 정보를 가져오는 과정에서 예상치 못한 문제가 발생했습니다.',
         );
@@ -49,18 +62,22 @@ const MyPage = () => {
       localStorage.removeItem('jwt');
       history.push('/login');
     }
-  }, [history]);
+  }, [history, jwt]);
+
   useIonViewWillEnter(() => {
     getCurrentUser();
   }, [getCurrentUser]);
 
-  const onToast = () => {
-    present({
-      buttons: [{ text: '확인', handler: () => dismiss() }],
-      duration: 2000,
-      message: '해당 기능은 추후 제공될 예정입니다.',
-    });
-  };
+  const toast = useCallback(
+    (message) => {
+      present({
+        buttons: [{ text: '확인', handler: () => dismiss() }],
+        duration: 2000,
+        message,
+      });
+    },
+    [present, dismiss],
+  );
 
   const onLogout = () => {
     history.push('/login');
@@ -72,6 +89,35 @@ const MyPage = () => {
       message: '로그아웃 되었습니다.',
     });
   };
+
+  const handleProfileClick = () => {
+    fileRef.current.click();
+  };
+
+  const handleFileChange = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      setSpinner(true);
+
+      try {
+        const file = e.target.files[0];
+
+        const formData = new FormData();
+        formData.append('profile', file);
+        const { data } = await users.uploadProfile(formData, jwt);
+
+        toast('프로필 사진이 성공적으로 변경되었습니다.');
+
+        setProfile(data.src);
+      } catch {
+        toast('프로필 사진을 변경하지 못했습니다. 다시 시도해주세요.');
+      }
+
+      setSpinner(false);
+    },
+    [setSpinner, toast, jwt],
+  );
 
   const handleFavProductClick = useCallback(
     (productId) => {
@@ -89,7 +135,7 @@ const MyPage = () => {
         <Profile
           name={user?.username}
           email={user?.email}
-          thumbnailSrc={user?.profileImageSrc}
+          thumbnailSrc={profile}
           favArtistName={
             user?.bestOfArtistName
               ? user?.bestOfArtistName
@@ -97,6 +143,14 @@ const MyPage = () => {
           }
           holding={user?.productsPurchased.length} // 보유 NFT 수량
           balance={user?.money} // 잔액
+          onClick={handleProfileClick}
+        />
+        <input
+          type="file"
+          ref={fileRef}
+          accept="image/png, image/jpeg, image/jpg"
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
         />
 
         <Padding padding={26} top={20} bottom={13}>
@@ -135,21 +189,30 @@ const MyPage = () => {
           <Divider />
 
           <Padding padding={5}>
-            <Typography size={13} onClick={onToast}>
+            <Typography
+              size={13}
+              onClick={() => toast('해당 기능은 추후 제공될 예정입니다.')}
+            >
               <Padding padding={10} left={0} right={0}>
                 <Flex justify="space-between" align="center">
                   알림 설정 <MdKeyboardArrowRight />
                 </Flex>
               </Padding>
             </Typography>
-            <Typography size={13} onClick={onToast}>
+            <Typography
+              size={13}
+              onClick={() => toast('해당 기능은 추후 제공될 예정입니다.')}
+            >
               <Padding padding={10} left={0} right={0}>
                 <Flex justify="space-between" align="center">
                   암호 잠금 <MdKeyboardArrowRight />
                 </Flex>
               </Padding>
             </Typography>
-            <Typography size={13} onClick={onToast}>
+            <Typography
+              size={13}
+              onClick={() => toast('해당 기능은 추후 제공될 예정입니다.')}
+            >
               <Padding padding={10} left={0} right={0}>
                 <Flex justify="space-between" align="center">
                   캐시 삭제 <MdKeyboardArrowRight />
@@ -173,7 +236,7 @@ const MyPage = () => {
 
           <Padding padding={5}>
             <Padding padding={10} left={0} right={0}>
-              <Typography size={13} onClick={onToast}>
+              <Typography size={13}>
                 <Flex justify="space-between" align="center">
                   <a
                     href="https://moby-privacy.netlify.app/"

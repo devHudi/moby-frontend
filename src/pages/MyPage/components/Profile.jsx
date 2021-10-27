@@ -9,7 +9,7 @@ const Wrapper = styled(Flex)`
 
 const RightWrapper = styled(Flex)`
   border-left: 1px solid #ffffff;
-  max-width: 120px;
+  max-width: 100px;
 `;
 
 const ProfileImage = styled(Image)`
@@ -36,10 +36,11 @@ const Profile = ({
   favArtistName,
   holding,
   balance,
+  onClick,
 }) => (
   <Wrapper align="center">
     <Flex align="center">
-      <ProfileImage image={thumbnailSrc} />
+      <ProfileImage image={thumbnailSrc} onClick={onClick} />
       <Flex direction="column">
         <Typography size={15} weight="bold" color="#ffffff">
           {name}
@@ -80,6 +81,7 @@ Profile.propTypes = {
   favArtistName: PropTypes.string,
   holding: PropTypes.number,
   balance: PropTypes.number,
+  onClick: PropTypes.func,
 };
 
 Profile.defaultProps = {
@@ -89,6 +91,7 @@ Profile.defaultProps = {
   favArtistName: '',
   holding: 0,
   balance: 0,
+  onClick: () => {},
 };
 
 export default Profile;
