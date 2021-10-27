@@ -59,7 +59,13 @@ const Purchase = () => {
   const onPurchase = useCallback(async () => {
     setSpinner(true);
     try {
-      await transactionsApi.addTransaction(cart.itemId, jwt);
+      await transactionsApi.addTransaction(
+        cart.itemId,
+        cart.totalPrice,
+        cart.quantity,
+        jwt,
+      );
+
       toast('결제에 성공하였습니다.');
       history.push('/');
     } catch (error) {
@@ -67,7 +73,7 @@ const Purchase = () => {
       toast(`${message} 잠시 후 다시 시도해주세요.`);
     }
     setSpinner(false);
-  }, [cart.itemId, jwt, toast, history, setSpinner]);
+  }, [cart, jwt, toast, history, setSpinner]);
 
   useEffect(() => {
     getProduct();
