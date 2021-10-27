@@ -73,7 +73,7 @@ const Comment = ({ image, name, content, date }) => {
     present({
       buttons: [{ text: '확인', handler: () => dismiss() }],
       duration: 2000,
-      message: '해당 기능은 추후 제공될 예정입니다.',
+      message: '신고 완료되었습니다.',
     });
   };
 
