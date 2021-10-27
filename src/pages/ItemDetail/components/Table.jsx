@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import { Divider, Margin, NoContent } from 'moby-ui';
+import { Divider, Margin } from 'moby-ui';
 
 const RowWrapper = styled.div`
   display: flex;

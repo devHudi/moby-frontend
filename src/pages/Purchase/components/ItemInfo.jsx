@@ -49,6 +49,7 @@ const ItemInfo = ({ type, image, name, quantity, price }) => (
 
 ItemInfo.propTypes = {
   type: PropTypes.oneOf(['official', 'community']),
+  image: PropTypes.string,
   name: PropTypes.string,
   quantity: PropTypes.number,
   price: PropTypes.number,
@@ -56,6 +57,7 @@ ItemInfo.propTypes = {
 
 ItemInfo.defaultProps = {
   type: 'official',
+  image: '',
   name: null,
   quantity: 0,
   price: 0,
