@@ -55,12 +55,12 @@ const ItemDetail = () => {
     setTab(i);
   };
 
-  const onBuy = (id, quantity, totalPrice) => {
+  const onBuy = (id, quantity, price) => {
     history.push('/purchase');
     setCart({
       itemId: id,
       quantity,
-      totalPrice,
+      totalPrice: quantity * price,
     });
   };
 
@@ -101,6 +101,8 @@ const ItemDetail = () => {
           {tab === 0 && <ChartTab items={recommendedItems} />}
           {tab === 1 && <DetailTab images={[item?.detailImgSrc]} />}
         </Padding>
+
+        {console.log(item)}
 
         <Purchase
           itemId={itemId}

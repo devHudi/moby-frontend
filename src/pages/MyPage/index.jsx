@@ -47,7 +47,7 @@ const MyPage = () => {
       if (error.response?.data) alert(error.response.data.message);
       else alert(error.message); // 라우터에서 이미 에러 체크해서 present 사용 X
       localStorage.removeItem('jwt');
-      history('/login');
+      history.push('/login');
     }
   }, [history]);
   useIonViewWillEnter(() => {
@@ -75,8 +75,6 @@ const MyPage = () => {
 
   const handleFavProductClick = useCallback(
     (productId) => {
-      // TODO 누르면 해당 상품 디테일 페이지로 이동
-      // TODO history.push(`/items/${productId}`);
       history.push(`/items/${productId}`);
     },
     [history],
