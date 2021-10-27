@@ -67,12 +67,6 @@ const Router = () => {
       {spinner && <Spinner />}
 
       <IonRouterOutlet>
-        <PublicRoute exact path="/login">
-          <Login />
-        </PublicRoute>
-        <PublicRoute exact path="/sign-up">
-          <SignUp />
-        </PublicRoute>
         <PrivateRoute exact path="/">
           <MarketPlace />
         </PrivateRoute>
@@ -103,6 +97,12 @@ const Router = () => {
         <PrivateRoute exact path="/rank/artist">
           <ArtistRank />
         </PrivateRoute>
+        <PublicRoute exact path="/login">
+          <Login />
+        </PublicRoute>
+        <PublicRoute exact path="/sign-up">
+          <SignUp />
+        </PublicRoute>
       </IonRouterOutlet>
     </IonReactRouter>
   );
