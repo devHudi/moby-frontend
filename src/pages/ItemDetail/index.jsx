@@ -84,8 +84,8 @@ const ItemDetail = () => {
         <Image height={237} image={item?.posterSrc} />
         <Header
           price={item?.currentPrice || 0}
-          stock={item?.quantity || 0}
-          total={item?.totalQuantity || 0}
+          stock={item?.quantityLeft || 0}
+          total={item?.quantityTotal || 0}
         />
         <Divider />
         <Padding>
