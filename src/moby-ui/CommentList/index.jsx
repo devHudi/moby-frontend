@@ -124,9 +124,14 @@ const CommentList = ({ children, onMoreClick }) => (
 
     {children}
 
-    <MoreButton onClick={onMoreClick}>
-      <MdKeyboardArrowDown />
-    </MoreButton>
+    {onMoreClick && (
+      <MoreButton onClick={onMoreClick}>
+        <MdKeyboardArrowDown />
+      </MoreButton>
+    )}
+
+    {!onMoreClick && <Margin size={5} />}
+
     <Divider />
   </CommentListWrapper>
 );
@@ -140,7 +145,7 @@ CommentList.propTypes = {
 
 CommentList.defaultProps = {
   children: null,
-  onMoreClick: () => console.log('Load More'),
+  onMoreClick: null,
 };
 
 export default CommentList;
