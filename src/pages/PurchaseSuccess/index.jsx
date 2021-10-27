@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory, useParams } from 'react-router-dom';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, useIonViewWillEnter } from '@ionic/react';
 import {
   AltHeader,
   Divider,
@@ -33,14 +33,12 @@ const PurchaseSuccess = () => {
 
   const [transaction, setTransaction] = useState({});
 
-  console.log({ transaction });
-
   const getTransaction = useCallback(async () => {
     const { data } = await transactionApis.getTransaction(id, jwt);
     setTransaction(data);
   }, [id, jwt]);
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     getTransaction();
   }, [getTransaction]);
 
