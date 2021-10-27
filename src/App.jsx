@@ -29,6 +29,16 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     outline: none;
   }
+
+  body {
+    display: flex;
+    justify-content: center;
+  }
+
+  #root > .ion-page {
+    max-width: 414px;
+    margin: 0 auto;
+  }
 `;
 
 const App = () => (
