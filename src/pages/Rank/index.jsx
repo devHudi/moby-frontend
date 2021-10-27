@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, useIonViewWillEnter } from '@ionic/react';
 import { AltHeader, Divider, Padding, Margin, Navigation } from 'moby-ui';
 
 import * as productsApi from 'apis/products';
@@ -47,9 +47,9 @@ const Rank = () => {
     );
   }, [history]);
 
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     getRanking();
-  }, [getRanking]);
+  });
 
   return (
     <IonPage>
