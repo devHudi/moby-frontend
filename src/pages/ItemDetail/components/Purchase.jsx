@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import _ from 'lodash';
@@ -124,6 +124,14 @@ const Purchase = ({
   const [sellOpen, setSellOpen] = useState(false);
   const [buyPrice, setBuyPrice] = useState(defaultBuyPrice);
   const [sellPrice, setSellPrice] = useState(defaultSellPrice);
+
+  useEffect(() => {
+    setBuyPrice(defaultBuyPrice);
+  }, [defaultBuyPrice]);
+
+  useEffect(() => {
+    setSellPrice(defaultSellPrice);
+  }, [defaultSellPrice]);
 
   return (
     <>

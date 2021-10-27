@@ -59,7 +59,7 @@ const Purchase = () => {
   const onPurchase = useCallback(async () => {
     setSpinner(true);
     try {
-      const { data } = await transactionsApi.addTransaction(
+      await transactionsApi.addTransaction(
         cart.itemId,
         cart.totalPrice,
         cart.quantity,

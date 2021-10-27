@@ -105,8 +105,8 @@ const ItemDetail = () => {
         <Purchase
           itemId={itemId}
           type={item?.isOfficial ? 'official' : 'community'}
-          defaultBuyPrice={21000}
-          defaultSellPrice={19000}
+          defaultBuyPrice={item?.currentPrice}
+          defaultSellPrice={item?.currentPrice}
           onOfficialBuy={onBuy}
           onCommunityBuy={(id, quantity, buyPrice) =>
             console.log('커뮤니티 구매', id, quantity, buyPrice)
