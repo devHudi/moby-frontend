@@ -78,9 +78,11 @@ const ArtistDetail = () => {
     if (bestArtistName === artist.name) {
       setAritstHeart(false);
       await usersApi.deleteBestArtist(jwt);
+      setBestArtistName(null);
     } else {
       setAritstHeart(true);
       await usersApi.pickBestArtist(artistId, jwt);
+      setBestArtistName(artist.name);
     }
   }, [bestArtistName, artist.name, artistId]);
 

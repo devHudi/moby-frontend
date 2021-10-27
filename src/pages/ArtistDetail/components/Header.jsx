@@ -23,7 +23,7 @@ const Header = ({ agency, marketCap, tradingVolume, heart, onHeartChange }) => (
           <Heart
             filled={heart}
             onChange={onHeartChange}
-            borderColor="#E8E8E8"
+            borderColor="#868e96"
           />
         </Icon>
         <Value size={14} align="right">
