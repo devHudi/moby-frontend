@@ -25,6 +25,7 @@ import { useRecoilState } from 'recoil';
 import { spinnerState } from 'states/spinner';
 
 import * as users from 'apis/users';
+import * as transactions from 'apis/transactions';
 import * as favs from 'apis/favs';
 import Profile from './components/Profile';
 
@@ -36,6 +37,7 @@ const MyPage = () => {
   const fileRef = useRef();
 
   const [user, setUser] = useState(null); // null or UserDTO
+  const [nftCount, setNftCount] = useState(0); // null or UserDTO
   const [favList, setFavList] = useState(null); // null or FavDTO
 
   const [profile, setProfile] = useState(null);
@@ -64,9 +66,15 @@ const MyPage = () => {
     }
   }, [history, jwt]);
 
+  const getNftCount = useCallback(async () => {
+    const { data } = await transactions.getMyWallet(jwt);
+    setNftCount(data?.count);
+  }, [jwt]);
+
   useIonViewWillEnter(() => {
     getCurrentUser();
-  }, [getCurrentUser]);
+    getNftCount();
+  }, [getCurrentUser, getNftCount]);
 
   const toast = useCallback(
     (message) => {
@@ -141,7 +149,7 @@ const MyPage = () => {
               ? user?.bestOfArtistName
               : '당신의 아티스트를 Pick 해주세요!'
           }
-          holding={user?.productsPurchased.length} // 보유 NFT 수량
+          holding={nftCount} // 보유 NFT 수량
           balance={user?.money} // 잔액
           onClick={handleProfileClick}
         />
