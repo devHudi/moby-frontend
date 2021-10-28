@@ -21,6 +21,7 @@ const IconWrapper = styled.div`
 const Title = styled.div`
   font-size: 22px;
   font-weight: bold;
+  text-align: center;
 `;
 
 const Subtitle = styled.div`
