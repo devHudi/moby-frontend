@@ -19,7 +19,7 @@ const NftTab = ({ items }) => {
             image={item.image}
             name={item.name}
             date={item.date}
-            buyPrice={item.price}
+            buyPrice={item.buyPrice}
             currentPrice={item.currentPrice}
             holding={item.holding}
             holdingPercentage={item.holdingPercentage}
