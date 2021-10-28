@@ -51,6 +51,8 @@ const MyWallet = () => {
     const { data: transactionsData } = await transactionsApi.getMyWallet(jwt);
     const { data: userData } = await usersApi.getCurrentUser(jwt);
 
+    console.log({ transactionsData });
+
     setItems(
       sortItems(
         _.map(transactionsData?.products, (item) => ({
